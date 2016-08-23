@@ -651,9 +651,7 @@
 <li>b.创建用户（需要带两个参量：token和url），创建租户，创建角色；创建服务</li>
 <li>c.Controller节点上）把常用参数（username,password,tenant-name,auth-url等）作为环境变量导出</li>
 </ul>
-<ol>
-<li>Glance的安装部署</li>
-</ol>
+<p>3.Glance的安装部署</p>
 <ul>
 <li>a.安装Glance（安装Glance服务及Glance的python客户端），并修改Glance配置文件【主要修改etc目录下glance-api.conf文件和glance-registry.conf。首先进行glance-api.conf和glance-registry.conf文件中和数据库连接相关的配置，且检查/var/lib/glance目录，如果存在sqlite数据库文件（glance.sqlite）需将其删除，防止误读；而后修改glance-registry.conf】</li>
 <li>b.创建Glance数据库(MySQL)并同步（glance-manage db_sync）</li>
