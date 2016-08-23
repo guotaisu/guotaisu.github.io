@@ -564,9 +564,7 @@
 <blockquote>
 <p>注：可见通过Neutron，租户可以定制rich topology的虚拟网络；可以通过各种agent和plugin实现具体功能并和第三方设备，软件对接。<br>eg.构建一个基于三层架构的Web服务：<br>Web页面服务器；应用服务器；数据库服务器</p>
 </blockquote>
-<ol>
-<li>Horizon组件解析</li>
-</ol>
+<p>5.Horizon组件解析</p>
 <ul>
 <li>提供可视化GUI。OpenStack原生的Horizon满足不了需求，需在其上做二次开发。</li>
 <li>Horizon内部架构<br>可参照python的一个Web应用框架django。Horizon的内部设计分为三个层次：<br>① Dashboard ②  PanelGroup ③  panel<br>Horizon三级代码组织形式：<br>① horizon: 表格，标签页，表单，工作流 ，base.py文件(实现动态加载panel)<br>②openstack_dashboard:  dashboard子文件（包含各个面板的实现代码，即业务逻辑都在里面，它会去加载或调用horizon文件夹里的那些组件）</li>
