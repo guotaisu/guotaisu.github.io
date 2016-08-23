@@ -855,14 +855,14 @@
 </ul>
 <blockquote>
 <p>注：Java代码实现功能设计，.xml实现渲染（实现颜色，布局，大小等），如此安卓实现二者的分离。</p>
+</blockquote>
 <ol>
 <li>安卓本质是一个优秀的框架，适合做界面开发，功能由Java代码实现（GUI开发是Java的弱项，因为它没有把结构和表现做分离）</li>
-<li>安卓长度单位<br>（为适应不同设备）使用与像素和密度无关的单位：dp（可自动换算：1dp=[density/160]px），sp（用于设定与density及scale无关的字体单位）</li>
-<li>代码调试<br>用日志器【不能用system.out.println()，它只能是在真机上执行完毕后由adb回显数据。】<br>eg.Log.i(“标签” , ”要输出的内容”);</li>
-<li>IDE把源代码进行编译（生成.des字节码文件，与sun公司的.class文件不尽相同），编译完后进行打包（. apk文件），之后通过安卓的adb传到AVD或真机上，传完后adb再发送一条指令把安装好的.apk进行启动，启动过程中adb会收集到很多调试信息并返回。</li>
-<li>在Manifests文件中可设置用户权限：<uses permission="" ...=""></uses></li>
+<li>安卓长度单位<br><code>（为适应不同设备）使用与像素和密度无关的单位：dp（可自动换算：1dp=[density/160]px），sp（用于设定与density及scale无关的字体单位）</code></li>
+<li>代码调试<br>用日志器【不能用system.out.println()，它只能是在真机上执行完毕后由adb回显数据。】<br><code>eg.Log.i(“标签” , ”要输出的内容”);</code></li>
+<li><code>IDE把源代码进行编译（生成.des字节码文件，与sun公司的.class文件不尽相同），编译完后进行打包（. apk文件），之后通过安卓的adb传到AVD或真机上，传完后adb再发送一条指令把安装好的.apk进行启动，启动过程中adb会收集到很多调试信息并返回。</code></li>
+<li><code>在Manifests文件中可设置用户权限：&lt;uses permission ...&gt;</code></li>
 </ol>
-</blockquote>
 <h3 id="五．安卓布局管理"><a href="#五．安卓布局管理" class="headerlink" title="五．安卓布局管理"></a>五．安卓布局管理</h3><blockquote>
 <p>gravity: 容器自身对于内部组件的重力位置。<br>layout_gravity: 组件自身对于容器的重力位置。</p>
 <blockquote>
@@ -962,16 +962,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">eg2.BaseAdapter</div><div class="line">★需求----如果使用更加“复杂”的数据模型；如果需要更加精确的控制“适配“的细节；如果需要实现每个组件独立添加事件处理。</div><div class="line">*原理及细节：BaseAdapter是一个抽象类，需要继承并实现以下四个方法：</div><div class="line">int getCount()&#123; return as.length; &#125; //提交给渲染引擎（渲染的数据个数）</div><div class="line">Object getItem(int position)&#123; return as[position]; &#125;//返回自定义对象</div><div class="line">Long getItemId(int position)&#123; return position; &#125; //可自定义返回Object id</div><div class="line">View getView(int position,View convertView,ViewGroup parent)&#123;…&#125;//渲染引擎主要的操作代码，是渲染过程，返回View</div><div class="line">使用示例：</div><div class="line">a.可使用先前自定义的layout布局(如sgt_layout）,然后写一个Adapter类（sgtAdapter）继承BaseAdapter,复写它的四个方法。</div><div class="line">b.新建一个类（如Suguotai）设定属性和构造（自定义对象）,然后在Adapter类中用构造方法把自定义对象的数据传进来（例如可传进List&lt;自定义对象&gt;型数据（data） ）。</div><div class="line">c.int getCount()&#123;return data.seze();&#125;；</div><div class="line">Object getItem(int position)&#123; return data.get(position); &#125;</div><div class="line">Long getItemId(int position)&#123; return data.get(position).getId(); &#125;</div><div class="line"> </div><div class="line"> View getView(int position,View convertView,ViewGroup parent)&#123;</div><div class="line">   //用data和layout生成最终的View</div><div class="line">layoutInflater inflater=layoutInflater.from(context);//“吹”出View。</div><div class="line">context表示此ListView将来在哪个Activity中产生出来。而现在Apater类并不知道ListView将来究竟在哪个Activity中出现，所以在构造Adapter时应该把Activity传入。【Activity和Service都是Context的子类，此处声明一个Context属性传进来即可。】</div><div class="line">convertView=inflater.inflate(R.layout.sgt_layout,null);</div><div class="line">//第一个参数就是id，第二个参数ViewGroup可不管</div><div class="line">Suguotai s=data.get(position);//当前数据</div><div class="line">…//接下来将数据逐条渲染到View中：(id为layout里对应的id)</div><div class="line">eg. ImageView show=(ImageView)convertView.findViewById(R.id.sgtShow);</div><div class="line">show.getBackgroundResource(s.getShow());</div><div class="line">TextView title=(TextView)convertView.findViewById(R.id.title);</div><div class="line">title.setText(s.getTitle()); </div><div class="line">……</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//★可实现给某个具体的View添加事件，获得有关数据：</div><div class="line">eg. title.setOnclickListener(new onItemClickListener()&#123;</div><div class="line">…onClick(Viewview)&#123;</div><div class="line">Log.i(“tiger”,data.get(position).getTitle()); &#125;</div><div class="line">&#125;);</div><div class="line">return convertView;</div><div class="line">&#125;</div><div class="line">d.同SimpleAdapter的使用一样，先写一个Activity类继承ListActivity。</div><div class="line">e.实例化一个数据: private List&lt;Suguotai&gt; data;</div><div class="line">写一个方法进行初始化：          </div><div class="line">private void init()&#123;</div><div class="line">data = new ArrayList&lt;Suguotai&gt;();</div><div class="line">Suguotai s1=new Suguotai(id,…); Suguotai s2=new Suguotai(id,…);</div><div class="line">……//添加内容</div><div class="line">data.add(s1); data.add(s2); …//添加数据</div><div class="line">&#125;                        </div><div class="line">f.在onCreate()方法里调用init()产生数据，然后使用前面的sgtAdapter:</div><div class="line">sgtAdapter adapter=new sgtAdapter(this,data);</div><div class="line">setListAdapter(adapter);</div></pre></td></tr></table></figure>
 <h3 id="七：安卓四大组件"><a href="#七：安卓四大组件" class="headerlink" title="七：安卓四大组件"></a>七：安卓四大组件</h3><blockquote>
-<p>附： ★intent详解<br>1） 是下述前三大组件之间及其内部的通信桥梁，负责消息传递。作用类比Servlet转发jsp页面中的request(中间对象)。</p>
+<p>附: ★intent详解<br>1）是下述前三大组件之间及其内部的通信桥梁，负责消息传递。作用类比Servlet转发jsp页面中的request(中间对象)。</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">eg1.（两个Activity之间的跳转）</div><div class="line">FirstActivity.java:</div><div class="line">Public void go(View view)&#123;</div><div class="line">Intent intent = new Intent(); //实例化intent</div><div class="line">//intent.setClass(this,SecondActivity.class); //“想找谁就找谁”，显式启动（不建议使用）</div><div class="line">Intent.setAction(“codding”);//隐式启动（建议使用）；</div><div class="line">//Intent.addCategory(Intent.CATEGORY_DEFAULT); //隐式启动隐含的代码</div><div class="line">表示找CATEGORY_DEFAULT分类下的codding（内容任意写）【在Manifests中配置】</div><div class="line">...  //可设置intent的其它属性，如intent.putExtra(“key”,”value”);可传递各种数据；startActivity(intent); </div><div class="line">&#125;</div><div class="line">SecondActivity.java:</div><div class="line">（在onCreate()方法中接收intent）</div><div class="line">Intent intent = this.getIntent();</div><div class="line">...  //获得各种数据如String uname = intent.getStringExtra(“uname”);</div><div class="line">...</div><div class="line">￭数据量较大时可新建一个类进行封装，该类实现序列化接口。在一端实例化该类并添加数据，在另一端用序列化类型接收（getSerializableExtra(“key”)）。</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">eg2.（启动下一个Activity并获取返回结果）</div><div class="line">FirstActivity.java:</div><div class="line">...</div><div class="line">startActivityForResult(intent,12); //第二个参数为请求码（任意数字）</div><div class="line"> </div><div class="line">//在上述启动过的Activity执行结束时才会执行下面的回调方法</div><div class="line">Protected void onActivityResult(int requestCode,int resultCode,Intent data)&#123;</div><div class="line">//此处的intent为另一个Activity中的intent；由 requestCode,resultCode 确认关联关系</div><div class="line"> </div><div class="line">if(requestCode=12&amp;resultCode==11) </div><div class="line">Log.i(“标签” , data.getStringExtra(“msg”)); //进行调试</div><div class="line">&#125;</div><div class="line"> </div><div class="line">SecondActivity.java:</div><div class="line">Public void finish(View view)&#123;</div><div class="line">Intent intent = getIntent();</div><div class="line">intent.putExtra(“msg”,”内容”);</div><div class="line"> </div><div class="line">setResult(11,intent); //第一个参数为结果码（不同于请求码的任意数字）；第二个参数为上述SecondActivity操作后的intent，对应FirstActivity中回调方法参数的（Intent data）项。</div><div class="line"> </div><div class="line">finish(); //完成任务后结束</div><div class="line">&#125;</div><div class="line">补：在.xml定义EditText，添加id(如tvl); 之后在其Activitity中获得并查看其内容：</div><div class="line">TextView tvl = (TextView)findViewById(R.id.tv1); //TextView是View的子类，所以要强转。</div><div class="line">Tv1.getText().toString();</div></pre></td></tr></table></figure>
-<ol>
-<li><p>Activity<br>1）类比Java中的Jsp（表现层）<br>2）Activity的栈式管理<br>3）Activity的生命周期</p>
-</li>
-<li><p>Service</p>
-</li>
-</ol>
+<p>1.Activity<br>1）类比Java中的Jsp（表现层）<br>2）Activity的栈式管理<br>3）Activity的生命周期</p>
+<p>2.Service</p>
 <ul>
 <li>是APP组件之一，驻留于后台，类似Windows后台程序。运行于调用它的APP的进程的UI线程中，不会随着启动它的组件一并销毁。利用它可以实现IPC通信，不等同于“业务层bean对象”。</li>
 <li>Service开发：<br>继承Service类，并Override生命周期方法【onCreate(),onStartCommand(),onDestroy()】。在清单文件中（注册）加以描述，并加入适当的intent-filter。Service是隐式启动，但无需加CATEGORY_DEFAULT，它只需加action即可（name=”MySer”），外界Activity通过该action就可以启动该Service。【方法如下：做一个启动按钮。须有一个intent找到相应的intent，<br>（Intent intent=new Intent(“MySer”)，然后startService(intent); 同理可以做一个按钮来杀死该Service】<br>启停方法：startService(intent);stopService(Intent)/stopSelf(); 【服务启动后不会自动停止，必须显示停止】; onStartCommand()（由安卓系统回调）;</li>
@@ -1061,9 +1057,7 @@
 <li>E. 当Activity用完之后则进行解绑（调用onUnbind()）。</li>
 </ul>
 </blockquote>
-<ol>
-<li>ContentProvider</li>
-</ol>
+<p>3.ContentProvider</p>
 <blockquote>
 <p>＊主要用来做数据存储，实际上它自身并不提供存储机制，而是一个中间抽象层（中间件）。</p>
 <p>Activity，Service，BroadcastReceiver 三大组件之间通过Intent连接，而ContentProvider则是通过URI连接。</p>
@@ -1094,9 +1088,7 @@
 </blockquote>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">eg1.(查询)</div><div class="line">public void query(View view)&#123;</div><div class="line">Uri uri = Uri.parse(“content://tiger1.cn”);</div><div class="line">//此处为URI连接协议，主机名（或Authority）对应先前注册的authorities</div><div class="line">ContentResolver resolver=getContentResolver();</div><div class="line">Cursor cs = resolver.query(uri,null,null,null,null);</div><div class="line">//参数分别为uri,投影，选择，排序；null表示没有；结果返回一个Cursor,可对其操作。</div><div class="line">&#125;</div><div class="line">＊应用：对电话簿的ContentProvider的访问</div></pre></td></tr></table></figure>
-<ol>
-<li>BroadcastReceiver<br>1）进行广播</li>
-</ol>
+<p>4.BroadcastReceiver<br>1）进行广播</p>
 <h3 id="八．★★安卓多线程"><a href="#八．★★安卓多线程" class="headerlink" title="八．★★安卓多线程"></a>八．★★安卓多线程</h3><ul>
 <li>安卓中，在子线程里更新UI组件会报错；而在UI线程里调用网络连接会报错，强制性要求只能在子线程中调用。（这是利用安卓的框架自身来保证代码的正确性）</li>
 <li>多线程处理机制（线程间通信）</li>
