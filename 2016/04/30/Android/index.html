@@ -89,20 +89,20 @@
 OpenStack做为一个操作系统，它管理的资源主要有三个方面：计算，存储，网络。OpenStack管理这些资源并提供给上层应用或用户去使用。这些资源管理是通过OpenStack中的各个项目来实现的。其中计算资源管理相关项目是Nova；存储相关的主要有快存储服务Cinder,对象存储服务Swift和镜像存储服务Glanc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenStack">
-<meta property="og:url" content="http://www.guotai.cn.com/2016/04/30/OpenStack/index.html">
+<meta property="og:url" content="http://www.guotai.cn.com/2016/04/30/Android/index.html">
 <meta property="og:site_name" content="苏国泰专属空间">
 <meta property="og:description" content="第一章 OpenStack基础1.OpenStack管理的资源及提供的服务
 
 OpenStack做为一个操作系统，它管理的资源主要有三个方面：计算，存储，网络。OpenStack管理这些资源并提供给上层应用或用户去使用。这些资源管理是通过OpenStack中的各个项目来实现的。其中计算资源管理相关项目是Nova；存储相关的主要有快存储服务Cinder,对象存储服务Swift和镜像存储服务Glanc">
-<meta property="og:image" content="http://www.guotai.cn.com/./images/OpenStack%E8%B5%84%E6%BA%90VS%E5%85%AC%E6%9C%89%E4%BA%91%E8%B5%84%E6%BA%90.jpg">
-<meta property="og:image" content="http://www.guotai.cn.com/./images/Ceph%E5%92%8CSwift%E6%AF%94%E8%BE%83.jpg">
-<meta property="og:updated_time" content="2016-08-22T11:52:47.834Z">
+<meta property="og:image" content="http://www.guotai.cn.com/./images/OpenStack%20VS%20%E5%85%AC%E6%9C%89%E4%BA%91.jpg">
+<meta property="og:image" content="http://www.guotai.cn.com/./images/Ceph%20VS%20Swift.jpg">
+<meta property="og:updated_time" content="2016-08-23T03:29:34.900Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenStack">
 <meta name="twitter:description" content="第一章 OpenStack基础1.OpenStack管理的资源及提供的服务
 
 OpenStack做为一个操作系统，它管理的资源主要有三个方面：计算，存储，网络。OpenStack管理这些资源并提供给上层应用或用户去使用。这些资源管理是通过OpenStack中的各个项目来实现的。其中计算资源管理相关项目是Nova；存储相关的主要有快存储服务Cinder,对象存储服务Swift和镜像存储服务Glanc">
-<meta name="twitter:image" content="http://www.guotai.cn.com/./images/OpenStack%E8%B5%84%E6%BA%90VS%E5%85%AC%E6%9C%89%E4%BA%91%E8%B5%84%E6%BA%90.jpg">
+<meta name="twitter:image" content="http://www.guotai.cn.com/./images/OpenStack%20VS%20%E5%85%AC%E6%9C%89%E4%BA%91.jpg">
 
 
 
@@ -123,7 +123,7 @@ OpenStack做为一个操作系统，它管理的资源主要有三个方面：�
 
 
 
-  <link rel="canonical" href="http://www.guotai.cn.com/2016/04/30/OpenStack/"/>
+  <link rel="canonical" href="http://www.guotai.cn.com/2016/04/30/Android/"/>
 
   <title> OpenStack | 苏国泰专属空间 </title>
 </head>
@@ -338,8 +338,7 @@ OpenStack做为一个操作系统，它管理的资源主要有三个方面：�
 <blockquote>
 <p>OpenStack做为一个操作系统，它管理的资源主要有三个方面：计算，存储，网络。OpenStack管理这些资源并提供给上层应用或用户去使用。这些资源管理是通过OpenStack中的各个项目来实现的。其中计算资源管理相关项目是Nova；存储相关的主要有快存储服务Cinder,对象存储服务Swift和镜像存储服务Glance；与网络相关的主要是一个和软件定义网络相关的项目Neutron(原名叫Qauntum)。另外Nova中有一个管理网络的模块叫做Nova Network，它做为一个比较稳定的遗留组件，现在仍然在OpenStack里和Neutron并存，在小规模部署里面，为了追求稳定和减少工作量会去使用它对网络资源进行管理。</p>
 </blockquote>
-<p>2.OpenStack资源VS公有云资源:</p>
-<p><img src="./images/OpenStack%E8%B5%84%E6%BA%90VS%E5%85%AC%E6%9C%89%E4%BA%91%E8%B5%84%E6%BA%90.jpg" alt="enter description here" title="OpenStack资源VS公有云资源.jpg"></p>
+<p>2.OpenStack资源VS公有云资源:<br><img src="./images/OpenStack%20VS%20%E5%85%AC%E6%9C%89%E4%BA%91.jpg" alt="enter description here" title="OpenStack VS 公有云.jpg"></p>
 <p>3.OpenStack基本组件</p>
 <ul>
 <li>Nova（OpenStack Compute）:<br>它是OpenStack里最核心的项目， 主要作用是控制虚拟机的创建以及改变他的容量和配置；它还可以做虚拟机的销毁，即虚拟机的整个生命周期都是由Nova来控制的。Nova的部署和运行一般有两种情况：一种是作为Controller节点去运行，它的核心部分主要有Scheduler(决定将要启动的虚拟机调度到哪个物理节点上),Conductor(对所有的计算节点进行统一管理)，NovaCell(级联)，用这些来控制其它一些运算节点。另外一种是作为Compute节点运行，它的核心部分是Nova  Compute，用来控制运行实际的虚拟机。</li>
@@ -613,7 +612,7 @@ OpenStack做为一个操作系统，它管理的资源主要有三个方面：�
 </ul>
 <blockquote>
 <p>附：块存储有强一致性和高性能的要求，这对于Swift和HDFS都是没有或比较弱的。<br>★Cinder支持Ceph提供的RBD设备，二者结合可基于X86普通服务器更加廉价方便地搭建一个块存储系统提供（卷）给虚拟机去使用。<br>②提供Swift兼容的对象接口</p>
-<p>★Ceph和Swift仍不可互为替代，二者比较如下：<br> <img src="./images/Ceph%E5%92%8CSwift%E6%AF%94%E8%BE%83.jpg" alt="enter description here" title="Ceph和Swift比较.jpg"></p>
+<p>★Ceph和Swift仍不可互为替代，二者比较如下：<br><img src="./images/Ceph%20VS%20Swift.jpg" alt="enter description here" title="Ceph VS Swift.jpg"></p>
 </blockquote>
 <p>案例一：目前OpenStack规模小，节点数量少，此时使用Swift节点浪费存储，可选用Ceph<br>案例二：提供云盘服务（面对大量用户，强调用户体验，用户可选存储策略（Storage Policy）），此时选用Swift更好，它更好地支持规模化部署，有先进的Feature，成本比Ceph更低。<br>④现在OpenStack所有存储都（开始）支持Ceph作为后端</p>
 <p>6.OpenStack与Docker<br>附：HyperVisor：在一个宿主机上搭建环境，可在环境里创建虚拟机，再在虚拟机里装客户操作系统(Guest OS)，然后在其上面装中间件，之后再装应用等。<br>Container技术：另外一种虚拟化技术，无需再装Guest OS，而直接基于宿主机操作系统来操作，可在其上做运行环境隔离，资源划分等，并形成容器，让应用在容器中运行。容器之间底层是共享一个操作系统的，甚至可以共享一些公用的库。和传统的HyperVisor相比，它的优势在于省去了Guest OS的开销；劣势在于只能使用和宿主机相同的操作系统。</p>
@@ -652,16 +651,16 @@ OpenStack做为一个操作系统，它管理的资源主要有三个方面：�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/25/核心Java/" rel="next" title="核心Java">
-                <i class="fa fa-chevron-left"></i> 核心Java
+              <a href="/2016/04/30/OpenStack/" rel="next" title="OpenStack">
+                <i class="fa fa-chevron-left"></i> OpenStack
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/30/Android/" rel="prev" title="OpenStack">
-                OpenStack <i class="fa fa-chevron-right"></i>
+              <a href="/2016/08/11/mogoroom/" rel="prev" title="mogoroom">
+                mogoroom <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

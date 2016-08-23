@@ -392,6 +392,404 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/30/Android/" itemprop="url">
+                  OpenStack
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-30T00:00:00+08:00" content="2016-04-30">
+              2016-04-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据与云计算/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据与云计算</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="第一章-OpenStack基础"><a href="#第一章-OpenStack基础" class="headerlink" title="第一章 OpenStack基础"></a>第一章 OpenStack基础</h2><p>1.OpenStack管理的资源及提供的服务</p>
+<blockquote>
+<p>OpenStack做为一个操作系统，它管理的资源主要有三个方面：计算，存储，网络。OpenStack管理这些资源并提供给上层应用或用户去使用。这些资源管理是通过OpenStack中的各个项目来实现的。其中计算资源管理相关项目是Nova；存储相关的主要有快存储服务Cinder,对象存储服务Swift和镜像存储服务Glance；与网络相关的主要是一个和软件定义网络相关的项目Neutron(原名叫Qauntum)。另外Nova中有一个管理网络的模块叫做Nova Network，它做为一个比较稳定的遗留组件，现在仍然在OpenStack里和Neutron并存，在小规模部署里面，为了追求稳定和减少工作量会去使用它对网络资源进行管理。</p>
+</blockquote>
+<p>2.OpenStack资源VS公有云资源:<br><img src="./images/OpenStack%20VS%20%E5%85%AC%E6%9C%89%E4%BA%91.jpg" alt="enter description here" title="OpenStack VS 公有云.jpg"></p>
+<p>3.OpenStack基本组件</p>
+<ul>
+<li>Nova（OpenStack Compute）:<br>它是OpenStack里最核心的项目， 主要作用是控制虚拟机的创建以及改变他的容量和配置；它还可以做虚拟机的销毁，即虚拟机的整个生命周期都是由Nova来控制的。Nova的部署和运行一般有两种情况：一种是作为Controller节点去运行，它的核心部分主要有Scheduler(决定将要启动的虚拟机调度到哪个物理节点上),Conductor(对所有的计算节点进行统一管理)，NovaCell(级联)，用这些来控制其它一些运算节点。另外一种是作为Compute节点运行，它的核心部分是Nova  Compute，用来控制运行实际的虚拟机。</li>
+<li>Cinder:<br>它主要用途是用来提供块存储服务。它最核心的两个部分是Scheduler和Cinder Volume。此处Scheduler的功能和Nova的Scheduler功能接近，用来决定通过哪个Cinder Volume进行读取操作。而Cinder Volume是实际控制存储设备的节点。</li>
+<li>Neutron<br>它是当下流行的SDN(软件定义网络)在OpenStack里的一个实现。Neutron有一个很大特点就是它提供了Plugin组件/模块（用户可以自定义）。</li>
+<li>Swift<br>相对独立的一个组件，它和其他组件的交互关系比较少。它提供对象存储服务，类似于亚马逊S3或者国内七牛这样一个存储服务。</li>
+<li>Glance<br>它是OpenStack里面使用Swift最多的组件，它主要是用Swift来存储虚拟机的镜像和快照等。</li>
+<li>Keystone<br>它主要是为各个组件提供用户的认证，建权等服务。</li>
+<li>Horizon<br>它是一个图形界面。</li>
+<li>其它组件<br>Heat:  用来做各个服务的编排。<br>Sahara:  使Hadoop能够在OpenStack上运行。<br>……</li>
+</ul>
+<h2 id="第二章-OpenStack架构分析"><a href="#第二章-OpenStack架构分析" class="headerlink" title="第二章 OpenStack架构分析"></a>第二章 OpenStack架构分析</h2><p>1.OpenStack组件间的逻辑关系<br>以E版本为例，含七大基本组件：<br>Dashboard(即Horizon)；Identity(即keystone)compute(即Nova)；Image(即Glance)；Object Storage(即Swift)；Network(即Neutron)；Block Storage(即Clinder)；</p>
+<blockquote>
+<p>注：其中Network(即Neutron)和Block Storage(即Clinder)分别是从Compute Network和Compute<br>Vloume发展出来的。但Network组件并没有直接去替换Compute Network，它是相对独立的（也是当下流行的SDN）的一个项目，它为Compute提供网络连接，提供网络资源管理这些服务。而Block Storage则替换了Compute Vloume，它为Compute提供块存储服务。</p>
+</blockquote>
+<ol>
+<li>OpenStack的API</li>
+</ol>
+<ul>
+<li>OpenStack各组件间通过相互调用API实现通信。OpenStack的API是基于HTTP协议的RESTful Web API。（REST:表现状态传输 VS另外一种Web服务接口协议：SOAP）</li>
+<li>REST架构里对资源的操作包括获取，创建，修改和删除。正好对应HTTP里提供的GET,POST,PUT,DELETE方法。所以用HTTP来实现REST是比较方便的。</li>
+<li>RESTful Web API主要有以下三个要点：<br>①资源地址（即资源的URI）：如以http开头的地址<br>②传输资源的表现形式(即Web服务接受与返回的互联网媒体类型）:JSON, XML等。<br>③对资源的操作(即Web服务在该资源上所支持的一系列请求方法)：如GET,POST,PUT或DELETE</li>
+<li>调用及调试API的方式<br>①curl命令：linux下发送http请求并接受响应的命令行工具<br>②OpenStack命令行客户端：python写的命令行客户端<br>③FireFox或Chrome浏览器的REST客户端：图形界面<br>④OpenStack的SDK： 不要手写代码发送HTTP请求调用REST接口，省去一些诸如Token等数据的管理工作，能够很方便地基于OpenStack做开发。</li>
+</ul>
+<p>3.OpenStack组件间的通信关系<br>OpenStack组件间的通信关系分为四类：</p>
+<ul>
+<li>基于HTTP协议的通信<br>①出现在各个组件API之间的调用。最常见的是通过Horizon(或说命令行接口)对各组件进行操作的时候产生的通信；另外就是各组件通过Keystone对用户身份进行校验的时候产生的通信；还有就是Nova Compute在获取镜像的时候对Glance API的调用及Swift数据的读写也是通过HTTP协议的RESTful Web API来进行的。</li>
+<li>基于(消息队列)AMQP协议的通信<br>①主要是每个项目内部各个组件之间的通信。例如Nova的Nova  Compute和Scheduler之间及Scheduler和Cinder Volume之间。（注意：由于Cinder是从Nova Volume演化出来的，所以Cinder和Nova之间也有通过AMQP协议通信的关系）<br>②AMQP协议进行通信也属于面向服务的架构，所以虽然大部分通过AMQP协议进行通信的组件属于同一个项目，但是并不要求它们安装部署在同一个节点上。如Nova Compute 和Nova Conductor反而反而通常要求它们不能部署在同一个节点上；而实际上Nova Conductor和Nova Scheduler也可以放到不同的节点上，这有利于系统的横向扩展，我们可对其中的各个组件分别按照它们的负载情况进行横向扩展。（用不同数量的节点去承载它们这些服务）<br>③OpenStack并没有规定AMQP协议的实现，我们经常使用的是private MQ，实际用户可根据自身情况选择其它的消息中间件。</li>
+<li>基于数据库连接的通信（主要是SQL）<br>①出现在各个组件和数据库之间，这些通信大多也属于项目内部，和前面基AMQP的类似。它也不要求数据库和项目其它组件安装在同一个节点上，它也可以分开安装，甚至我们还可专门部署这个数据库服务器，把这些数据库服务放在上面，然后之间是通过基于SQL的这些连接来进行通信。<br>②OpenStack同样没有规定必须使用哪种数据库，我们通常使用的是MySQL，实际用户可根据自身情况选择其它的数据库。</li>
+<li>基于第三方API（或称为Native API）进行通信<br>①出现在各OpenStack各组件和第三方的软件或硬件之间。如Cinder和存储后端设备之间的通信；又如Neutron的agent(或者说插件)和网络设备之间的通信。这些通信都需要调用第三方设备或第三方软件的API（Native API）。</li>
+</ul>
+<p>4.OpenStack中几种不同的存储<br>OpenStack的三种存储服务：Glance,Swift,Cinder</p>
+<ul>
+<li>①Glance(镜像存储): 一个镜像管理服务，本身不具备存储功能，它的后端可以接其它的存储系统，可以是存储设备，本地存储，Swift，也可以是亚马逊S3等。</li>
+</ul>
+<blockquote>
+<p>附:三种存储概念：</p>
+<ul>
+<li>文件系统：（有POSIX接口）如Glance里的GFS，Hadoop里的HDFS</li>
+<li>块存储：如EMC设备，华为的SAN设备，NetApp；“散存储”一般都提供块存储。<br>对应Cinder，其实Cinder本身也并不是提供数据存储的，它也需要接一个存储的后端，即EMC的散设备等，及最新流行的开源的分布式存储Ceph(可提供块存储服务)。</li>
+<li>对象存储：对应Swift，典型代表如亚马逊的AWS S3。它是通过RESTful Web API去访问的，它的优势在于可以很方便地去访问存储的数据。</li>
+</ul>
+</blockquote>
+<ul>
+<li>②Cinder<br>给OpenStack提供块存储的接口。它有一个很重要的功能叫卷管理功能。虚拟机并不直接去使用存储设备（或使用后端的存储系统），它使用的是虚拟机上的块设备，可称为卷(Volume），实际上Cinder就是去创建和管理这些Volume，并且把它挂载到虚拟机上。</li>
+<li>③Swift<br>提供对象存储服务。如果使用文件系统，当数据量特别大的时候，存储性能会急剧下降。而对象存储抛弃了目录树的结构，用一种扁平化的结构去管理数据。实际上Swift只有三层结构：Account(关联账户), Container(容器，对Object分类), Object (最终的数据/即文件)。</li>
+</ul>
+<p>5.OpenStack工作流程<br>OpenStack工作流程 相当复杂（有五十多个步骤）。虚拟机创建的四个阶段  :<br>scheduling , networking , block_device_mapping, spawing</p>
+<p>6.OpenStack的部署架构</p>
+<ul>
+<li>OpenStack各个项目，组件按一定方式安装到实际的服务器节点上，实际的存储设备上，然后通过网络把它们连接起来，这就是OpenStack的部署架构。</li>
+<li>OpenStack部署分为单节点部署和多节点部署（集群部署）</li>
+<li><p>OpenStack的部署架构不是一层不变的，而是根据实际需求设计不同的实施方案。</p>
+</li>
+<li><p>OpenStack的简单部署架构：</p>
+</li>
+</ul>
+<blockquote>
+<p>附：</p>
+<ul>
+<li>三种网络：<br>①(绿色)管理网络：OpenStack的管理节点(或管理服务)对其它的节点进行管理的网络。它们之间有如不同组件之间的API调用，虚拟机之间的迁移等<br>②（蓝色）存储网络：是计算节点，访问存储服务的网络。包括向存储设备里读写数据的流量基本上都需要从存储网络走。<br>③（黄色）服务网络：是由OpenStack去管理的这些虚拟机对外提供服务的网络。</li>
+<li>四种节点：<br>①控制节点：是OpenStack的管理节点，先前介绍的OpenStack大部分服务都是运行在控制节点上。如keystone认证服务，Glance管理服务等。<br>注： 特别的，Nova和Neutron这两个组件必须采用分布式部署。<br>对于Nova，因为Nova-Compute是控制和管理虚拟机的，所以它必须部署在计算节点上，而Nova其它几个服务则应该部署在控制节点上。特别要强调的是，Nova-Compute和Nova-Conductor一定不能部署在同一个节点上，因为二者分开的目的就是为了解耦。<br>对于Neutron，Neutron的插件或Agent需要部署在网络节点和计算节点上，而其它部分，如Neutron Server可以部署在控制节点上。<br>②计算节点：指实际运行虚拟机的节点，就是OpenStack的管理的那些虚拟机实际上最后是在计算节点上运行的。<br>③存储节点：可以是提供对象存储的Swift的节点，或者是Swift集群的Proxy节点，也可以是一个其它服务的存储后端。<br>④网络节点：主要是实现网关和路由的功能。</li>
+</ul>
+<ul>
+<li>OpenStack的复杂部署架构：要点如下：<br>①规模较大的情况下，把各种管理服务部署到不同的服务器上。<br>②把OpenStack的同一个服务部署到不同的节点上，形成双机热备或者多机热备的高可用集群。（或者可用负载均衡集群的方式去实现高可用）<br>③在复杂的数据中心环境中，考虑如何与第三方服务进行对接和集成。（如LDAP服务，DNS服务等）</li>
+</ul>
+</blockquote>
+<h2 id="第三章-OpenStack各组件解析（基础）"><a href="#第三章-OpenStack各组件解析（基础）" class="headerlink" title="第三章 OpenStack各组件解析（基础）"></a>第三章 OpenStack各组件解析（基础）</h2><p>1.Nova组件解析</p>
+<ul>
+<li>Nova的架构<br>除了先前介绍的七大组件外，在此补充两个组件：nova-conslole，nova-consoleauth，它们的作用是通过支持VNC 或SPICE（独立计算环境简单协议）客户端来访问虚拟机界面。<br>SPICE协议支持USB设备和多屏显示等功能，使用它需修改nova.conf文件。</li>
+<li>Nova对虚拟机的调度机制<br>①placement (放置): 把虚拟机放在哪个物理机上启动<br>②migration(迁移):从哪个物理机迁移到哪个物理机<br><em>实际上Nova中的调度器(Scheduler)只完成了placement (放置)的工作，migration(迁移)实际上是由其它组件协同完成的。<br>*</em>配置Nova.conf文件：Nova-Scheduler基于Filters对虚拟机进行调度的机制分为两步，第一步是通过Filters筛选宿主机(含有Compute)这，第二步是对虚拟机进行排序，Nova中该排序叫称重（weighting），最终完成调度算法，决定了应用哪台宿主机上启动哪台虚拟机。</li>
+</ul>
+<blockquote>
+<p>注：在nova.conf中可以通过ram_allocation_ratio参数设置内存的超配比例，其前提是使用RamFilter。</p>
+</blockquote>
+<ol>
+<li>Swift组件解析</li>
+</ol>
+<ul>
+<li>Swift历史相对较长，比较独立，它和其它组件的耦合度比较低，有自己完整的存储体系，不依赖第三方软件或设备（如不依赖keystone做用户认证和建权）。<br>★对象存储：采用RESTful接口，支持直接从互联网访问存储系统进行数据的读写。</li>
+<li>Swift接口：它和其它组件接口类似，也是RESTful 的Web API，总共有四个部分组成：第一个是HTTP操作（GET,POST,PUT或DELETE）；第二个是认证信息（主要是用户的身份信息）；第三个是指示资源地址的URL（包含域名或地址及Account, Container,Object）；第四个是（可选项）数据和元数据。</li>
+<li>Swift其它要点：<br>Swift的架构：整体架构是RESTful  API，它是通过一个叫Proxy Server来实现的。（可对它进行扩展，做Load Balancer，用它去接收上面的HTTP请求，然后把请求转发到实际的Storage Server上）<br>搭建Swift时的注意事项：<br>a.（小规模集群）采用全对等架构，即它的每个(Server)节点都一样。<br>b.用Load Balancer把服务器组成一个集群。<br>c. （小规模集群）每个服务器是一个zone。<br>d. 小规模Swift集群，服务器数量最少是5个。（或说最小集群是五个服务器）<br>e. 不要用虚拟机和RAID。（不要把Swift放到虚拟机里去做实现。）<blockquote>
+<p>附：Swif 2.0的新功能：<br>a.存储策略（核心功能）：让用户能够选择数据的存储策略。</p>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li>Cinder组件解析</li>
+</ol>
+<ul>
+<li>传统数据中心的存储设备：SAN或盘阵，指一类设备，通过网络连接给服务器提供存储空间。SAN设备和服务器之间的网络连接主要有两种形式，第一种叫Fibre Channel（FC），用专用光线连接网络; 另外一种叫iSCSI，基于以太网协议/IP协议。</li>
+</ul>
+<blockquote>
+<p>注：Cinder存储服务可以为虚拟机提供云硬盘。</p>
+<ul>
+<li>Cinder API<br>①不同于Swift的RESTful API，它提供一些操作和管理功能<br>②实际流量是不通过Cinder的这些组件的，而是直接通过存储设备和服务器之间的网络连接走的，该连接可以是FC（光纤通道）或iSCIS（基于IP的数据传输通道）传输数据到服务器。</li>
+<li>Cinder Volume<br>①通过Driver适配其它设备。（屏蔽底层硬件异构性）</li>
+</ul>
+</blockquote>
+<ol>
+<li>Neutron组件解析</li>
+</ol>
+<ul>
+<li>传统数据中心的网络：它分为几个层(Tier)，首先是服务器接入的第一级交换机叫接入交换机（往往在机架的顶部又称为(TOR)架顶交换机）；往上会接入一个汇聚层的交换机叫汇聚交换机（往往放在一排机架的顶头位置）；再往上会接入核心交换机，它把汇聚交换机连接起来，往往不只一个。</li>
+<li>根据ISO网络模型，网络分为七个层(此处是协议栈里的层，layer)，OpenStack和Neutron主要关注其中的二三层，分别是数据链层和网络层。</li>
+<li>在OpenStack和Neutron出现之前的虚拟化网络：用Qauntum去虚拟化网络，它使用linux系统里的一个软件叫虚拟网桥，它实现的网桥不存在物理信号问题，可简单为它是一个二层的交换机（跑在服务器虚拟机内部，把虚拟机都连接到此交换机上），可用它来搭建一个虚拟化环境，但是如果放到云环境中去，涉及租户间流量隔离问题，此网桥就不满足需求了，因为它是连通的（把所有虚拟机连接在同一个虚拟网络里），跟普通交换机无太大区别。</li>
+<li>Nova中的一个管理网络模块Nova Network在前面网桥的基础上增加了一个模块，它可以有两种工作模式：①Flat DHCP工作模式②基于VLAN的隔离 ，它勉强满足了云的要求，所以可在一个简单的，对网络要求不高的云计算环境中使用Nova Network实现一个比较简单的网络。</li>
+<li>Neutron功能<br>①VLAN隔离<br>②软件定义网络（SDN）<br>如L2-in-L3隧道，GRE 隧道等，还支持OpenFlow（SDN协议）<br>③第三方API扩展<br>④第三方Plugin扩展</li>
+</ul>
+<blockquote>
+<p>注：可见通过Neutron，租户可以定制rich topology的虚拟网络；可以通过各种agent和plugin实现具体功能并和第三方设备，软件对接。<br>eg.构建一个基于三层架构的Web服务：<br>Web页面服务器；应用服务器；数据库服务器</p>
+</blockquote>
+<ol>
+<li>Horizon组件解析</li>
+</ol>
+<ul>
+<li>提供可视化GUI。OpenStack原生的Horizon满足不了需求，需在其上做二次开发。</li>
+<li>Horizon内部架构<br>可参照python的一个Web应用框架django。Horizon的内部设计分为三个层次：<br>① Dashboard ②  PanelGroup ③  panel<br>Horizon三级代码组织形式：<br>① horizon: 表格，标签页，表单，工作流 ，base.py文件(实现动态加载panel)<br>②openstack_dashboard:  dashboard子文件（包含各个面板的实现代码，即业务逻辑都在里面，它会去加载或调用horizon文件夹里的那些组件）</li>
+</ul>
+<p>6.Glance组件解析</p>
+<ul>
+<li>Glance架构：上层Glance  API Server(提供RESTful API) ,所有访问请求会通过它；<br>Registry Server(提供镜像注册和检索服务)；Store Adapter【和Cinder类似，可使用不同存储后端，如Filesystem Store(可理解为Glance本地的一个文件存储), 还有Swfit Store,S3 Store, HTTP Store ，这些都是通过HTTP协议来访问的。所以Glance可以看成是一个典型的对象存储应用。】</li>
+<li>和Swift一样，可以把Glance的API Server做横向扩展，然后给它做一个负载均衡的集群，下面再转到实际的存储后端去。但不同的情况是，Glance存储和管理的镜像，有的镜像用户访问量特别巨大，所以虽然对Glance的API Server做了负载均衡，实际的后端访问负载还是会落到一个点上，给它造成很大压力。为解决这个问题Glance提供 了一种缓存机制，使每个通过Glance到达服务器的Server端的镜像都会缓存到API Server上，如果我们有多个API Server，随着用户访问请求的增多，被经常访问的同一个镜像会在每一个API Server上都有一份，后续再有访问请求的时候，它就会直接调用API Server上的这个镜像文件，而不会再去访问到存储后端上来。而且这个机制对终端用户来说是透明的，即终端用户并不清楚Glance服务获取的这个镜像到底存在哪里。（注：如果我们只有一个节点提供API服务，这种缓存机制就没有意义了。）</li>
+<li>缓存管理注意事项：<br>a.控制cache总量的大小（它有cache总量大小的控制）：周期性的运行一个命令来处理cache总量的大小限制。<br>b.清理状态异常的cache文件。<br>c.预热某些热门镜像到新增的API节点中：通过命令预先把一些比较热门的镜像先加载到新增的API节点中。<br>d.手动删除缓存镜像来释放空间</li>
+</ul>
+<ol>
+<li>KeyStone组件解析</li>
+</ol>
+<ul>
+<li>KeyStone的作用：<br>a.权限管理：用户，租户，角色（Role,keystone访问控制机制的核心）。<br>★注：用户和租户之间是多对多的关系。可通过Role进行权限管理以及将同一个用户分配到不同的tenant。<br>b.服务目录：服务，端点</li>
+<li>keystone只是云安全的一部分，二者不可等同。公有云上常见的安全防护手段：<br>a.安全访问：允许使用安全的Https访问<br>b.内置防火墙功能：通过配置内置防火墙让云上的环境或应用更安全<br>c.加密数据存储<br>d.帮助租户监测安全状况：主动监测租户的安全状况并给出提示</li>
+</ul>
+<blockquote>
+<p>问题集：</p>
+<ul>
+<li>比较Swift和Cinder两种存储之间的异同<br>异：Swift比较独立，它和其它组件的耦合度比较低，有自己完整的存储体系，不依赖第三方软件或设备（如不依赖keystone做用户认证和建权）,采用RESTful接口，支持直接从互联网访问存储系统进行数据的读写。<br>而Cinder本身并不是提供数据存储的，它需要接一个存储的后端，即EMC的散设备等，它有一个很重要的功能叫卷管理功能。虚拟机并不直接去使用存储设备（或使用后端的存储系统），它使用的是虚拟机上的块设备，可称为卷(Volume），实际上Cinder就是去创建和管理这些Volume，并且把它挂载到虚拟机上。<br>同：二者整体架构都是RESTful  API，但Swift是通过一个叫Proxy Server来实现的。Cinder API不同于Swift的RESTful API，它提供一些操作和管理功能。</li>
+</ul>
+</blockquote>
+<ul>
+<li>比较Neutron和Nova-Network的异同<br>Nova Network只是早先Nova中的一个管理网络模块，它在网桥的基础上增加了一个模块，它可以有两种工作模式：①Flat DHCP工作模式②基于VLAN的隔离，它勉强满足了云的要求，所以可在一个简单的，对网络要求不高的云计算环境中使用Nova Network实现一个比较简单的网络。Neutron做为一个Openstack项目出现之后，租户可以定制rich topology的虚拟网络；可以通过各种agent和plugin实现具体功能并和第三方设备，软件对接。</li>
+</ul>
+<h2 id="第四章-OpenStack各组件解析（进阶）"><a href="#第四章-OpenStack各组件解析（进阶）" class="headerlink" title="第四章 OpenStack各组件解析（进阶）"></a>第四章 OpenStack各组件解析（进阶）</h2><p>1.Ceilometer组件解析</p>
+<ul>
+<li>Ceilometer又称为Openstack Telemetry: 远程测量收集数据</li>
+<li>Ceilometer主要目的：为计费提供数据支持</li>
+<li>计费用和监控用计量数据的区别：<br>a.侧重点    b.不可抵赖性</li>
+<li>Ceilometer要点：<br>a.原始数据的来源：<br>①通过AMQP消息中间件收集各个组件发出的消息<br>②通过Ceilometer的agent（可扩展）调用Openstack各个组件的API获得数据</li>
+</ul>
+<blockquote>
+<p>注：支持第三方的agent，plugin或driver来扩展Openstack是常用的手段。</p>
+</blockquote>
+<p>③在每个计算节点上运行Ceilometer的polling agent获得虚拟机的信息。<br>b.数据的存储：<br>①和Nova及Cinder等使用MYSQL作为默认的后端存储不一样，Ceilometer默认的后端数据库是MongoDB(是一个key-value数据库)，当然它也可以用Hbase，MYSQL等数据库。<br>c.（如何提供给）第三方系统<br>①通过Ceilometer 的API获得计量数据，设置报警条件和预值。</p>
+<p>2.Heat组件解析<br>Heat又称为Ochestration：把一个IT系统的各个模块和资源组织，调度起来。它和AWS里的CloudFormation比较类似，它按照用户写的模板或脚本(Template)把Openstack的各种资源（如虚拟机或卷）实例化并组织起来形成一个完整的应用。按照Tempalte生成的东西叫stack(栈)。Tempalte写了创建一个stack需要用到哪些资源，及这些资源的相互关系。Heat的主要任务就是负责stack的创建，更新和销毁。(创建命令：heat stack-create  …  -template-file …)</p>
+<blockquote>
+<p>附：完整的Template包括， version ,description , resources，parameters, outputs<br>*更复杂的结构：创建一个wordpress网站；创建一个三层架构的网站；可以拆分为几个Template分别实现不同功能。</p>
+<p>注：Heat可以和Ceilometer配合使用来实现auto scaling，另外Heat可兼容CloudFormation模板。</p>
+</blockquote>
+<p>3.Trove组件解析</p>
+<ul>
+<li>Trove的功能：根据用户的请求创建一个包含数据库的虚拟机</li>
+<li>数据库的建立：可以是创建完虚拟机后由trove去安装；也可事先做好trove的镜像（里面已经安装好数据库了）。后者效率更高，Trove支持关系型数据库MySQL, NoSQL数据库，MongoDB, Cassandra等</li>
+<li>Trove的功能实现依赖四个组件：<br>a.Trove API：提供RESTful API<br>b.Taskmanager: 完成管理命令的执行（创建/销毁/管理示例，操作数据库），它的主要工作方式主要是去监听RabbitMQ这个中间件上的MQP等调用请求并实现。<br>c.Trove-Conductor: 和Nova-Conductor比较类似，负责和数据库交互。<br>d.Guest agent: 类似于Neutronagent ，对应数据库</li>
+<li>Trove目前面临的挑战：不支持自动配置数据库的HA</li>
+</ul>
+<p>4.Sahara组件解析（Sahara原名叫Savanna）</p>
+<ul>
+<li>Sahara作用：<br>a.在Openstack上快速创建Hadoop集群<br>b.利用Iaas上空闲的计算能力做大数据的离线处理</li>
+<li>Sahara的架构（原理）要点：<br>a.Horison：里包含Sahara的dashboard<br>b.Plugin：用来支持Hadoop各种发行版<br>c.Swift: 存储持久化数据（不该再放到Hadoop的HDFS里，因为它的生命周期和虚拟化的Hadoop集群的生命周期一样）<br>d.Sahara API：不同于其它组件,它的API分为两个服务入口，一个叫Service.api，另外一个叫Service.edp.api。</li>
+<li>Sahara的使用模式<br>①Iaas模式/管理模式：<br>a.节点（此处不同于先前讲的计算节点等），它是运行Hadoop集群的机器。<br>b.节点组：按照节点类型划分，通过节点组模板定义节点组<br>c.集群：完整的Hadoop集群，通过集群模板定义集群<br>d.Job：（有工作流的性质），它可能是若干个Hadoop job组织起来形成Sahara<br>②Pass,DAaas模式/用户模式/EDP模式<br>a.前提：至少创建一个Hadoop集群<br>b.准备工作：上传要处理的数据；编写job并上传；给Sahara一个三元组（即调用EDP API时的参数，分别是使用哪个集群，数据元和素在哪，要运行的job是什么）</li>
+</ul>
+<p>5.Ironic组件解析</p>
+<ul>
+<li>用Ironic（由单词iron演化而来）实现实现对物理机械的管理或者说用物理机器实现云服务。</li>
+<li>它和Openstack在部署架构上管理虚拟机和物理机器的区别：<br>a.在控制节点上多了一个Ironic API组件<br>b.在Compute  Node上除了Nova-Compute, Neutron  agent以外，还有一个Ironic Conductor 。（注：此处的节点和先前的节点不一样，它和Cinder Volume类似，并不是实际提供存储资源的节点）</li>
+<li>它和Openstack在计算资源调度流程上或启动一台机器的工作流程上的区别：<br>物理机器节点上的Nova Compute调用Ironic API，实际启动的物理机器节点或说实际提供计算资源的物理机器节点是由Ironic Conductor通过PXE ,IPMI远程管理的。</li>
+<li>Ironic实际上是由Nova的一个部分演化而来（以前Nova中专门管理物理机器的Nova driver）（同样的，先前说的Cinder是Nova Volume演化而来）</li>
+</ul>
+<blockquote>
+<p>问题集：<br>Heat中的模板和Sahara中的模板的异同：<br>异：<br>Heat和AWS里的CloudFormation比较类似，它按照用户写的模板或脚本(Template)把Openstack的各种资源（如虚拟机或卷）实例化并组织起来形成一个完整的应用。按照Tempalte生成的东西叫stack(栈), Tempalte写了创建一个stack需要用到哪些资源，及这些资源的相互关系。<br>Sahara 的Iaas模式/管理模式中，通过节点组模板定义节点组，通过集群模板定义集群。<br>同：都包含了配置信息，用来对组件进行配置，通常包括 version ,description , resources，parameters, outputs等信息。</p>
+</blockquote>
+<h2 id="第五章-OpenStack实际操作"><a href="#第五章-OpenStack实际操作" class="headerlink" title="第五章 OpenStack实际操作"></a>第五章 OpenStack实际操作</h2><p>1.OpenStack部署环境准备</p>
+<ul>
+<li>创建一个路由器（Router）;创建一个交换机（用Neutron 中的Network，它相当于交换机，需配置子网（广播域）），最后把两者连接起来。为了让网络里的连接其它设备能够正常访问公网（Internet）需用Floating IP（也是Netron中的一个概念，它实际上就是云计算环境可用的公网IP）,它有两种用法，一是将其绑定到路由器上，二是将其绑定到云主机上（让这台云主机和外网相连通。它显示有2个IP,但实际只有一个IP，它是通过Neutron的一种机制把两个IP映射起来。当然我们也可通过Neutron实现修改虚拟机真正的IP地址和MAC地址）。</li>
+<li>创建云主机（Instance）</li>
+</ul>
+<p>2.KeyStone的安装部署</p>
+<ul>
+<li>a.登录Controller节点安装KeyStone(apt-get)，并修改KeyStone配置文件【修改etc目录下keystone.conf文件中的三个部分：和数据库连接相关的设置；修改或设置写log的位置（log_dir=/var/log/keystone）；设置keystone服务和其它服务共享的一个token】</li>
+<li>b.创建用户（需要带两个参量：token和url），创建租户，创建角色；创建服务</li>
+<li>c.Controller节点上）把常用参数（username,password,tenant-name,auth-url等）作为环境变量导出</li>
+</ul>
+<ol>
+<li>Glance的安装部署</li>
+</ol>
+<ul>
+<li>a.安装Glance（安装Glance服务及Glance的python客户端），并修改Glance配置文件【主要修改etc目录下glance-api.conf文件和glance-registry.conf。首先进行glance-api.conf和glance-registry.conf文件中和数据库连接相关的配置，且检查/var/lib/glance目录，如果存在sqlite数据库文件（glance.sqlite）需将其删除，防止误读；而后修改glance-registry.conf】</li>
+<li>b.创建Glance数据库(MySQL)并同步（glance-manage db_sync）</li>
+<li>c.用keystone命令给Glance创建用户并添加该用户到先前的租户里</li>
+<li>d. 修改glance-api.conf文件和glance-registry.conf文件中keystone相关的设置，<br>并在keystone中注册Glance以及它的端点。</li>
+<li>e.上传镜像</li>
+</ul>
+<p>4.Nova的安装部署</p>
+<ul>
+<li>在Controller节点进行安装，此处不能和先前一样写个Nova，要写清楚具体安装哪些组件（如Scheduller,Conductor,Nova-api,Nova的python客户端等）。</li>
+<li>在Compute节点安装Nova-compute-kvm(此处kvm实际上是由qemu模拟的一个虚拟机)，没有Neutron则需安装nova-network，nova-api-matadata .</li>
+<li>同先前组件一样，先修改nova.conf相关配置，同样要去检查/var/lib/glance目录，如果存在sqlite数据库文件将其删除，创建数据库(MySQL)并同步（把数据项或信息填充到现在的数据库，glance-manage db sync，不同于先前的命令，此处无下划线）</li>
+<li>继续修改nova.conf中keystone相关的设置，在keystone里创建用户并注册服务和端点。</li>
+<li>在Compute节点上配置nova.network.api.API</li>
+<li>在控制节点上创建网络</li>
+<li>启动虚拟机（用nova boot命令）</li>
+</ul>
+<ol>
+<li>OpenStack支撑服务的安装配置<br>支撑服务：NTP（时间同步服务），mysql数据库服务，RabbitMQ（消息中间件服务）。配置host文件，实现通过主机名访问虚拟机。</li>
+</ol>
+<ul>
+<li>NTP服务：它有两个作用，一是将本机时间和网络上的一台时间同步器去同步；另外一个作用是将本机作为一个时间同步器提供给其它节点去使用。<br>在Opentstack部署环境中，建议让Controller结点去和互联网上的一个时间同步器同步，让其它结点和这个Controller结点同步，这样一来，其它结点和这个Controller结点的时间同步就在一个局域网内，时间同步性更高。安装完NTP后为实现把Controller结点做为时间同步源，需在其它结点上编辑它的配置文件（etc文件夹下的ntp.conf,加上server controller）。</li>
+<li>在Contorller结点上安装mysql服务（需安装python-mysqdb客户端和mysql-server服务进程），并修改配置文件（etc文件夹中mysql下的my.cnf,<br>修改bind-address（绑定访问mysql服务器所需要的IP地址）；修改或添加数据库引擎配置（mysql默认或推荐的数据库引擎是InnoDB）。<br>注：【实际运用中可把数据库服务安装到单独的一个机器上(可配置全ssd)，公司里常用全ssd服务器来支撑数据库服务，提高其性能】<br>其它结点上不用再安装数据库服务，只需安装一个python客户端即可，Openstack就可以访问Contorller结点上的那个数据库了。</li>
+</ul>
+<blockquote>
+<p>附：安装mysql时会创建一个匿名用户和一些Database，为正常使用起见可将其清除（可手动清除，也可用mysql提供的一个命令：mysql_secure_installtion）。</p>
+<ul>
+<li>在Contorller结点上安装RabbitMQ服务。消息中间件还可用别的如Qpid，ZeroMQ</li>
+</ul>
+</blockquote>
+<p>6.通过图形界面使用OpenStack</p>
+<ul>
+<li>除了安装horizion(dashboard)，还需安装apache等其它几个服务，这些都是为了显示动态网页所需要的。另外还要删除一个包（openstack-dashboard-ubantu-theme），因为它影响到horizon图形界面的显示。然后修改配置文件（etc中openstack-dashboard下的一个.py结尾的文件local_settings.py），修改BACKEND和LOCATION（它们是对显示的web界面缓存的设置），让其参数与memcached中一致。</li>
+</ul>
+<p>7.通过命令行使用OpenStack</p>
+<ul>
+<li>先前多数是在Controller节点上用过命令行访问本地的服务，此处介绍远程访问的方法。为了模拟远程访问的环境，可在使用的公有云里创建一个ubuntu的云主机作为客户端（还是接入先前的子网），并修改配置文件（hosts）。然后安装相应客户端（如python-novaclient）。</li>
+</ul>
+<blockquote>
+<p>注：可以创建脚本，把导出环境变量的命令都放在里面，方便以后使用（里面的命令需根据自己的环境进行修改）。之后不直接执行脚本，而是用source命令执行脚本，这样才能把脚本里设置的环境变量带到当前用户的操作环境中。（可用echo命令查看环境变量设置是否成功）</p>
+</blockquote>
+<h2 id="第六章-OpenStack扩展话题"><a href="#第六章-OpenStack扩展话题" class="headerlink" title="第六章 OpenStack扩展话题"></a>第六章 OpenStack扩展话题</h2><p>1.OpenStack自动化部署</p>
+<ul>
+<li>分为三个层次：<br>A.单节点自动安装：常用于准备一个开发环境，常用工具是DevStack<br>B.集群化安装：最常用工具是puppet<br>C.多个集群安装部署：典型代表工具是Mirantis公司推出的fuel</li>
+<li>DevStack的安装演示（单节点自动安装的实际操作过程）<br>a.创建云主机。更新一下安装源（apt-get update），安装git，通过git clone命令下载DevStack的源代码。然后用devstack文件夹里提供的一个工具创建一个用来安装和运行DevStack的用户（./create-stack-user.sh）。将下载的源码在当前用户的home文件夹下拷贝一份（可从本地拷贝或再次从源端下载），找到devstack文件夹中samples下的local.conf文件,拷贝一份到上一级目录并修改其中的相关配置（把HOST_IP修改成当前当前机器的内网IP）。<br>b.运行./stack.sh脚本，进入自动安装过程。</li>
+</ul>
+<p>2.Hadoop云化时存在的问题</p>
+<ul>
+<li>Hadoop是用来做大数据处理的一个工具，它也有自己庞大的生态圈，其中最重要的两个软件是HDFS（分布式存储系统），MapReduce（任务调度框架）</li>
+</ul>
+<blockquote>
+<p>注：HDFS把文件分成块，把块做三个副本存储到不同节点上，形成一个比较高可靠性的文件系统；MapReduce把我们提交的数据处理任务（job）拆分成不同的task分发到不同的节点上，以实现并行处理。MapReduce最大的特点是能够把任务调度到离数据近的节点上，尽量减少数据在网络间的传输，使我们可用通用廉价的X86服务器和网络设备来构筑一个数据并行处理系统。</p>
+<p>★Openstack虚拟机调度和Hadoop任务调度实际上是两个不同层次的资源调度。要把Hadoop做云化就需要解决两个不同层次上的资源和任务调度问题。Hadoop最重要的两个部分HDFS和MapReduce云化时也会出现相应问题，为解决相关问题Hadoop提供了一个由VMware主导的开源项目HVE(Hadoop Virtual Extensions)。</p>
+</blockquote>
+<ol>
+<li>基于OpenStack实现Hadoop云化</li>
+</ol>
+<ul>
+<li>Sahara分别从部署管理和提供数据处理服务两个层次上对Hadoop云化做了一些工作。</li>
+<li>HDFS和Swift集成：在Hadoop集群里仍用本地根硬盘来构筑 HDFS，但是把数据源和job放在Swift里。此外，由VMware主导的开源项目BDE(Big Data Extensions)，它和Openstack的Sahara很类似，但是在各个方面都做得比Sahara好得多，且它和HVE 集成做得很好。</li>
+</ul>
+<ol>
+<li>Ceph简介</li>
+</ol>
+<ul>
+<li>Ceph现在经常被用来做为RBD设备提供块存储服务。</li>
+<li>Ceph层次结构：<br>底层RADOS，中间层LIBRADOS ,顶层RADOS GW, RBD, CEPH FS<br>① RADOS：可靠的，自动化的，分布式的对象存储。底层是一个完整的存储系统，它的核心是OSD(Object Storage Daemon)，Daemon是一个服务软件（进程），它和Cinder里定义的OSD(Object Storage Device)之间有很强的对应关系，可认为是其简略版本。<br>注：不同于Swift存储 的对象（文件），Ceph的对象实际上是把一个文件拆分成若干个Object，分别放到底层的存储设备上。<br>★RADOS逻辑结构：OSDs , Monitors , Clients<br>注：此处的客户端和Swift客户端有本质区别，Swift客户端只是用Pyhon写的一个供用户使用能够调用RESTful 接口的客户端程序而已，没有它我们直接调用RESTful 接口也可以读写Swift，但是在RADOS里如果没有Clients,整个数据读写就难以实现，它是存储系统的一部分。</li>
+</ul>
+<blockquote>
+<p>★Ceph系统中的寻址流程（文件存储到底层OSD上）<br>它首先把文件拆分成若干个Objects，然后把Objects放到PG组里面，每个组再通过CRUSH算法给它映射到不同的OSD上。此存储过程特点是它每一步都是通过计算得到的，它中间没有查表，这使得Ceph拥有较好的扩展性。<br>②LIBRADOS: 提供一组直接访问RADOS的API<br>③RADOS GW, RBD, CEPH FS：RADOS GateWay把底层对象存储系统往外再次封装，提供兼容Swift和亚马逊S3对象存储接口，这个接口也是HTTP的。RBD经常作为Cinder的后端为虚拟机提供卷。CEPH FS是在Ceph基础上封装了一个POSIX接口，形成文件系统。</p>
+</blockquote>
+<ol>
+<li>Ceph在OpenStack中的应用</li>
+</ol>
+<ul>
+<li>Ceph在OpenStack中受欢迎的原因：<br>①有了Ceph，可基于X86搭建分布式块存储系统</li>
+</ul>
+<blockquote>
+<p>附：块存储有强一致性和高性能的要求，这对于Swift和HDFS都是没有或比较弱的。<br>★Cinder支持Ceph提供的RBD设备，二者结合可基于X86普通服务器更加廉价方便地搭建一个块存储系统提供（卷）给虚拟机去使用。<br>②提供Swift兼容的对象接口</p>
+<p>★Ceph和Swift仍不可互为替代，二者比较如下：<br><img src="./images/Ceph%20VS%20Swift.jpg" alt="enter description here" title="Ceph VS Swift.jpg"></p>
+</blockquote>
+<p>案例一：目前OpenStack规模小，节点数量少，此时使用Swift节点浪费存储，可选用Ceph<br>案例二：提供云盘服务（面对大量用户，强调用户体验，用户可选存储策略（Storage Policy）），此时选用Swift更好，它更好地支持规模化部署，有先进的Feature，成本比Ceph更低。<br>④现在OpenStack所有存储都（开始）支持Ceph作为后端</p>
+<p>6.OpenStack与Docker<br>附：HyperVisor：在一个宿主机上搭建环境，可在环境里创建虚拟机，再在虚拟机里装客户操作系统(Guest OS)，然后在其上面装中间件，之后再装应用等。<br>Container技术：另外一种虚拟化技术，无需再装Guest OS，而直接基于宿主机操作系统来操作，可在其上做运行环境隔离，资源划分等，并形成容器，让应用在容器中运行。容器之间底层是共享一个操作系统的，甚至可以共享一些公用的库。和传统的HyperVisor相比，它的优势在于省去了Guest OS的开销；劣势在于只能使用和宿主机相同的操作系统。</p>
+<ul>
+<li>Docker：是基于容器的一个引擎，让开发者可以打包应用，并将其依赖包打到可移植的容器里，而容器可发布到任何linux机器上。OpenStack里将Docker也看成是一种HyperVisor</li>
+<li>OpenStack+Docker:（结合点）<br>①使用Swift做Docker镜像的存储后端<br>②Nova里有针对Docker的Driver或插件，可用Nova调度和管理Docker容器。<br>③使用Heat来实现Docker的Ochestration<br>④基于Neutron设计与实现适用于Docker的SDN方案<br>⑤使用Glance来管理Ducker镜像<br>……</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/30/OpenStack/" itemprop="url">
                   OpenStack
                 </a>
@@ -742,368 +1140,6 @@
 <li>Docker：是基于容器的一个引擎，让开发者可以打包应用，并将其依赖包打到可移植的容器里，而容器可发布到任何linux机器上。OpenStack里将Docker也看成是一种HyperVisor</li>
 <li>OpenStack+Docker:（结合点）<br>①使用Swift做Docker镜像的存储后端<br>②Nova里有针对Docker的Driver或插件，可用Nova调度和管理Docker容器。<br>③使用Heat来实现Docker的Ochestration<br>④基于Neutron设计与实现适用于Docker的SDN方案<br>⑤使用Glance来管理Ducker镜像<br>……</li>
 </ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/25/Android/" itemprop="url">
-                  Android
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-25T00:00:00+08:00" content="2016-04-25">
-              2016-04-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/编程基础/" itemprop="url" rel="index">
-                    <span itemprop="name">编程基础</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一．adb的安装及使用"><a href="#一．adb的安装及使用" class="headerlink" title="一．adb的安装及使用"></a>一．adb的安装及使用</h3><p>配置adb(后台使用adb):在系统环境中的path添加adb路径：sdk中的platform-tools</p>
-<h3 id="二．-安卓系统架构"><a href="#二．-安卓系统架构" class="headerlink" title="二． 安卓系统架构"></a>二． 安卓系统架构</h3><h3 id="三．-安卓生命周期"><a href="#三．-安卓生命周期" class="headerlink" title="三． 安卓生命周期"></a>三． 安卓生命周期</h3><ul>
-<li>四个状态：<br>（1）运行<br>（2）暂停<br>（3）停止<br>（4）死亡</li>
-<li>七个函数：</li>
-</ul>
-<h3 id="四．-开发基础"><a href="#四．-开发基础" class="headerlink" title="四． 开发基础"></a>四． 开发基础</h3><p>1．安卓最基本的文件结构</p>
-<ul>
-<li>Manifests: 反射层文件，启动时加载</li>
-<li>java代码： 安卓自动调用生命周期方法把.xml文件结合起来</li>
-<li>res（资源文件）：</li>
-</ul>
-<blockquote>
-<p>注：Java代码实现功能设计，.xml实现渲染（实现颜色，布局，大小等），如此安卓实现二者的分离。</p>
-<ol>
-<li>安卓本质是一个优秀的框架，适合做界面开发，功能由Java代码实现（GUI开发是Java的弱项，因为它没有把结构和表现做分离）</li>
-<li>安卓长度单位<br>（为适应不同设备）使用与像素和密度无关的单位：dp（可自动换算：1dp=[density/160]px），sp（用于设定与density及scale无关的字体单位）</li>
-<li>代码调试<br>用日志器【不能用system.out.println()，它只能是在真机上执行完毕后由adb回显数据。】<br>eg.Log.i(“标签” , ”要输出的内容”);</li>
-<li>IDE把源代码进行编译（生成.des字节码文件，与sun公司的.class文件不尽相同），编译完后进行打包（. apk文件），之后通过安卓的adb传到AVD或真机上，传完后adb再发送一条指令把安装好的.apk进行启动，启动过程中adb会收集到很多调试信息并返回。</li>
-<li>在Manifests文件中可设置用户权限：<uses permission="" ...=""></uses></li>
-</ol>
-</blockquote>
-<h3 id="五．安卓布局管理"><a href="#五．安卓布局管理" class="headerlink" title="五．安卓布局管理"></a>五．安卓布局管理</h3><blockquote>
-<p>gravity: 容器自身对于内部组件的重力位置。<br>layout_gravity: 组件自身对于容器的重力位置。</p>
-<blockquote>
-<ul>
-<li>gravity和layout_gravity可能由冲突，如gravity重力场在下，而layout_gravity在上。</li>
-<li>gravity对于垂直方向的影响优先于layout_gravity，对于水平方向的影响低layout_gravity。</li>
-</ul>
-</blockquote>
-</blockquote>
-<ol>
-<li><p>线性布局（LinearLayout）<br>1）不同于Java的流式布局（flow）, 线性布局不会自动向下横排，计算时要考虑其大小。<br>2）默认横向排列，可设置为竖向排列。【orientation=”vertical”】<br>3）默认重力场在左上角，可以修改。【gravity=”bottom”(左下)，=”bottom|right”(右下) …】<br>4）重力场可在容器上设置，也可在组件上设置。<br>5）组件分配比例问题：layout_weight=”数字” //数字表示权重（空间占比），且”layout_weight”优先级高于”wrap_content”和dp。（横排方向的组件大小设置以dp为准）<br>6）LinearLayout容器对外而言其自身也是组件，可嵌套使用。</p>
-</li>
-<li><p>相对布局（RelativeLayout）<br>1）按照各子元素之间的位置关系完成布局（根据前一个已定位的组件来确定自身的位置）。是安卓五大布局里最灵活的一种布局结构，比较适合一些复杂界面的布局。<br>2）给一个组件定位，即加id（@+id/a）。另一个组件即可根据该id实现自身定位。<br>【如layout_toRightOf=@id/a(在a右边)，_below(在a下面)，alignleft(与a左对齐) …】<br>3）可设置组件间的间距。（margin和padding）</p>
-</li>
-</ol>
-<blockquote>
-<p>★编程方式使用组件<br>基于配置文件使用静态布局管理器不能做一些动态上的组件控制。可将.xml配置文件所有内容移植到编码中实现灵活布局。</p>
-</blockquote>
-<ol>
-<li><p>表格布局（TableLayout）<br>1）定义组件较多需按行（列）排列时可用表格布局。<br>2）它里面设置button无需设置高度和宽度，由其容纳的表格确定。<br>3）和html不同，它无td设置，只可设置行。（TableRow）<br>4）不设置其单元格大小则默认为装下其内容大小。可在容器设置单元格（列）的大小。<br>【如（stretchColumns=”0”(第1列扩展),=“1”，（第2列扩展）,=“0,1”（1，2列平分）】<br>5）可设置单元格（列）里的内容不可见。【如collapseColumns=”0”(第一列内容不可见)】<br>6）其它设置【如shrinkColumns（压缩）】</p>
-</li>
-<li><p>绝对布局（AbsoluteLayout）<br>1）以左上角的点为原点，用x,y来控制。（layout_x=”50dp”,layout_y=”100”）</p>
-</li>
-<li><p>其它布局（如网格布局(GridLayout)）</p>
-</li>
-</ol>
-<h3 id="六．安卓Wegit组件（可视化控件）"><a href="#六．安卓Wegit组件（可视化控件）" class="headerlink" title="六．安卓Wegit组件（可视化控件）"></a>六．安卓Wegit组件（可视化控件）</h3><p>1）TextView：textColor；textSize,background …<br>2）EditText：hint(提示)；inputType(限定输入内容) …<br>3）ImageView: src(源):@drawalbe/图片名称 …<br>4）RadioButton（单选按钮）: checked=ture(默认选中)；允许加文本 …</p>
-<blockquote>
-<p>★两个单选按钮实现互锁:用RadioGroup包含两个RadioButton，并且都需要有id 。<br>RadioGroup自身也是ViewGroup,支持布局。它默认竖排，可设置为横排。（orientation=”horizontal”）</p>
-<blockquote>
-<p>注：要想知道是否选上，只需绑定id,然后调用isChecked()。</p>
-</blockquote>
-</blockquote>
-<p>5）CheckBox（复选按钮）:默认竖排，同上，可将其放入LinearLayout，然后设置为横排。<br>6）Switch（控制开关）: 应用于开关控制（如wifi开关的控制）。安卓中还提供了另一个控件：ToggleButton .<br>7）SeekBar（拖动条）: max(设置最大值)；progress(设置当前值)</p>
-<blockquote>
-<p>★给SeekBar添加监听事件【（不用onClick）类比Java给一个按钮添加监听器】：<br>给SeekBar起名（添加id）<br>在onCreate中获取上述id(即实例化)并给它添加(set)相应的监听事件（含匿名内部类）。<br>【在此也可直接实现相应的监听事件接口（上述内部类便可用this代替）】<br>重写接口中的方法</p>
-<p>★附：SeekBar控制图形透明度：改变Alpha（灰度）通道即可<br>给图片起名（添加id）<br>在onCreate中获取上述id(即实例化)并重写SeekBar监听接口中的方法（onProgressChanged()）。添加(set)Alpha(progress/100.0f)方法即可，注意Alpha（）参数要求为浮点型数据，100为SeekBar的max值，progress/100.0f将自动转换成浮点型数据。</p>
-<blockquote>
-<p><code>注：还可做调色板，改变其它三个颜色通道（RGB）即可：Color.rgb(x,y,z)//参数分别是红绿蓝颜色的分量，取值范围为0-255（int）。</code></p>
-</blockquote>
-</blockquote>
-<p>8）RatingBar（星评图标）：是SeekBar的子类（二者完成同样动作，方式不一样而已）。<br>numStars（设定星数,默认星数为5个）；stepSize（选择方式，可设为选半颗星（=“0.5”））；<br>max(设置最大值)；progress(设置当前值)<br>9）ProgressBar（进度图标）: 默认样式为转圈，可更改其样式。style；max；progress …<br>应用：如显示播放或下载进度【开子线程，在里面实现更新即可）】</p>
-<blockquote>
-<p>★★补：三个重要控件【和后台数据有关；重点在于Adapter，和数据有关的都可以使用它】</p>
-<blockquote>
-<ul>
-<li><code>注：Spinner和ListView的使用原理与AutoCompleteView一样，关键在于Adapter的使用。</code></li>
-</ul>
-</blockquote>
-</blockquote>
-<ul>
-<li>1）AutoCompleteView（自动完成框）：表面看起来和文本框一样，关键在于它里面包含内容，打字时会有提示功能，可应用于用户检索功能。<br>completionThreshold【可设置自动完成的阈值（默认为2），=“1”(打一个字母就会出现提示)】<blockquote>
-<ul>
-<li>★AutoCompleteView需要增加一个Adapter（适配器）用于适配两个事件，View（或ViewGroup）和Data（从网络或数据库中获得）。<blockquote>
-<ul>
-<li>【Data要进入View，此过程称为渲染，即把一个数据渲染成一个View，此过程靠Adapter给我们自动完成。</li>
-</ul>
-</blockquote>
-</li>
-<li>AutoCompleteView使用方法：<br>给AutoCompleteView起名（添加id）<br>在onCreate中获取上述id(即实例化，假设为lv1)并给它增加(set)一个Adapter；</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">eg.此处要个Arrayadapter：</div><div class="line">Arrayadapter&lt;String&gt; adapter = new ArrayAdapter&lt;String&gt;(this,View,data );</div><div class="line">setAdapter(adapter)【Adapter是泛型类，在此是个父类接口，要个adapter即可.】</div></pre></td></tr></table></figure>
-<blockquote>
-<blockquote>
-<ul>
-<li><code>注：ArrayAdapter的构造有三个参数，它将自动在其内部实现渲染。
-【第一个参数表示渲染位置，this表示当前位置；第二个参数为View；第三个参数为Data。】
-【第二个参数写ViewId即可。可自己做一个View,但已经系统提供了一个View,可直接使用.（调用安卓jar包：android.R.layout.simple_list_item_1，它是TextView布局（源码）】</code><br><code>【第三个参数实际上是String数组，可外置。new String[]{“abc”,”def”,”g”,...}】</code><br><code>可给lv1添加事件:setOnItemClickListener(new onItemClickListener(){…});</code></li>
-<li><code>注： 一个Item可能有多个View，此处不能实现给某个具体的View添加事件，因为渲染是在内部完成的，这也是ArrayAdapter的一个重大缺陷。</code><blockquote>
-<ul>
-<li><code>★获得数据有可有两种方式：可把View转换成TextView，然后getText()获得data值；也可以通过data加上position获得data的值，此处用后者更好些：Log.i(“tiger”,data[position]);
-//点击某个区域可获得相应数据（此处只是作为整体组件进行响应）</code></li>
-</ul>
-</blockquote>
-</li>
-</ul>
-</blockquote>
-</blockquote>
-<ul>
-<li><p>2）Spinner（类似html中的下拉列表）</p>
-</li>
-<li><p>3）ListView（列表显示）<br>ListView应用广泛。如果使用大量ListView可以做简化，即继承ListActivity。这个Activity专门为ListView服务，它有如下特点：<br>a.它自身内部就有一个ListView,所以无需布局文件。<br>b.它实现了onItemClickListener接口(即它自身就是监听器)这样一来便可减少不少工作。<br>我们无需setContentView(…)和setOnItemClickListener(…)，直接实例化一个数据和一个adapter，再添加一个监听器onListItemClick(…)即可。</p>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<ul>
-<li>★附：Adapter基本作用和原理：<br>1）Adapter将数据内容与组件进行绑定<br>2）AdapterView的所有继承类都是具备setAdapter(Adapter)<br>3）ListView,GridView,Spinner,ExapendableView是重要的子类型</li>
-<li>*Adapter是一个父类型，我们使用时将会用到它的各种子类型，比较常见的三个子类型如：<br>①ArrayAdaper：支持泛型操作，最为简单，只能展示一行字。<br>②SimpleAdapter：有最好的扩充性，可以自定义出各种效果。<br>③BaseAdapter：是一个抽象类，继承它需要实现较多的方法，所以也就具有较高的灵活性。<br>④SimpleCursorAdapter:是SimpleAdapter的一个变种，它可以把一个Corsor对象映射到View上。可以认为是SimpleAdapter对数据库的简单结合，可以方便地把数据库的内容以列表的形式展示出来。（一般无需使用它）</li>
-</ul>
-</blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">eg1.SimpleAdapter</div><div class="line">★其最终目的是要把一个Map结构的数据映射到一个布局上，即把复杂数据变成一个布局文件(View)。</div><div class="line">使用示例：</div><div class="line">a.可先自定义一个layout布局（如sgt_layout），再写一个Activity类继承ListActivity。</div><div class="line">b.实例化一个数据: private List&lt;Map&lt;String,Object&gt;&gt; data;</div><div class="line">写一个方法进行初始化：          </div><div class="line">private void init()&#123;</div><div class="line">data = new ArrayList&lt;Map&lt;String,Object&gt;&gt;();</div><div class="line">Map&lt;String,Object&gt; mp1 = new HashMap&lt;String,Object&gt;();</div><div class="line">mp1.put(key,value);mp2.put(key,value);mp3.put(key,value);…//添加内容</div><div class="line">data.add(mp1); data.add(mp2); data.add(mp3); …//添加数据</div><div class="line">&#125;                        </div><div class="line">c.在onCreate()方法里调用init()产生数据，然后使用SimpleAdapter:</div><div class="line">SimpleAdapter adapter=new SimpleAdapter(this,data,View,String[]from,Int[]to);</div><div class="line">setListAdapter(adapter);</div><div class="line">＊注：SimpleAdapter的构造有五个参数，它将自动在其内部实现渲染。</div><div class="line">【第一个参数表示渲染位置，this表示当前位置。第二个参数是数据，第三个参数是先前自定义的布局。第四个参数是一个字符串数组（写key的数组，用它来找value）。第五个参数表示往哪渲染，它是一个Int[]类型数组（其id就是布局里定义的id），它要求data与View的position顺序对应。】</div><div class="line">d.可添加事件(仍不能实现给某个具体的View添加事件)，获得有关数据：</div><div class="line">onListItemClick(…)&#123;</div><div class="line">Log.i(“tiger”,data.get(position).get(“content”).toString); &#125;</div><div class="line">//点击content区域可获取相应数据。（此处只是作为整体组件进行响应）</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">eg2.BaseAdapter</div><div class="line">★需求----如果使用更加“复杂”的数据模型；如果需要更加精确的控制“适配“的细节；如果需要实现每个组件独立添加事件处理。</div><div class="line">*原理及细节：BaseAdapter是一个抽象类，需要继承并实现以下四个方法：</div><div class="line">int getCount()&#123; return as.length; &#125; //提交给渲染引擎（渲染的数据个数）</div><div class="line">Object getItem(int position)&#123; return as[position]; &#125;//返回自定义对象</div><div class="line">Long getItemId(int position)&#123; return position; &#125; //可自定义返回Object id</div><div class="line">View getView(int position,View convertView,ViewGroup parent)&#123;…&#125;//渲染引擎主要的操作代码，是渲染过程，返回View</div><div class="line">使用示例：</div><div class="line">a.可使用先前自定义的layout布局(如sgt_layout）,然后写一个Adapter类（sgtAdapter）继承BaseAdapter,复写它的四个方法。</div><div class="line">b.新建一个类（如Suguotai）设定属性和构造（自定义对象）,然后在Adapter类中用构造方法把自定义对象的数据传进来（例如可传进List&lt;自定义对象&gt;型数据（data） ）。</div><div class="line">c.int getCount()&#123;return data.seze();&#125;；</div><div class="line">Object getItem(int position)&#123; return data.get(position); &#125;</div><div class="line">Long getItemId(int position)&#123; return data.get(position).getId(); &#125;</div><div class="line"> </div><div class="line"> View getView(int position,View convertView,ViewGroup parent)&#123;</div><div class="line">   //用data和layout生成最终的View</div><div class="line">layoutInflater inflater=layoutInflater.from(context);//“吹”出View。</div><div class="line">context表示此ListView将来在哪个Activity中产生出来。而现在Apater类并不知道ListView将来究竟在哪个Activity中出现，所以在构造Adapter时应该把Activity传入。【Activity和Service都是Context的子类，此处声明一个Context属性传进来即可。】</div><div class="line">convertView=inflater.inflate(R.layout.sgt_layout,null);</div><div class="line">//第一个参数就是id，第二个参数ViewGroup可不管</div><div class="line">Suguotai s=data.get(position);//当前数据</div><div class="line">…//接下来将数据逐条渲染到View中：(id为layout里对应的id)</div><div class="line">eg. ImageView show=(ImageView)convertView.findViewById(R.id.sgtShow);</div><div class="line">show.getBackgroundResource(s.getShow());</div><div class="line">TextView title=(TextView)convertView.findViewById(R.id.title);</div><div class="line">title.setText(s.getTitle()); </div><div class="line">……</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//★可实现给某个具体的View添加事件，获得有关数据：</div><div class="line">eg. title.setOnclickListener(new onItemClickListener()&#123;</div><div class="line">…onClick(Viewview)&#123;</div><div class="line">Log.i(“tiger”,data.get(position).getTitle()); &#125;</div><div class="line">&#125;);</div><div class="line">return convertView;</div><div class="line">&#125;</div><div class="line">d.同SimpleAdapter的使用一样，先写一个Activity类继承ListActivity。</div><div class="line">e.实例化一个数据: private List&lt;Suguotai&gt; data;</div><div class="line">写一个方法进行初始化：          </div><div class="line">private void init()&#123;</div><div class="line">data = new ArrayList&lt;Suguotai&gt;();</div><div class="line">Suguotai s1=new Suguotai(id,…); Suguotai s2=new Suguotai(id,…);</div><div class="line">……//添加内容</div><div class="line">data.add(s1); data.add(s2); …//添加数据</div><div class="line">&#125;                        </div><div class="line">f.在onCreate()方法里调用init()产生数据，然后使用前面的sgtAdapter:</div><div class="line">sgtAdapter adapter=new sgtAdapter(this,data);</div><div class="line">setListAdapter(adapter);</div></pre></td></tr></table></figure>
-<h3 id="七：安卓四大组件"><a href="#七：安卓四大组件" class="headerlink" title="七：安卓四大组件"></a>七：安卓四大组件</h3><blockquote>
-<p>附： ★intent详解<br>1） 是下述前三大组件之间及其内部的通信桥梁，负责消息传递。作用类比Servlet转发jsp页面中的request(中间对象)。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">eg1.（两个Activity之间的跳转）</div><div class="line">FirstActivity.java:</div><div class="line">Public void go(View view)&#123;</div><div class="line">Intent intent = new Intent(); //实例化intent</div><div class="line">//intent.setClass(this,SecondActivity.class); //“想找谁就找谁”，显式启动（不建议使用）</div><div class="line">Intent.setAction(“codding”);//隐式启动（建议使用）；</div><div class="line">//Intent.addCategory(Intent.CATEGORY_DEFAULT); //隐式启动隐含的代码</div><div class="line">表示找CATEGORY_DEFAULT分类下的codding（内容任意写）【在Manifests中配置】</div><div class="line">...  //可设置intent的其它属性，如intent.putExtra(“key”,”value”);可传递各种数据；startActivity(intent); </div><div class="line">&#125;</div><div class="line">SecondActivity.java:</div><div class="line">（在onCreate()方法中接收intent）</div><div class="line">Intent intent = this.getIntent();</div><div class="line">...  //获得各种数据如String uname = intent.getStringExtra(“uname”);</div><div class="line">...</div><div class="line">￭数据量较大时可新建一个类进行封装，该类实现序列化接口。在一端实例化该类并添加数据，在另一端用序列化类型接收（getSerializableExtra(“key”)）。</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">eg2.（启动下一个Activity并获取返回结果）</div><div class="line">FirstActivity.java:</div><div class="line">...</div><div class="line">startActivityForResult(intent,12); //第二个参数为请求码（任意数字）</div><div class="line"> </div><div class="line">//在上述启动过的Activity执行结束时才会执行下面的回调方法</div><div class="line">Protected void onActivityResult(int requestCode,int resultCode,Intent data)&#123;</div><div class="line">//此处的intent为另一个Activity中的intent；由 requestCode,resultCode 确认关联关系</div><div class="line"> </div><div class="line">if(requestCode=12&amp;resultCode==11) </div><div class="line">Log.i(“标签” , data.getStringExtra(“msg”)); //进行调试</div><div class="line">&#125;</div><div class="line"> </div><div class="line">SecondActivity.java:</div><div class="line">Public void finish(View view)&#123;</div><div class="line">Intent intent = getIntent();</div><div class="line">intent.putExtra(“msg”,”内容”);</div><div class="line"> </div><div class="line">setResult(11,intent); //第一个参数为结果码（不同于请求码的任意数字）；第二个参数为上述SecondActivity操作后的intent，对应FirstActivity中回调方法参数的（Intent data）项。</div><div class="line"> </div><div class="line">finish(); //完成任务后结束</div><div class="line">&#125;</div><div class="line">补：在.xml定义EditText，添加id(如tvl); 之后在其Activitity中获得并查看其内容：</div><div class="line">TextView tvl = (TextView)findViewById(R.id.tv1); //TextView是View的子类，所以要强转。</div><div class="line">Tv1.getText().toString();</div></pre></td></tr></table></figure>
-<ol>
-<li><p>Activity<br>1）类比Java中的Jsp（表现层）<br>2）Activity的栈式管理<br>3）Activity的生命周期</p>
-</li>
-<li><p>Service</p>
-</li>
-</ol>
-<ul>
-<li>是APP组件之一，驻留于后台，类似Windows后台程序。运行于调用它的APP的进程的UI线程中，不会随着启动它的组件一并销毁。利用它可以实现IPC通信，不等同于“业务层bean对象”。</li>
-<li>Service开发：<br>继承Service类，并Override生命周期方法【onCreate(),onStartCommand(),onDestroy()】。在清单文件中（注册）加以描述，并加入适当的intent-filter。Service是隐式启动，但无需加CATEGORY_DEFAULT，它只需加action即可（name=”MySer”），外界Activity通过该action就可以启动该Service。【方法如下：做一个启动按钮。须有一个intent找到相应的intent，<br>（Intent intent=new Intent(“MySer”)，然后startService(intent); 同理可以做一个按钮来杀死该Service】<br>启停方法：startService(intent);stopService(Intent)/stopSelf(); 【服务启动后不会自动停止，必须显示停止】; onStartCommand()（由安卓系统回调）;</li>
-</ul>
-<blockquote>
-<p>￭开发实例（音乐播放器）：</p>
-<ul>
-<li>A. 做启停按钮（含启停方法）。在Activity中的onCreate()方法里实例化一个MediaPlayer的对象，之后在play()中首先需调用reset()和setDataSource(“/sdcard/mp3/a.mp3”)方法加载资源。<br>（此处需事先将mp3文件压入sdcard或storage/emulated下新建的一个mp3文件夹 ）。【setDataSource(String path)，此方法可从SD卡中加载资源，它还允许把一个网络资源的流（InputString） 加载到DataSource，即允许在线播放，边下边听和本地缓存等功能。】</li>
-<li>B. 根据时序图，下一步是预备（prepare()）,再下一步是开始播放（start()）。给play()抛出异常即可。最后再写暂停方法（pause()）。</li>
-<li><ul>
-<li>￭在Activity中播放，将处于非UI子线程并且退出后音乐不停止，此时无法正常结束音乐。</li>
-</ul>
-</li>
-<li><ul>
-<li>￭在Service中播放，退出Activity虽无法停止音乐，但可以通过Service来控制音乐。<br>所以在此进一步考虑把播放器放入Service，便可通过Service杀死播放器后台进程。<blockquote>
-<ul>
-<li><ul>
-<li>A. <code>新建一个Service。和前面相同，先在onCreate()方法里实例化一个MediaPlayer对象，在onStartCommand()里面控制播放器的播放，暂停，停止。而在相应Activity中则不再在onCreate()方法里实例化一个MediaPlayer对象，然后在play()和pause()方法中控制启停，此时play()和pause()方法用来告诉Servise做出相应动作，向其发送指令信息。</code></li>
-</ul>
-</li>
-<li><ul>
-<li>B. <code>在play()中通过intent发送信息（Intent intent = new Intent(“music”) ;//music表示动作）;需再进一步指明具体动作（intent.putExtra(“action”,1);//1代表播放指令，也可写PLAY,但应在开头事先声明：public static final int PLA Y = 1;）; 然后startService(intent)即可。</code></li>
-</ul>
-</li>
-<li><ul>
-<li>C. <code>同理在pause()中相应发送相应暂停指令即可。当然，除了play()和pause()方法，还可以有其它方法，通过它们发送指令信息。</code></li>
-</ul>
-</li>
-<li><ul>
-<li>D. <code>在新建的Service中的onStartCommand()方法里用swith()方法接收并处理Activity发送的指令信息。</code></li>
-</ul>
-</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">【（int action = intent.getIntExtra(“action”,-1);//第二参数表示接收不到值就显示-1），</div><div class="line">swith(action)&#123;</div><div class="line">   case MainActivity.PLAY :</div><div class="line">     拷贝原先Activity中play()方法的reset(),setDataSource(),prepare(),start()</div><div class="line">    //setDataSource(),prepare()处理异常即可</div><div class="line">break;</div><div class="line">   case MainActivity.PAUSE:</div><div class="line">     拷贝原先Activity中pause()方法</div><div class="line">break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>★附：OnStartCommand的返回值：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">1）OnStartCommand（Intent intent, int flags, int startid）&#123;...&#125;  </div><div class="line">//第一个参数是Activity传递过来的intent；OnStartCommand()可被反复调用，而第三个参数便是用来区分每次调用的编号；OnStartCommand有多种启动方式（如粘性启动和非粘性启动），第二个参数便是用来区分启动方式的。</div><div class="line">2）OnStartCommand()方法不是startService()调用的而是安卓系统调用的，凡是on开头的方法都是回调方法，由安卓系统自动调用，startService()只是通知安卓系统去调用。</div><div class="line">``` </div><div class="line"></div><div class="line">&gt;&gt; ★从音乐播放器开发实例中可进一步发现Service和Activity之间的关系：</div><div class="line">Service掌管播放器所有事宜，而Activity只是承担命令发送者的角色，即接收用户请求，把该请求翻译成命令交给Service,然后由Service根据该命令做出不同动作。</div><div class="line"> </div><div class="line">&gt; ★附：IntentService()【为我们封装了多线程的内容，可在主线程中实现一次性启停一个子线程】</div><div class="line">1）新建IntentService,因IntentService没写无参构造，需人为添加一个无参构造（调用带参构造）；之后重写onHandleIntent()方法。</div><div class="line"> </div><div class="line">* ★★★绑定Service</div><div class="line"></div><div class="line">&gt; + A.主要应用于IPG通信。第一次被绑定时实例化，最后一个客户端解绑定时完成onUnbind和onDestroy，在一个进程中使用bind方式无实际意义。</div><div class="line">&gt; + B.它的使用以调用bindService()开始；onCreate()；onBind()（只有在第一次访问时调用一次，此处不同于先前的onStartCommand()随反复访问Service可以多次调用。）；onUnbind()（解绑后并不会马上回调，该Service运行期间可能有多个客户端或Activity来绑定它，只有所有的绑定Service都回调onUnbind()时，此处才会最后调用一次onUnbind()）；onDestroy()【此处无需finish()，所有客户端或Activity都解绑后自动调用，最后自动shut down。当然，该Service允许被其它Activity启动，并照常回调onStartCommand(),但如果它以onStartCommand()启动了，所有客户端解绑后它也不会Destroy(),需被finish()。`★即一个Service可以被启动和绑定，即startService()和bindService()。】`</div><div class="line"></div><div class="line">&gt;&gt; ★由上述可见onBind()和onUnbind()都只调用一次，前者是第一个客户端绑定的时候回调一次，后者是最后一个客户端调用时它回调一次。</div><div class="line"></div><div class="line">&gt; + C.onBind()方法有一个返回值：IBinder（苹果公司发布的一个新产品）是一个接口，包含很多接口方法，为避免麻烦可写一个类（MyBinder）直接继承Binder（它已实现Ibinder），并增加自己的方法，然后在onBind()中实例化。</div><div class="line">&gt; + D.服务器端RmiService（onBind()）写完后在Manifests中注册（需加action（name=”rmi”））即可，然后再写客户端Activity（onCreate()方法或按钮对应的事件（方法））:</div></pre></td></tr></table></figure>
-<p>Intent intent = new Intent(“rmi”);<br>bindService(intent,new ServiceConnection,BIND_AUTO_CREATE);<br>//第三个参数是指示器，指示如果另外一端的Service没启动该怎么办；第二个参数ServiceConnection，ServiceConnection仍然是一个接口，在此处可直接使用匿名内部类实现它【重写里面的抽象方法，其中onServiceConnected()方法里含有Ibinder代理对象(proxy)，其本质是另一端Rmi中的MyBinder的变身，（开头处声明）直接在此处强转即可：RmiService.MyBinder mybinder= (RmiService.MyBinder)proxy;<br>//此后便可由此代理对象获取另一端IBinder的传值。】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&gt; ＊应用：例如可用它完善前面的音乐播放器。</div><div class="line">&gt;&gt; 【在Service端的play()方法里开一个子线程监控进度，在Activity端的play()方法里也开启一个子线程获取不断变化的progress,拿它更新SeekBar。】</div><div class="line">&gt;&gt; + ①定义并获取SeekBar，在play()方法里开启一个子线程，循环查找MyBinder里的progress（定期休眠和获取即可），并在主线程里实现更新（包装成Message，调用handler()）。</div><div class="line">&gt;&gt; + ②Activity承担发送指令的角色，所以要在play(),pause(),resume()等方法中发送指令并启动Service（StartService()）。</div><div class="line"></div><div class="line">&gt;&gt; + ③Service根据该指令做出不同动作（回调OnStartCommand()）。play(),pause(),resume()之间通过同步机制（Synchronized）实现通信。</div><div class="line"> </div><div class="line">&gt;&gt;&gt; ★上述音乐播放器退出后，Activity开启的子线程仍在运行，说明在play()中开启子线程不合适，需进一步完善，分析可知将该子线程置于bindService()的onServiceConnected()里用于更新进度再合适不过了。`另外，Activity退出后，需杀死子线程，所以可增加条件：while（…&amp;&amp; isRun）//isRun表示判断是否运行。开头处声明正常情况下让isRun=true。`</div><div class="line">`当Activity退出后,肯定要执行OnDestroy(),所以增加该回调方法,让isRun=false即可。`</div><div class="line"></div><div class="line">&gt; + E. 当Activity用完之后则进行解绑（调用onUnbind()）。</div><div class="line"> </div><div class="line"> </div><div class="line">3. ContentProvider       </div><div class="line">&gt; ＊主要用来做数据存储，实际上它自身并不提供存储机制，而是一个中间抽象层（中间件）。</div><div class="line"></div><div class="line">&gt; Activity，Service，BroadcastReceiver 三大组件之间通过Intent连接，而ContentProvider则是通过URI连接。</div><div class="line">&gt; + 它是Android数据共享标准（区分与RDBMS），也是Android的组件之一（需要注册）。</div><div class="line">&gt; + 它由开发者继承并重写其CURD的方法，注册后暴露其URI，即一系列的URI对应到相应的CURD方法。</div><div class="line">&gt; + 其URI符合Result风格，统一了数据共享的API操作，即屏蔽了内部对文件和数据库等一系列操作的不同，APP的开发者只需要关注Android所提供的API即可。</div><div class="line">&gt; + 其访问的URI规则如下：</div><div class="line">a.Scheme: ContentProvider的scheme已经由Android所规定为：content://</div><div class="line">b.  主机名（或Authority）: 用于唯一标识这个ContentProvider（即包名）</div><div class="line">c.   路径（path）: 可以用来表示我们要操作的数据，路径的构建应根据业务而定，如下：</div><div class="line">要操作contact表中id为10的记录，可以构建这样的路径：/contact/10</div><div class="line">要操作contact表中id为10的记录的name字段，可以构建路径：/contact/10/name</div><div class="line">要操作contact表中的所有记录，可以构建这样的路径：/contact</div><div class="line">&gt;&gt; + ContentProvider开发：</div><div class="line">&gt;&gt;&gt; + 新建类(如TigerContentProvider)继承ContentProvider复写其CURD方法。</div><div class="line">&gt;&gt;&gt; + 注册:（exported=”true”,authorities=”tiger1.cn”,name=”.TigerContentProvider”）</div><div class="line">&gt;&gt;&gt; + 增加按钮(做查询)和对应事件（方法），方法中不可能直接去实例化TigerContentProvider（因为组件及其实例化是由安卓系统管理的）， 但可以实例化getContentResolver() ,</div><div class="line">（ContentResolver resolver=getContentResolver()）,它相当于ContentProvider客户端，里面含有CURD方法，通过对这个resolver进行增删改查的动作，然后它会命令Android系统回调TigerContentProvider里面的增删改查，即间接实现CURD方法。（使用解耦合）</div></pre></td></tr></table></figure></p>
-<p>eg1.(查询)<br>public void query(View view){<br>Uri uri = Uri.parse(“content://tiger1.cn”);<br>//此处为URI连接协议，主机名（或Authority）对应先前注册的authorities<br>ContentResolver resolver=getContentResolver();<br>Cursor cs = resolver.query(uri,null,null,null,null);<br>//参数分别为uri,投影，选择，排序；null表示没有；结果返回一个Cursor,可对其操作。<br>}<br>＊应用：对电话簿的ContentProvider的访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">4. BroadcastReceiver   </div><div class="line">1）进行广播</div><div class="line"></div><div class="line"></div><div class="line">### 八．★★安卓多线程</div><div class="line">+ 安卓中，在子线程里更新UI组件会报错；而在UI线程里调用网络连接会报错，强制性要求只能在子线程中调用。（这是利用安卓的框架自身来保证代码的正确性）</div><div class="line">+ 多线程处理机制（线程间通信）</div></pre></td></tr></table></figure></p>
-<p>eg1.<br>public class MainActivityextends AppCompatActivity {<br>    private TextView tv;<br>    private Handler handler;<br>    @Override<br>    protected void onCreate(Bundle savedInstanceState) { //UI线程<br>        super.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br>        tv = (TextView)findViewById(R.id.tv);<br>        sb = (SeekBar)findViewById(R.id.sb);<br>        handler=new Handler() {<br>//UI线程绑定一个Handler,可监听Massage对象。handler中有消息队列（MessageQueen）。<br>  注：子线程也可以绑定Handler，即反过来在UI线程中包装Message，在子线程中改变相应的值。<br>            @Override<br>            public void handleMessage(Message msg) {//复写回调方法，在主线程中更新UI<br>                int i = msg.getData().getInt(“pro”);<br>                tv.setText(“test:”+i);<br>            }<br>        };<br>    }<br>    public void start(View view) {<br>    new Thread(){<br>        @Override<br>        public void run() {<br>            for(int i=0;i<101;i++){ try="" {="" thread.sleep(20);="" }="" catch="" (interruptedexception="" e)="" e.printstacktrace();="" 把上面的进度包装成一个消息="" message="" msg="new" message();="" bundle="" bundle();="" bundle.putint("pro",i);="" msg.setdata(bundle);="" 把消息发到消息队列中，发100次="" handler.sendmessage(msg);="" }.start();="" <figure="" class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">eg2.(在主线程中干预子线程的运行&gt;&gt;Synchronized , wait , notify)</div><div class="line">在eg1基础上增加SeekBar,pause,resume按钮和相应事件（方法），在子线程中设置运行条件，而在主线程中控制条件即可。</div><div class="line">public class MainActivity extends AppCompatActivity &#123;</div><div class="line">    private TextView tv;</div><div class="line">    private Handler handler;</div><div class="line">    private SeekBar sb;</div><div class="line">    private boolean isPause=false;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        tv = (TextView)findViewById(R.id.tv);</div><div class="line">        sb = (SeekBar)findViewById(R.id.sb);</div><div class="line">        handler=new Handler() &#123;</div><div class="line">            @Override</div><div class="line">            public void handleMessage(Message msg) &#123;</div><div class="line">                int i = msg.getData().getInt(&quot;pro&quot;);</div><div class="line">                tv.setText(&quot;test:&quot;+i);</div><div class="line">                sb.setProgress(i);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    public void start(View view) &#123;</div><div class="line">        new Thread()&#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                synchronized (handler) &#123;</div><div class="line">//这把锁在主线程和主线程中都是共用的，其中的对象是二者皆可见的唯一对象，否则wait()调用处无效。此处选择Handler作为共用对象更为合适。</div><div class="line">MainActivity自身可做锁对象。但此处不能用public Synchronized void  run()&#123;…&#125;，因为此处用的是子线程对象，况且run()方法里面没有Synchronized，它是复写的，所以此处只能用同步代码块。</div><div class="line"> // 另外，wait()和notify()配套使用，且二者被调用时要求必须处于一个同步代码块的内部（Synchronized）,还要求其调用对象必须是同步代码块中的那个同步锁。</div><div class="line">                    for (int i = 0; i &lt; 101; i++) &#123;</div><div class="line">                        if (isPause) &#123;</div><div class="line">                            try &#123;</div><div class="line">                                handler.wait();</div><div class="line">                            &#125; catch (InterruptedException e) &#123;</div><div class="line">                                e.printStackTrace();</div><div class="line">                            &#125;</div><div class="line">                         &#125;</div><div class="line">                        try &#123;</div><div class="line">                            Thread.sleep(20);</div><div class="line">                        &#125; catch (InterruptedException e) &#123;</div><div class="line">                            e.printStackTrace();</div><div class="line">                        &#125;</div><div class="line">                        Message msg = new Message();</div><div class="line">                        Bundle bundle = new Bundle();</div><div class="line">                        bundle.putInt(&quot;pro&quot;, i);</div><div class="line">                        msg.setData(bundle);</div><div class="line">                        handler.sendMessage(msg);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;.start();</div><div class="line">    &#125;</div><div class="line">    public void pause(View view) &#123; isPause=true;  &#125;</div><div class="line">/*  public synchronized void resume(View view) &#123; //将MainActivity自身作为锁对象</div><div class="line">        isPause=false;</div><div class="line">        notify(); &#125;*/</div><div class="line">    public synchronized void resume(View view) &#123; //此处用MainActivity锁对象自身</div><div class="line">        synchronized (handler)&#123;</div><div class="line">            isPause=false;</div><div class="line">            handler.notify();//唤醒，让其重新进入线程调用机...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></101;i++){></p>
-<h3 id="九．安卓数据存储策略"><a href="#九．安卓数据存储策略" class="headerlink" title="九．安卓数据存储策略"></a>九．安卓数据存储策略</h3><blockquote>
-<p>毕竟安卓系统不是做服务器的，在安卓系统中，数据库只是一个很小的范围，它并不认为数据一定要保存在数据库里，它只要能把数据存储到某个地方即可。</p>
-</blockquote>
-<ol>
-<li>文件系统（首选）</li>
-</ol>
-<blockquote>
-<blockquote>
-<p>File存储：<br>原理：使用一个普通自定义文件做为存储媒介，以流的方式进行读写操作。</p>
-</blockquote>
-</blockquote>
-<ul>
-<li><code>OutputStream out = context.openFileOutput(fileName,mode);</code><br> //此方法打开<data packname="" files="" filename="">的输出流；Mode可以是MODE_PRIVATE|MODE_APPEND（前者为默认操作模式，代表该文件是私有数据,只能被应用本身访问,在该模式下,写入的内容会覆盖原文件的内容。后者为最佳模式，会检查文件是否存在,存在就往文件追加内容,否则就创建新文件。）等。其中按位或|可做权限叠加。</data></li>
-<li><code>Inputstream in = context.openFileInput(fileName);</code></li>
-<li>常用方法：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">File getFileDir[];//获取data/packName/files的目录对象；</div><div class="line">File getDir[dirName,mode];</div><div class="line">String[] fileList[];</div><div class="line">deleteFile[fileName];</div><div class="line">注：上述方法无需new File()（需找文件路径），文件存储在data/packName/files下。</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eg1.(存储)</div><div class="line">OutputStream out = openFileOutput(“tiger.data”,MODE_PRIVATE|MODE_APPEND);</div><div class="line">//out.write(“Hello World!”.getByte());</div><div class="line">  out.write(“Hello World!,世界你好”.getByte(“UTF-8”));</div><div class="line">★补：Java中一般不会使用字符流，即reader和writer，因为它不能设定文字编码，它是自动转码的，我们没办法随心所欲地控制它。</div><div class="line">out.close();//流要自己管理，此处需手动关闭</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">eg2.（取出）</div><div class="line">Inputstream in = openFileInput(“tiger.data”);</div><div class="line">byte[] buf = new byte[4];//在内存中开辟一个缓存读取文件,此处按一次4个字节读取</div><div class="line">/* int count=0;</div><div class="line">while(count=in.read(buf)!=-1)&#123;</div><div class="line">//此处可用来边读边写</div><div class="line">&#125;  */</div><div class="line">byte[] buf = new byte[in.available()];//此处一次性读取</div><div class="line">in.read(buf);</div><div class="line">String msg = new String(buf,”UTF-8”);//此处将buf重新编码成UTF-8</div><div class="line">Log.i(“tiger”,msg);</div><div class="line">in.close();</div><div class="line">＊附：加大难度写一个对象进去，这是纯Java的知识，把上述流包装成对象流即可：</div><div class="line">ObjectoutputStream oout = new ObjectOutputStream(out);</div><div class="line">oout.write(new Object());</div></pre></td></tr></table></figure>
-<blockquote>
-<p>★★附：SharedPreferences存储</p>
-<blockquote>
-<p>原理：由保存在data/data/<packname>/shared_prefs/xxx.xml完成数据的存储。<br>实际上SharedPreferences用的是map(key-value)键值对存储，它是轻量级存储，常用来存储一些轻量级数据。其底层仍然用inputStream和outputSteam，但是其上层API看不见这些，它的存储不需要考虑流的问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">eg1.(存储)</div><div class="line">定义SharedPreferences pref，在onCreate()方法中得到它：</div><div class="line">（pref = PreferenceManager.getDefaultSharedPreferences(this);）</div><div class="line"> Set &lt;String&gt; set = new HashSet&lt;String&gt;();</div><div class="line">   set.add(“basket”); set.add(“foot”);</div><div class="line">   SharedPreferences.Editor editor = pref.edit(); //存储需借助Editor</div><div class="line">   editor.putString(“uname”,”tiger”);editor.putInt(“age”,100);</div><div class="line">   editor.putStringSet(“sport”,set); //可存储集合数据 </div><div class="line">   editor.commit(); // 此前的操作都在内存,通过commit()存储</div></pre></td></tr></table></figure></packname></p>
-</blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">eg2.（取出）</div><div class="line">String uname = pref.getString(“uname”,”xxxxx”);//第二参数为默认值,以下同理</div><div class="line">int age = pref.getInt(“age”,-1);</div><div class="line">Set&lt;String&gt; sport = pref.getStringSet(“sprot”,null);</div><div class="line">Log.i(“tiger”uname+”...”+age);</div><div class="line">for(String key:sport)&#123;</div><div class="line">Log.i(“tiger”,key);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<blockquote>
-<p>注：上述存储过程可不断被覆盖，适合存储进度。<br>附：File存储不适合变动数据的存储，数据库系统更优，它适合增删改查</p>
-</blockquote>
-</blockquote>
-<ol>
-<li>数据库系统<blockquote>
-<p>标准方案：使用jdbc的jar包连接数据库进行存储，不过使用概率小。</p>
-<blockquote>
-<p>★安卓自身存储方案：只针对一种数据库：SQLite</p>
-</blockquote>
-</blockquote>
-</li>
-</ol>
-<p>SQLite是Linux底层的一个非常轻量级的基于文件（一个文件即一个db，区别于Oracle：非文件型，一个db实例包含多个文件）的关系型数据库，支持SQL92，海量存储，并发，性能，安全方面较弱，但体积小，开销低，较适合用于便携及嵌入式设备。</p>
-<blockquote>
-<p>1）* SQLite数据类型(比较少):NULL(空值)，INTEGER(整型)，REAL(实数型//浮点数字)，TEXT(字符串文本),BLOB(二进制对象)</p>
-<p>2）* ★SQLite的核心对象：SQLiteDatabase</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  获取方式：SQLiteDatabase.openDatabase(...)//打开现有的数据库</div><div class="line">                          .openOrCreateDatabase(...)//打开或创建数据库</div><div class="line">  使用方式：.execSQL()//执行更新类操作；.rawQuery()//执行查询，返回Cursor对象</div><div class="line">            .close()//关闭</div><div class="line">＊注：Cursor（和jdbc核心对象中的Resulset是同一类对象）</div><div class="line">            .moveToNext()//如果有下一条记录返回true，否则返回false</div><div class="line">            .getXXX(index)//返回查询到的某个Index列的数据，index从0开始。</div></pre></td></tr></table></figure>
-<blockquote>
-<blockquote>
-<p>★SQLiteDatabase使用方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">实例化一个对象SQLiteDatabase db，在onCreate()方法中用工厂方法打开或创建数据库：</div><div class="line">db = SQLiteDatabase.openOrCreateDatabase(“tiger.data”，null);</div><div class="line">//第一个参数是文件路径； 第二个参数是CursorFactory,里面有一个回调器，可供查询后处理遍历问题。这样的好处是把对Corsor的处理封装到对象中去。此处null表示不使用。</div><div class="line">注：此处tiger.data不在项目目录下而存储在用户根目录下，我们最好将其存储在外存上（需开放相应权限）。</div></pre></td></tr></table></figure></p>
-<p>★附：Sdcard的操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">可使用Environment.getExternalStorageState()：获取是否挂载的信息（即是否有外存）；</div><div class="line">File Environment.getExternalStorageDirectory():获取Sdcar的挂载点，返回File文件。</div><div class="line">需加入（权限）：</div><div class="line">&lt;user-permission android:name=”android.permission.MOUNT_UNMOUNT_FILESYSTEMS”&gt;</div><div class="line">&lt;user-permission android:name=”android.permission.WEITE_EXTERNAL_STORAGE”/&gt;</div></pre></td></tr></table></figure></p>
-</blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eg1.(创建db)</div><div class="line">File sdcardPath = Environment.getExternalStorageDirectory();</div><div class="line">db=SQLiteDatabase.openOrCreateDatabase(“sdcardPath.getAbsolutePath()</div><div class="line">+”/tiger.data”，null); //db的生成</div><div class="line">创建表：定义按钮，可在其对应事件（方法）内创建表（String ddl=“create table users(_id interger primary key autoincrement,uname text)”;db.execSQL(ddl);）</div><div class="line">存取数据：</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">eg2.(存储)</div><div class="line">String sql=”insert into users (uname) valus (?)”</div><div class="line">Try&#123; //支持事务</div><div class="line">db.beginTransaction();</div><div class="line">//db.execSQL(sql);//抛异常时下行代码不执行，直接回滚</div><div class="line">db.execSQL(sql,new Object[]&#123;“tiger”+i++&#125;);</div><div class="line">//在开头声明变量i并初始化为0，此处表示点击一次加一次</div><div class="line">db.setTransactionSuccessful();</div><div class="line">&#125;catch(Exception e)&#123;</div><div class="line">&#125; finally&#123; db.endTransaction(); //必须结束事务 &#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">eg3.（取出/查询）</div><div class="line">String sql=”select id,uname from users where id&gt;?”</div><div class="line">//强烈建议不要使用seclect * from ...</div><div class="line">Cursor cs= db.rawQuery(sql,new String[]&#123;“2”&#125;);</div><div class="line">//第二参数表示条件（id&gt;2）,是由于API设计时规定其它类型在此都变成String类型</div><div class="line">while (c.moveToNext())&#123;</div><div class="line">String uname = c.getString(1);</div><div class="line">//此处1对应select语句中的uname,如果上述代码使用seclect * from，则无此对应顺序。</div><div class="line">int id=cs.getInt(cs.getColumnIndex(“_id”));</div><div class="line">//参数可以写0，它仍保留使用字段名的方式，但明显麻烦。</div><div class="line">Log.i(“tiger”,uname+”...”+id); &#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>3）★上述数据库存储中还存在其它问题，安卓系统不允许二次创建（覆盖）表格，况且app升级一般会涉及数据库结构更新，因此需要另一个SQLite的核心对象：SQLiteOpenHelper：会自动处理数据库的第一次创建，结构更新等操作的工作类型.(帮助完成初始化和升级)需要override其onCreate(),onUpgrade()等方法.</p>
-<p>★SQLiteOpenHelper使用方法：<br>新建类(如TigerOpenHelper)继承SQLiteOpenHelper，实现其onCreate()，onUpgrade()。</p>
-<blockquote>
-<p>注：SQLiteOpenHelper没有无参构造，新建的类需添加SQLiteOpenHelper的带参构造，并在其中调用super(context,name,factory,version);</p>
-<blockquote>
-<p>￭onCreate()代码段只有在第一次利用此类获得database时才执行。</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eg1. onCreate(...)&#123;</div><div class="line">//可去除先前创建表的按钮和对应事件（方法）。把创建表的代码移到此处，实现自动建表。</div><div class="line">&#125;</div><div class="line">在原来使用SQLiteDatabase的基础上，在Activity里实例化一个TigerOpenHelper对象TigerOpenHelper helper，在onCreate()方法中实例化helper并获得数据库：</div><div class="line">helper=new TigerOpenHelper(this,sdcardPath.getAbsolutePath()+”/tiger1.data”，null,1); // 版本号1对应onUpgrade()中的oldVersion，本号加1则表示升级下一个版本，升级时onCreate()不会执行而执行onUpgrade()，不升级时相反。</div><div class="line">db=helper.getWritableDatabase();//可写包含可读功能</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">eg2. onUpgrade(...)&#123;</div><div class="line">//结构变化代码</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
-<li>WebService<blockquote>
-<p>在安卓系统中安装一些WebService标准的API，调用这些API时自动连接网络存储数据。</p>
-</blockquote>
-</li>
-</ol>
 
           
         
@@ -1965,7 +2001,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
