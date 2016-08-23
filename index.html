@@ -891,135 +891,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/25/核心Java/" itemprop="url">
-                  核心Java
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-25T00:00:00+08:00" content="2016-04-25">
-              2016-04-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/编程基础/" itemprop="url" rel="index">
-                    <span itemprop="name">编程基础</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一：WebUI"><a href="#一：WebUI" class="headerlink" title="一：WebUI"></a>一：WebUI</h3><h3 id="二-JAVA"><a href="#二-JAVA" class="headerlink" title="二:  JAVA"></a>二:  JAVA</h3><h3 id="三：oracle"><a href="#三：oracle" class="headerlink" title="三：oracle"></a>三：oracle</h3><h3 id="四-JavaWeb-J2ee"><a href="#四-JavaWeb-J2ee" class="headerlink" title="四:  JavaWeb, J2ee"></a>四:  JavaWeb, J2ee</h3><p>1.框架：</p>
-<ul>
-<li>Hibernate:（xml版）</li>
-<li>框架搭建：</li>
-</ul>
-<p>2015.12.30</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">String和StringBuffer的区别：示例：</div><div class="line">Private String randName(int len)&#123;</div><div class="line"> </div><div class="line">String s= “hello”;</div><div class="line">s=”abc”;</div><div class="line"> </div><div class="line">StringBuffer sb = new StringBuffer();</div><div class="line">For(int i = 0; i&lt;len;i++)&#123;</div><div class="line">s += (char)(Math.random()*26+65)</div><div class="line">sb.append((char)(Math.random()*26+65));</div><div class="line">//产生随机大写字母（对应数字65~90，小写对应数字97~122）</div><div class="line">&#125; </div><div class="line">Return sb.toString();//StringBuffer要通过toString()转换成String</div><div class="line">&#125;</div><div class="line">上面的两个s指向两个不同地址+=后把两个地址合并后放入一个新地址，即一直在切换地址。</div><div class="line">s放在堆内存中，java中GC机制会自动回收(影响性能)，而在c++中没有回收机制，使用时要进行释放，否则会造成内存溢出。</div><div class="line"> </div><div class="line">double后面小数点保留15位，float后面小数点保留6位 </div><div class="line">若要取小数点后两位则有：</div><div class="line">1)用DecimalForamt 类进行数据格式转换</div><div class="line">DecimalForamt  df = new DecimaForamt(“#0.00”) //括号里指明格式</div><div class="line">String sd = df.format(Math.random()*100 )</div><div class="line">2）用Stirng类的fomat静态方法</div><div class="line">String sd = Stirng.format(“%.2f”,Math.random()*100)</div><div class="line"> </div><div class="line">Hibernate中分页代码：</div><div class="line">String hql =”from Book”;</div><div class="line">int pageSize=4;</div><div class="line">int currentPage = 1;</div><div class="line">int records = 0;</div><div class="line">int totalpage = 0;</div><div class="line">Quetry query = session.createQuery(hql);</div><div class="line">records = query.list.size();</div><div class="line">query.setMaxResults(pageSize);</div><div class="line">query.setFirstResult((currentPage-1)*pageSize);</div><div class="line">totalPage = records/pageSize;</div><div class="line">if(records%pageSize!=0)&#123;</div><div class="line">totalPage++;</div><div class="line">&#125;</div><div class="line">System.err.println(totalPage);//err（区别于out）：标记分页</div></pre></td></tr></table></figure>
-<p>2016.1.02</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">文件上传（用户管理系统头像上传）：</div><div class="line"></div><div class="line">表单（二进制提交）取出字段用getFieldName()不能用request.getParameter()</div></pre></td></tr></table></figure>
-<p>2016.1.03</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">计算机编码主要区分：</div><div class="line">ASCLL：英文编码。其中ISO-8859-1是ASCLL码的一个子集。</div><div class="line">Unicode:中文编码 （除英文外的其他语言用的编码）。</div><div class="line">UTF-8：是Unicode的一个分支。</div><div class="line">gbk:是UTF-8的一个分支。(big5（大五码/繁体中文，也是UTF-8的一个分支)。</div><div class="line">gb2312:是gbk的子集。</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">编码存储：</div><div class="line">ASCLL（255个字符，122后就是乱码）：字节存储（1byte=8bit），一个字节表示一个英文字母。大写字母A~Z（65~90），小写字母a~z（97~122）。数字编码0~9（48~57），其它符号如13表示空格。。。</div><div class="line">Unicode（0~65535）:2byte=16bit</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">中文乱码：</div><div class="line">（1）Get提交（URL重写）： </div><div class="line">Tomcat7 修改配置文件（server）在容器connector中的端口后加URIEncoding=”UTF-8”。</div><div class="line">Tomcat8无需修改配置文件可直接处理get提交的中文乱码。</div><div class="line">（2）post提交</div><div class="line">源程序中添加： </div><div class="line">String tex = request.getParameter(“text”);</div><div class="line">Text=new String(text.getBytes(“ISO-8859-1”),”UTF-8”); </div><div class="line">或源程序中添加：request.setCharacterEncoding(“UTF-8”)；//控制器中表单采用二进制（字节）提交时不起作用。若数据库存储依然乱码，需统一数据库编码，要在数据库连接处告诉数据库采用何种编码（？useUnicode=true&amp;characterEncoding=UTF8)。（oracle一般能自动统一数据库编码） </div><div class="line">（3）输出到浏览器乱码：response.getWriter().print(text);</div><div class="line">源程序中添加: Response.setContentType(“text/html,;charset-UTF-8”);//设置的是响应头或请求头不是设置输出文件。</div></pre></td></tr></table></figure>
-<p>2016.1.06</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">java读取属性文件</div><div class="line">1.例一（读取系统属性）</div><div class="line">Properties p = System.getProperties();//导入uitil工具包</div><div class="line">p.list(System.out);/、获取所有的属性</div><div class="line">System.out.println(p.getProperty(“os.name”));//获取单个属性</div><div class="line"> </div><div class="line">2.例二（连接池动态加载）</div><div class="line">写配置文件(driver,url；不加引号)，并定义类变量driver,url</div><div class="line">在源程序中添加代码（如init（）方法中）： </div><div class="line">Properties p  = new Properties();</div><div class="line">//获取类的存放目录（用类反射）</div><div class="line">String path = 类名.class.getResource(“/属性文件名”).toString().substring(6);</div><div class="line">InputStream in = new FileInputStream(new File(“path”));</div><div class="line">p.load(in);</div><div class="line">driver = p.getProperty(“driver”);</div><div class="line">url  = p.getProperty(“url”)</div><div class="line">``` </div><div class="line"></div><div class="line">2016.01.14</div></pre></td></tr></table></figure>
-<p>UserDAOImpl.java:<br>public class UserDAOImpl extends HibernateDaoSupport implements UserDAO{</p>
-<p>Public void delete(long id){<br>Session session = getSession();<br>Obeject o = Session.get(User.class,id);<br>//用get,记录不存在就返回空；<br>Obeject o = Session.load(User.class,id);<br>//用load,没有记录的话，会抛异常，程序终止，后面不再执行，确定存在记录则可大胆使用<br>session.delete(o);<br>  }<br>}<br>```</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/04/25/Android/" itemprop="url">
                   Android
                 </a>
@@ -1455,6 +1326,135 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/25/核心Java/" itemprop="url">
+                  核心Java
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-25T00:00:00+08:00" content="2016-04-25">
+              2016-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程基础/" itemprop="url" rel="index">
+                    <span itemprop="name">编程基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="一：WebUI"><a href="#一：WebUI" class="headerlink" title="一：WebUI"></a>一：WebUI</h3><h3 id="二-JAVA"><a href="#二-JAVA" class="headerlink" title="二:  JAVA"></a>二:  JAVA</h3><h3 id="三：oracle"><a href="#三：oracle" class="headerlink" title="三：oracle"></a>三：oracle</h3><h3 id="四-JavaWeb-J2ee"><a href="#四-JavaWeb-J2ee" class="headerlink" title="四:  JavaWeb, J2ee"></a>四:  JavaWeb, J2ee</h3><p>1.框架：</p>
+<ul>
+<li>Hibernate:（xml版）</li>
+<li>框架搭建：</li>
+</ul>
+<p>2015.12.30</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">String和StringBuffer的区别：示例：</div><div class="line">Private String randName(int len)&#123;</div><div class="line"> </div><div class="line">String s= “hello”;</div><div class="line">s=”abc”;</div><div class="line"> </div><div class="line">StringBuffer sb = new StringBuffer();</div><div class="line">For(int i = 0; i&lt;len;i++)&#123;</div><div class="line">s += (char)(Math.random()*26+65)</div><div class="line">sb.append((char)(Math.random()*26+65));</div><div class="line">//产生随机大写字母（对应数字65~90，小写对应数字97~122）</div><div class="line">&#125; </div><div class="line">Return sb.toString();//StringBuffer要通过toString()转换成String</div><div class="line">&#125;</div><div class="line">上面的两个s指向两个不同地址+=后把两个地址合并后放入一个新地址，即一直在切换地址。</div><div class="line">s放在堆内存中，java中GC机制会自动回收(影响性能)，而在c++中没有回收机制，使用时要进行释放，否则会造成内存溢出。</div><div class="line"> </div><div class="line">double后面小数点保留15位，float后面小数点保留6位 </div><div class="line">若要取小数点后两位则有：</div><div class="line">1)用DecimalForamt 类进行数据格式转换</div><div class="line">DecimalForamt  df = new DecimaForamt(“#0.00”) //括号里指明格式</div><div class="line">String sd = df.format(Math.random()*100 )</div><div class="line">2）用Stirng类的fomat静态方法</div><div class="line">String sd = Stirng.format(“%.2f”,Math.random()*100)</div><div class="line"> </div><div class="line">Hibernate中分页代码：</div><div class="line">String hql =”from Book”;</div><div class="line">int pageSize=4;</div><div class="line">int currentPage = 1;</div><div class="line">int records = 0;</div><div class="line">int totalpage = 0;</div><div class="line">Quetry query = session.createQuery(hql);</div><div class="line">records = query.list.size();</div><div class="line">query.setMaxResults(pageSize);</div><div class="line">query.setFirstResult((currentPage-1)*pageSize);</div><div class="line">totalPage = records/pageSize;</div><div class="line">if(records%pageSize!=0)&#123;</div><div class="line">totalPage++;</div><div class="line">&#125;</div><div class="line">System.err.println(totalPage);//err（区别于out）：标记分页</div></pre></td></tr></table></figure>
+<p>2016.1.02</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">文件上传（用户管理系统头像上传）：</div><div class="line"></div><div class="line">表单（二进制提交）取出字段用getFieldName()不能用request.getParameter()</div></pre></td></tr></table></figure>
+<p>2016.1.03</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">计算机编码主要区分：</div><div class="line">ASCLL：英文编码。其中ISO-8859-1是ASCLL码的一个子集。</div><div class="line">Unicode:中文编码 （除英文外的其他语言用的编码）。</div><div class="line">UTF-8：是Unicode的一个分支。</div><div class="line">gbk:是UTF-8的一个分支。(big5（大五码/繁体中文，也是UTF-8的一个分支)。</div><div class="line">gb2312:是gbk的子集。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">编码存储：</div><div class="line">ASCLL（255个字符，122后就是乱码）：字节存储（1byte=8bit），一个字节表示一个英文字母。大写字母A~Z（65~90），小写字母a~z（97~122）。数字编码0~9（48~57），其它符号如13表示空格。。。</div><div class="line">Unicode（0~65535）:2byte=16bit</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">中文乱码：</div><div class="line">（1）Get提交（URL重写）： </div><div class="line">Tomcat7 修改配置文件（server）在容器connector中的端口后加URIEncoding=”UTF-8”。</div><div class="line">Tomcat8无需修改配置文件可直接处理get提交的中文乱码。</div><div class="line">（2）post提交</div><div class="line">源程序中添加： </div><div class="line">String tex = request.getParameter(“text”);</div><div class="line">Text=new String(text.getBytes(“ISO-8859-1”),”UTF-8”); </div><div class="line">或源程序中添加：request.setCharacterEncoding(“UTF-8”)；//控制器中表单采用二进制（字节）提交时不起作用。若数据库存储依然乱码，需统一数据库编码，要在数据库连接处告诉数据库采用何种编码（？useUnicode=true&amp;characterEncoding=UTF8)。（oracle一般能自动统一数据库编码） </div><div class="line">（3）输出到浏览器乱码：response.getWriter().print(text);</div><div class="line">源程序中添加: Response.setContentType(“text/html,;charset-UTF-8”);//设置的是响应头或请求头不是设置输出文件。</div></pre></td></tr></table></figure>
+<p>2016.1.06</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">java读取属性文件</div><div class="line">1.例一（读取系统属性）</div><div class="line">Properties p = System.getProperties();//导入uitil工具包</div><div class="line">p.list(System.out);/、获取所有的属性</div><div class="line">System.out.println(p.getProperty(“os.name”));//获取单个属性</div><div class="line"> </div><div class="line">2.例二（连接池动态加载）</div><div class="line">写配置文件(driver,url；不加引号)，并定义类变量driver,url</div><div class="line">在源程序中添加代码（如init（）方法中）： </div><div class="line">Properties p  = new Properties();</div><div class="line">//获取类的存放目录（用类反射）</div><div class="line">String path = 类名.class.getResource(“/属性文件名”).toString().substring(6);</div><div class="line">InputStream in = new FileInputStream(new File(“path”));</div><div class="line">p.load(in);</div><div class="line">driver = p.getProperty(“driver”);</div><div class="line">url  = p.getProperty(“url”)</div><div class="line">``` </div><div class="line"></div><div class="line">2016.01.14</div></pre></td></tr></table></figure>
+<p>UserDAOImpl.java:<br>public class UserDAOImpl extends HibernateDaoSupport implements UserDAO{</p>
+<p>Public void delete(long id){<br>Session session = getSession();<br>Obeject o = Session.get(User.class,id);<br>//用get,记录不存在就返回空；<br>Obeject o = Session.load(User.class,id);<br>//用load,没有记录的话，会抛异常，程序终止，后面不再执行，确定存在记录则可大胆使用<br>session.delete(o);<br>  }<br>}<br>```</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/22/数据结构要点笔记/" itemprop="url">
                   数据结构要点笔记
                 </a>
@@ -1590,22 +1590,30 @@
 <li>HashSet 是以一种散列表的形式来实现Set接口。</li>
 <li>集合的交叉并补</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">Set在Java中实际应用的例子（Java中差集的演示）：</div><div class="line">eg.</div><div class="line">import java.util.*;</div><div class="line">public class SetTest</div><div class="line">&#123;</div><div class="line">    public static void main(String[] args)</div><div class="line">    &#123;</div><div class="line">       String[] a = &#123;&quot;zhang&quot;,&quot;wang&quot;,&quot;li&quot;,&quot;wu&quot;,&quot;han&quot;&#125;;</div><div class="line">       String[] b = &#123;&quot;zhang,数学,88&quot;, &quot;zhang,语文,89&quot;,&quot;zhang,英语,78&quot;,&quot;wu,数学,99&quot;,&quot;wu,英语,66&quot;,&quot;tang,数学,77&quot;&#125;;</div><div class="line">       </div><div class="line">        //求哪些同学所有科目都缺考</div><div class="line">       Set&lt;String&gt; sa = new HashSet&lt;String&gt;();</div><div class="line">       for(int i=0; i&lt;a.length; i++) sa.add(a[i]);</div><div class="line">       Set&lt;String&gt; sb = new HashSet&lt;String&gt;();</div><div class="line">       for(int i=0; i&lt;b.length; i++) sb.add(b[i].split(&quot;,&quot;)[0]);</div><div class="line">      </div><div class="line">       sa.removeAll(sb);//求差集（sa-sb）</div><div class="line">      </div><div class="line">       //集合里面的元素是没有顺序的，不能像动态数组一样去求size,然后get某一项。</div><div class="line">       //如何取得集合中的每一个元素（即遍历集合），Java提供了一种标准手段，叫枚举或者叫迭代</div><div class="line">       //任何实现Collection接口的这些类都会提供一个Iterator，它会返回一个Iterator接口</div><div class="line">       Iterator&lt;String&gt; it = sa.iterator();</div><div class="line">       while(it.hasNext())&#123;</div><div class="line">           System.out.println(it.next());</div><div class="line">       &#125;</div><div class="line">       //System.out.println(sa);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">``` </div><div class="line"></div><div class="line">&gt;&gt; 补充：★在java集合中顶层有这样两个接口Iterator和Enumeration，这两个接口是特殊的数据操作接口。Iterator用于进行数据迭代，称为迭代器；Enumeration用于进行数据枚举，称为枚举。</div><div class="line">&gt;&gt; + 枚举：</div><div class="line">该接口定义了可以对一个对象类集合中的元素进行枚举的方法，但目前已被迭代器所替代。</div><div class="line">在枚举中定义了如下两个方法：</div><div class="line">boolean hasMoreElements():判断集合中是否有元素可提取，有该方法就返回true，否则返回false</div><div class="line">Object nextElement() :将枚举中的下一个对象作为一个类属Object的引用而返回。也就是每次调用nextElement()方法获得枚举中的下一个对象。</div><div class="line">&gt;&gt; + 迭代：</div><div class="line">迭代器&lt;Iterator&gt;和枚举&lt;Enumeration&gt;的功能差不多，但在集合中推荐使用迭代器进行跌代。</div><div class="line">迭代器定义了如下三个方法：</div><div class="line">boolean hasNext():判断集合中是否有元素可迭代；</div><div class="line">E next()：返回迭代的下一个元素；</div><div class="line">Void remove():移除迭代器返回的最后一个元素。</div><div class="line"></div><div class="line">#### 三. 散列的原理</div><div class="line"></div><div class="line">1. 散列是Hash（音译为哈希）这个外来词汇的意译。散列在现代的存储理论和数据库等领域都是十分关键的。散列的目标是已知一个关键字（在全局内是唯一的）能迅速地找到要查找的对象所在的位置。散列的基本思想是想通过某个数学公式进行计算，把关键字映射到对象存储位置信息（其空间大小往往小于关键字的可能空间）。</div><div class="line"> </div><div class="line">2. 散列特征：</div><div class="line">无视数据规模，能快速定位；</div><div class="line">会占用更大的空间；</div><div class="line">是典型的以空间换取时间；</div><div class="line">3. 散列冲突：两个不同关键字经过相同的数学变换，有时可能会碰巧得到同样的一个地址信息。它可通过各种策略来解决，其中最常用的策略就是顺序地向下去寻找。可以这样说，对象就存储在它的散列值所表达的位置的附近。</div><div class="line"></div><div class="line">#### 四. HashSet重复标准</div><div class="line"></div><div class="line">1. Set接口中并没有描述什么叫重复，什么是重复的标准，各个不同的具体实现类都会有自己的处理方法。</div><div class="line">2. HashSet是使用最多的Set类型 它判断重复的标准如下：</div><div class="line">1）HashSet先去检查了新加入对象的hashCode是否与已有的对象的hashCode发生了碰撞，如果没有碰撞，这说明必然不会重复，它就不再去调用equals方法进行比较了，否则调用equals方法，返回true才表明两个对象在内容上是真正的相同，这时候对象就被阻止在集合外面不被加进来了。（因此HashSet判断一个元素是否与集合中已有元素重复时的效率是相当高的，因为即使有很多元素，真正发生碰撞的元素毕竟是少数，如此调用equals方法的次数就很少。）</div><div class="line">2）HashSet没有办法帮助我们自定义的类型去决定什么是逻辑上的重复，因为它不知道我们是按照何种应用逻辑来决定是否重复。</div></pre></td></tr></table></figure>
-<p>eg.  import java.util.*;<br>class Person { // 自己定义Person类<br>    private String name;<br>    private int age;<br>    public Person(String name, int age) {<br>       this.name = name;<br>       this.age = age;<br>    }<br>    public boolean equals(Object x) { //重写equals()<br>       if (x instanceof Person == false){return false;}else<br>       {Person p = (Person) x;}<br>       return this.name.equals(p.name) &amp;&amp; this.age == p.age;//只有名字和年龄都重复才叫重复<br>       // return true;<br>    }<br>    public int hashCode() {//散列码决定对象存储位置 重写hashCode()<br>       return this.name.hashCode() + this.age;<br>       // return 100;<br>    }<br>    public String toString() {//重写toString()<br>       return name + “: “ + age;<br>    }<br>}</p>
-<p>public class HashSetTest {<br>    public static void main(String[] args) {<br>       Set<person> a = new HashSet<person>();<br>       a.add(new Person(“zhang”, 10));<br>       a.add(new Person(“zhang”, 11));<br>       a.add(new Person(“zhang”, 10));<br>       a.add(new Person(“li”, 10));<br>       System.out.println(a); //HashSet默认情况下认为我们这些对象都是逻辑上不重复的<br>       /*</person></person></p>
-<pre><code>    * Set&lt;String&gt; a = new HashSet&lt;String&gt;();
-    * a.add(&quot;abc&quot;);
-    * a.add(&quot;xyz&quot;);
-    * a.add(&quot;abc&quot;);//为了验证，也可改成a.add(new String(&quot;abc&quot;));
-    * System.out.println(a); //结果没有输出两个adc，可见HashSet去判断对象是否重复，它用的是逻辑方式，并不是比较两个对象的地址。
-    */
-}
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 五. TreeSet与排序</div><div class="line"></div><div class="line">1. 根据HashCode判断重复的标准，试着去覆盖hashCode()和equals()方法，发现它们根本不起作用，这是因为TreeSet并不是用散列来进行内部对象的存储位置安排的。从名字上可感觉到它是使用了树形结构，更准确的说它是一种排序树，也就是说TreeSet要求加进来的所有元素必须都可以比较大小。而实际上并非所有元素都能够（或有必要）比较大小。</div><div class="line">2. Java支持两种标准方式：</div><div class="line">对象本身就支持一个叫Comparable的接口，任何支持了该接口的对象都实现了compareTo() 方法。（即Comparable类型的对象都有能力自己解决比较问题）</div><div class="line">对象并不需要承担比较大小的责任，而是聘请一个外来的，外部的裁判对象，来负责判定两个对象的大小关系。这种方式的优点是可以聘请不同的裁判来获得不同的比较结果。</div><div class="line">3. TreeSet如何来处理冲突问题</div></pre></td></tr></table></figure></p>
-<p>eg. 实例：<br>import java.util.<em>;<br>/</em><br> //对象自身实现了Comparable接口来实现比较<br> class Person implements Comparable {<br> private String name;<br> private int age;</p>
-<p> public Person(String name, int age) {<br> this.name = name;<br> this.age = age;<br> }<br> public String toString() {<br> return name + “: “ + age;<br> }<br> public int compareTo(Object x) {// 重写compareTo()方法<br> if (x instanceof Person == false) {<br> return 0;<br> } else {<br> Person p = (Person) x;<br> // return this.name.compareTo(p.name);<br> int t = this.name.compareTo(p.name);<br> if (t != 0) {<br> return t;<br> } else {<br> // return this.age - p.age;<br> return p.age - this.age;<br> }<br> }<br> }<br> */</p>
-<p>// 非侵入方式：不需要对象增加一些接口或方法就让其具有比较的能力<br>class Person {<br>    private String name;<br>    private int age;<br>    public Person(String name, int age) {<br>       this.name = name;<br>       this.age = age;<br>    }<br>    public String getName() {<br>       return name;<br>    }<br>    public int getAge() {<br>       return age;<br>    }<br>    public String toString() {<br>       return name + “: “ + age;<br>    }<br>}</p>
-<p>class K implements Comparator {// 新定义一个类型K（可称为裁判类(术语叫比较器)）<br>    public int compare(Object a, Object b) {// 重写compare()方法<br>       if (a instanceof Person == false || b instanceof Person == false) {<br>           return 0;<br>       } else {<br>           Person p1 = (Person) a;<br>           Person p2 = (Person) b;<br>           int t = p1.getName().compareTo(p2.getName());<br>           if (t != 0) {<br>              return t;<br>           } else {<br>              return p1.getAge() - p2.getAge();<br>//可写成return p1.getAge()-p2.getAge();按字母排序，字母相同则按年龄降序排列<br>           }<br>       }<br>    }<br>}<br>    public class TreeSetTest{<br>       public static void main(String[] args){<br>           //Set<person> a = new TreeSet<person>();<br>           Set<person> a = new TreeSet<person>(new K());<br>           a.add(new Person(“hao”, 10));<br>           a.add(new Person(“hao”, 20));<br>           a.add(new Person(“hao”, 30));<br>           a.add(new Person(“hao”, 10));<br>           a.add(new Person(“zhang”, 10));<br>           a.add(new Person(“zhang”, 11));<br>           a.add(new Person(“zhang”, 20));<br>           a.add(new Person(“li”, 40));<br>           System.out.println(a);<br>       }<br>    }</person></person></person></person></p>
-<p>￭注：Java中涉及到判断大小的地方很可能用的就是上述两种判断标准，如Arrays.sort(数组)，<br>Collection.sort(动态数组/list)，同样存在自定义元素比较大小问题，仍然可采用上述方案。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 六. 对象比较</div><div class="line"></div><div class="line">1. 对象的比较关系：</div><div class="line">+ 是否相等：</div><div class="line">比较指针是否指向同一个对象（==）;比较两个对象在逻辑上是否是等价的（equals()）;</div><div class="line">注：</div><div class="line">Object方法中的equals()仅仅是一个空壳，想要实现对内容的比较，需要覆盖equals()。</div><div class="line">虽然我们可以自定义比较规则，但是一般情况下要满足a.equals(a)必须返回true，即一个对象必须要和它自己逻辑等价(自反性，对称性，传递性)。</div><div class="line">在定义自己类的equals()方法时最好也能去覆盖hashCode()方法，对于equals返回是true的情况必须保证hashCode返回的值也相同。</div><div class="line">④比较相同并不能决定两个对象谁大谁小，即无法进行排序。要想实现排序必须比较出对象间更多的信息来，而不仅仅是像equals那样只返回布尔值。</div><div class="line"> </div><div class="line">+ 大小比较(a.compareTo(b)/compare(a,b))</div><div class="line">比较大小一定要返回三种信息：大于，等于，小于(Java中一般是返回一个整数（正数，0，负数）)，显然比较大小就隐含的比较了是否相等。</div><div class="line">a.compareTo(b)如果返回0，a.equals(b)就一定要返回true，这两者是相关联的。</div><div class="line"></div><div class="line">#### 七. Map接口与特性</div><div class="line"></div><div class="line">1. 类似数学中的函数概念（每一个x都有唯一的y与它对应，称y是x的函数），同样的，计算机中的函数被看成键值对，键是唯一的而值可以重复，这样从一个确定的键就可以确定出唯一的值。 Map可以看成是键值对的集合，从一个键出发可以快速的找到相应的值。</div><div class="line">2. 键和值都可以是任何一种对象，但具体的实现类却有具体的要求。</div><div class="line">3. Map的特性是一个键可以对应一个值，多个键也可以对应同一个值，但一个键绝不能对应于多个不同的值。正因为这个特性键才是不重复的。</div><div class="line">4. 把重复的键和值这种对应关系加入Map中时，后面加入的键会覆盖前面加入的键对。</div><div class="line">5. 把Map中的键值全部输出：</div><div class="line">1）调用keySet()方法取得键集（把Map转化成集合）,然后可调用iterrator()方法遍历该集合。</div><div class="line">2）调用entrySet()方法直接取出键值对。（返回的是一个内部接口类型Map.Entry&lt;string,string&gt;,也可不用泛型</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Set在Java中实际应用的例子（Java中差集的演示）：</div><div class="line">eg.</div><div class="line">import java.util.*;</div><div class="line">public class SetTest</div><div class="line">&#123;</div><div class="line">    public static void main(String[] args)</div><div class="line">    &#123;</div><div class="line">       String[] a = &#123;&quot;zhang&quot;,&quot;wang&quot;,&quot;li&quot;,&quot;wu&quot;,&quot;han&quot;&#125;;</div><div class="line">       String[] b = &#123;&quot;zhang,数学,88&quot;, &quot;zhang,语文,89&quot;,&quot;zhang,英语,78&quot;,&quot;wu,数学,99&quot;,&quot;wu,英语,66&quot;,&quot;tang,数学,77&quot;&#125;;</div><div class="line">       </div><div class="line">        //求哪些同学所有科目都缺考</div><div class="line">       Set&lt;String&gt; sa = new HashSet&lt;String&gt;();</div><div class="line">       for(int i=0; i&lt;a.length; i++) sa.add(a[i]);</div><div class="line">       Set&lt;String&gt; sb = new HashSet&lt;String&gt;();</div><div class="line">       for(int i=0; i&lt;b.length; i++) sb.add(b[i].split(&quot;,&quot;)[0]);</div><div class="line">      </div><div class="line">       sa.removeAll(sb);//求差集（sa-sb）</div><div class="line">      </div><div class="line">       //集合里面的元素是没有顺序的，不能像动态数组一样去求size,然后get某一项。</div><div class="line">       //如何取得集合中的每一个元素（即遍历集合），Java提供了一种标准手段，叫枚举或者叫迭代</div><div class="line">       //任何实现Collection接口的这些类都会提供一个Iterator，它会返回一个Iterator接口</div><div class="line">       Iterator&lt;String&gt; it = sa.iterator();</div><div class="line">       while(it.hasNext())&#123;</div><div class="line">           System.out.println(it.next());</div><div class="line">       &#125;</div><div class="line">       //System.out.println(sa);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>补充：★在java集合中顶层有这样两个接口Iterator和Enumeration，这两个接口是特殊的数据操作接口。Iterator用于进行数据迭代，称为迭代器；Enumeration用于进行数据枚举，称为枚举。</p>
+<ul>
+<li>枚举：<br>该接口定义了可以对一个对象类集合中的元素进行枚举的方法，但目前已被迭代器所替代。<br>在枚举中定义了如下两个方法：<br>boolean hasMoreElements():判断集合中是否有元素可提取，有该方法就返回true，否则返回false<br>Object nextElement() :将枚举中的下一个对象作为一个类属Object的引用而返回。也就是每次调用nextElement()方法获得枚举中的下一个对象。</li>
+<li>迭代：<br>迭代器<iterator>和枚举<enumeration>的功能差不多，但在集合中推荐使用迭代器进行跌代。<br>迭代器定义了如下三个方法：<br>boolean hasNext():判断集合中是否有元素可迭代；<br>E next()：返回迭代的下一个元素；<br>Void remove():移除迭代器返回的最后一个元素。</enumeration></iterator></li>
+</ul>
+</blockquote>
+<h4 id="三-散列的原理"><a href="#三-散列的原理" class="headerlink" title="三. 散列的原理"></a>三. 散列的原理</h4><ol>
+<li>散列是Hash（音译为哈希）这个外来词汇的意译。散列在现代的存储理论和数据库等领域都是十分关键的。散列的目标是已知一个关键字（在全局内是唯一的）能迅速地找到要查找的对象所在的位置。散列的基本思想是想通过某个数学公式进行计算，把关键字映射到对象存储位置信息（其空间大小往往小于关键字的可能空间）。</li>
+<li>散列特征：<br>无视数据规模，能快速定位；<br>会占用更大的空间；<br>是典型的以空间换取时间；</li>
+<li>散列冲突：两个不同关键字经过相同的数学变换，有时可能会碰巧得到同样的一个地址信息。它可通过各种策略来解决，其中最常用的策略就是顺序地向下去寻找。可以这样说，对象就存储在它的散列值所表达的位置的附近。</li>
+</ol>
+<h4 id="四-HashSet重复标准"><a href="#四-HashSet重复标准" class="headerlink" title="四. HashSet重复标准"></a>四. HashSet重复标准</h4><ol>
+<li>Set接口中并没有描述什么叫重复，什么是重复的标准，各个不同的具体实现类都会有自己的处理方法。</li>
+<li>HashSet是使用最多的Set类型 它判断重复的标准如下：<br>1）HashSet先去检查了新加入对象的hashCode是否与已有的对象的hashCode发生了碰撞，如果没有碰撞，这说明必然不会重复，它就不再去调用equals方法进行比较了，否则调用equals方法，返回true才表明两个对象在内容上是真正的相同，这时候对象就被阻止在集合外面不被加进来了。（因此HashSet判断一个元素是否与集合中已有元素重复时的效率是相当高的，因为即使有很多元素，真正发生碰撞的元素毕竟是少数，如此调用equals方法的次数就很少。）<br>2）HashSet没有办法帮助我们自定义的类型去决定什么是逻辑上的重复，因为它不知道我们是按照何种应用逻辑来决定是否重复。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">eg.  import java.util.*;</div><div class="line">class Person &#123; // 自己定义Person类</div><div class="line">    private String name;</div><div class="line">    private int age;</div><div class="line">    public Person(String name, int age) &#123;</div><div class="line">       this.name = name;</div><div class="line">       this.age = age;</div><div class="line">    &#125;</div><div class="line">    public boolean equals(Object x) &#123; //重写equals()</div><div class="line">       if (x instanceof Person == false)&#123;return false;&#125;else</div><div class="line">       &#123;Person p = (Person) x;&#125;</div><div class="line">       return this.name.equals(p.name) &amp;&amp; this.age == p.age;//只有名字和年龄都重复才叫重复</div><div class="line">       // return true;</div><div class="line">    &#125;</div><div class="line">    public int hashCode() &#123;//散列码决定对象存储位置 重写hashCode()</div><div class="line">       return this.name.hashCode() + this.age;</div><div class="line">       // return 100;</div><div class="line">    &#125;</div><div class="line">    public String toString() &#123;//重写toString()</div><div class="line">       return name + &quot;: &quot; + age;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public class HashSetTest &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">       Set&lt;Person&gt; a = new HashSet&lt;Person&gt;();</div><div class="line">       a.add(new Person(&quot;zhang&quot;, 10));</div><div class="line">       a.add(new Person(&quot;zhang&quot;, 11));</div><div class="line">       a.add(new Person(&quot;zhang&quot;, 10));</div><div class="line">       a.add(new Person(&quot;li&quot;, 10));</div><div class="line">       System.out.println(a); //HashSet默认情况下认为我们这些对象都是逻辑上不重复的</div><div class="line">       /*</div><div class="line">        * Set&lt;String&gt; a = new HashSet&lt;String&gt;();</div><div class="line">        * a.add(&quot;abc&quot;);</div><div class="line">        * a.add(&quot;xyz&quot;);</div><div class="line">        * a.add(&quot;abc&quot;);//为了验证，也可改成a.add(new String(&quot;abc&quot;));</div><div class="line">        * System.out.println(a); //结果没有输出两个adc，可见HashSet去判断对象是否重复，它用的是逻辑方式，并不是比较两个对象的地址。</div><div class="line">        */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="五-TreeSet与排序"><a href="#五-TreeSet与排序" class="headerlink" title="五. TreeSet与排序"></a>五. TreeSet与排序</h4><ol>
+<li>根据HashCode判断重复的标准，试着去覆盖hashCode()和equals()方法，发现它们根本不起作用，这是因为TreeSet并不是用散列来进行内部对象的存储位置安排的。从名字上可感觉到它是使用了树形结构，更准确的说它是一种排序树，也就是说TreeSet要求加进来的所有元素必须都可以比较大小。而实际上并非所有元素都能够（或有必要）比较大小。</li>
+<li>Java支持两种标准方式：<br>对象本身就支持一个叫Comparable的接口，任何支持了该接口的对象都实现了compareTo() 方法。（即Comparable类型的对象都有能力自己解决比较问题）<br>对象并不需要承担比较大小的责任，而是聘请一个外来的，外部的裁判对象，来负责判定两个对象的大小关系。这种方式的优点是可以聘请不同的裁判来获得不同的比较结果。</li>
+<li>TreeSet如何来处理冲突问题</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line">eg. 实例：</div><div class="line">import java.util.*;</div><div class="line">/*</div><div class="line"> //对象自身实现了Comparable接口来实现比较</div><div class="line"> class Person implements Comparable &#123;</div><div class="line"> private String name;</div><div class="line"> private int age;</div><div class="line"> </div><div class="line"> public Person(String name, int age) &#123;</div><div class="line"> this.name = name;</div><div class="line"> this.age = age;</div><div class="line"> &#125;</div><div class="line"> public String toString() &#123;</div><div class="line"> return name + &quot;: &quot; + age;</div><div class="line"> &#125;</div><div class="line"> public int compareTo(Object x) &#123;// 重写compareTo()方法</div><div class="line"> if (x instanceof Person == false) &#123;</div><div class="line"> return 0;</div><div class="line"> &#125; else &#123;</div><div class="line"> Person p = (Person) x;</div><div class="line"> // return this.name.compareTo(p.name);</div><div class="line"> int t = this.name.compareTo(p.name);</div><div class="line"> if (t != 0) &#123;</div><div class="line"> return t;</div><div class="line"> &#125; else &#123;</div><div class="line"> // return this.age - p.age;</div><div class="line"> return p.age - this.age;</div><div class="line"> &#125;</div><div class="line"> &#125;</div><div class="line"> &#125;</div><div class="line"> */</div><div class="line"></div><div class="line">// 非侵入方式：不需要对象增加一些接口或方法就让其具有比较的能力</div><div class="line">class Person &#123;</div><div class="line">    private String name;</div><div class="line">    private int age;</div><div class="line">    public Person(String name, int age) &#123;</div><div class="line">       this.name = name;</div><div class="line">       this.age = age;</div><div class="line">    &#125;</div><div class="line">    public String getName() &#123;</div><div class="line">       return name;</div><div class="line">    &#125;</div><div class="line">    public int getAge() &#123;</div><div class="line">       return age;</div><div class="line">    &#125;</div><div class="line">    public String toString() &#123;</div><div class="line">       return name + &quot;: &quot; + age;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">class K implements Comparator &#123;// 新定义一个类型K（可称为裁判类(术语叫比较器)）</div><div class="line">    public int compare(Object a, Object b) &#123;// 重写compare()方法</div><div class="line">       if (a instanceof Person == false || b instanceof Person == false) &#123;</div><div class="line">           return 0;</div><div class="line">       &#125; else &#123;</div><div class="line">           Person p1 = (Person) a;</div><div class="line">           Person p2 = (Person) b;</div><div class="line">           int t = p1.getName().compareTo(p2.getName());</div><div class="line">           if (t != 0) &#123;</div><div class="line">              return t;</div><div class="line">           &#125; else &#123;</div><div class="line">              return p1.getAge() - p2.getAge();     </div><div class="line">//可写成return p1.getAge()-p2.getAge();按字母排序，字母相同则按年龄降序排列</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">    public class TreeSetTest&#123;</div><div class="line">       public static void main(String[] args)&#123;</div><div class="line">           //Set&lt;Person&gt; a = new TreeSet&lt;Person&gt;();</div><div class="line">           Set&lt;Person&gt; a = new TreeSet&lt;Person&gt;(new K());</div><div class="line">           a.add(new Person(&quot;hao&quot;, 10));</div><div class="line">           a.add(new Person(&quot;hao&quot;, 20));</div><div class="line">           a.add(new Person(&quot;hao&quot;, 30));</div><div class="line">           a.add(new Person(&quot;hao&quot;, 10));</div><div class="line">           a.add(new Person(&quot;zhang&quot;, 10));</div><div class="line">           a.add(new Person(&quot;zhang&quot;, 11));</div><div class="line">           a.add(new Person(&quot;zhang&quot;, 20));</div><div class="line">           a.add(new Person(&quot;li&quot;, 40));</div><div class="line">           System.out.println(a);</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">￭注：Java中涉及到判断大小的地方很可能用的就是上述两种判断标准，如Arrays.sort(数组)，</div><div class="line">Collection.sort(动态数组/list)，同样存在自定义元素比较大小问题，仍然可采用上述方案。</div><div class="line">``` </div><div class="line"></div><div class="line">#### 六. 对象比较</div><div class="line"></div><div class="line">1. 对象的比较关系：</div><div class="line">+ 是否相等：</div><div class="line">比较指针是否指向同一个对象（==）;比较两个对象在逻辑上是否是等价的（equals()）;</div><div class="line">注：</div><div class="line">Object方法中的equals()仅仅是一个空壳，想要实现对内容的比较，需要覆盖equals()。</div><div class="line">虽然我们可以自定义比较规则，但是一般情况下要满足a.equals(a)必须返回true，即一个对象必须要和它自己逻辑等价(自反性，对称性，传递性)。</div><div class="line">在定义自己类的equals()方法时最好也能去覆盖hashCode()方法，对于equals返回是true的情况必须保证hashCode返回的值也相同。</div><div class="line">④比较相同并不能决定两个对象谁大谁小，即无法进行排序。要想实现排序必须比较出对象间更多的信息来，而不仅仅是像equals那样只返回布尔值。</div><div class="line"> </div><div class="line">+ 大小比较(a.compareTo(b)/compare(a,b))</div><div class="line">比较大小一定要返回三种信息：大于，等于，小于(Java中一般是返回一个整数（正数，0，负数）)，显然比较大小就隐含的比较了是否相等。</div><div class="line">a.compareTo(b)如果返回0，a.equals(b)就一定要返回true，这两者是相关联的。</div><div class="line"></div><div class="line">#### 七. Map接口与特性</div><div class="line"></div><div class="line">1. 类似数学中的函数概念（每一个x都有唯一的y与它对应，称y是x的函数），同样的，计算机中的函数被看成键值对，键是唯一的而值可以重复，这样从一个确定的键就可以确定出唯一的值。 Map可以看成是键值对的集合，从一个键出发可以快速的找到相应的值。</div><div class="line">2. 键和值都可以是任何一种对象，但具体的实现类却有具体的要求。</div><div class="line">3. Map的特性是一个键可以对应一个值，多个键也可以对应同一个值，但一个键绝不能对应于多个不同的值。正因为这个特性键才是不重复的。</div><div class="line">4. 把重复的键和值这种对应关系加入Map中时，后面加入的键会覆盖前面加入的键对。</div><div class="line">5. 把Map中的键值全部输出：</div><div class="line">1）调用keySet()方法取得键集（把Map转化成集合）,然后可调用iterrator()方法遍历该集合。</div><div class="line">2）调用entrySet()方法直接取出键值对。（返回的是一个内部接口类型Map.Entry&lt;string,string&gt;,也可不用泛型</div></pre></td></tr></table></figure>
 <p>eg. import java.util.*;<br>public class MyA {<br>    public static void main(String[] args) {<br>       Map<string, string="">  a = new  HashMap<string, string="">();<br>       a.put(“cat”, “猫”);<br>       a.put(“desk”, “桌子”);<br>       a.put(“table”, “桌子”);<br>       a.put(“table” ,”表格”);</string,></string,></p>
 <pre><code>   System.out.println(a.get(&quot;table&quot;));
 
