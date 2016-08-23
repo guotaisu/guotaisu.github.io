@@ -458,8 +458,10 @@
             <h2 id="第一章-OpenStack基础"><a href="#第一章-OpenStack基础" class="headerlink" title="第一章 OpenStack基础"></a>第一章 OpenStack基础</h2><p>1.OpenStack管理的资源及提供的服务</p>
 <blockquote>
 <p>OpenStack做为一个操作系统，它管理的资源主要有三个方面：计算，存储，网络。OpenStack管理这些资源并提供给上层应用或用户去使用。这些资源管理是通过OpenStack中的各个项目来实现的。其中计算资源管理相关项目是Nova；存储相关的主要有快存储服务Cinder,对象存储服务Swift和镜像存储服务Glance；与网络相关的主要是一个和软件定义网络相关的项目Neutron(原名叫Qauntum)。另外Nova中有一个管理网络的模块叫做Nova Network，它做为一个比较稳定的遗留组件，现在仍然在OpenStack里和Neutron并存，在小规模部署里面，为了追求稳定和减少工作量会去使用它对网络资源进行管理。</p>
+<ul>
+<li>附:OpenStack资源VS公有云资源:<br><img src="./images/OpenStack%20VS%20%E5%85%AC%E6%9C%89%E4%BA%91.jpg" alt="enter description here" title="OpenStack VS 公有云.jpg"></li>
+</ul>
 </blockquote>
-<p>2.OpenStack资源VS公有云资源:<br><img src="./images/OpenStack%20VS%20%E5%85%AC%E6%9C%89%E4%BA%91.jpg" alt="enter description here" title="OpenStack VS 公有云.jpg"></p>
 <p>3.OpenStack基本组件</p>
 <ul>
 <li>Nova（OpenStack Compute）:<br>它是OpenStack里最核心的项目， 主要作用是控制虚拟机的创建以及改变他的容量和配置；它还可以做虚拟机的销毁，即虚拟机的整个生命周期都是由Nova来控制的。Nova的部署和运行一般有两种情况：一种是作为Controller节点去运行，它的核心部分主要有Scheduler(决定将要启动的虚拟机调度到哪个物理节点上),Conductor(对所有的计算节点进行统一管理)，NovaCell(级联)，用这些来控制其它一些运算节点。另外一种是作为Compute节点运行，它的核心部分是Nova  Compute，用来控制运行实际的虚拟机。</li>
@@ -475,9 +477,7 @@
 <blockquote>
 <p>注：其中Network(即Neutron)和Block Storage(即Clinder)分别是从Compute Network和Compute<br>Vloume发展出来的。但Network组件并没有直接去替换Compute Network，它是相对独立的（也是当下流行的SDN）的一个项目，它为Compute提供网络连接，提供网络资源管理这些服务。而Block Storage则替换了Compute Vloume，它为Compute提供块存储服务。</p>
 </blockquote>
-<ol>
-<li>OpenStack的API</li>
-</ol>
+<p>2.OpenStack的API</p>
 <ul>
 <li>OpenStack各组件间通过相互调用API实现通信。OpenStack的API是基于HTTP协议的RESTful Web API。（REST:表现状态传输 VS另外一种Web服务接口协议：SOAP）</li>
 <li>REST架构里对资源的操作包括获取，创建，修改和删除。正好对应HTTP里提供的GET,POST,PUT,DELETE方法。所以用HTTP来实现REST是比较方便的。</li>
@@ -512,10 +512,8 @@
 <ul>
 <li>OpenStack各个项目，组件按一定方式安装到实际的服务器节点上，实际的存储设备上，然后通过网络把它们连接起来，这就是OpenStack的部署架构。</li>
 <li>OpenStack部署分为单节点部署和多节点部署（集群部署）</li>
-<li><p>OpenStack的部署架构不是一层不变的，而是根据实际需求设计不同的实施方案。</p>
-</li>
-<li><p>OpenStack的简单部署架构：</p>
-</li>
+<li>OpenStack的部署架构不是一层不变的，而是根据实际需求设计不同的实施方案。</li>
+<li>OpenStack的简单部署架构：</li>
 </ul>
 <blockquote>
 <p>附：</p>
@@ -535,9 +533,7 @@
 <blockquote>
 <p>注：在nova.conf中可以通过ram_allocation_ratio参数设置内存的超配比例，其前提是使用RamFilter。</p>
 </blockquote>
-<ol>
-<li>Swift组件解析</li>
-</ol>
+<p>2.Swift组件解析</p>
 <ul>
 <li>Swift历史相对较长，比较独立，它和其它组件的耦合度比较低，有自己完整的存储体系，不依赖第三方软件或设备（如不依赖keystone做用户认证和建权）。<br>★对象存储：采用RESTful接口，支持直接从互联网访问存储系统进行数据的读写。</li>
 <li>Swift接口：它和其它组件接口类似，也是RESTful 的Web API，总共有四个部分组成：第一个是HTTP操作（GET,POST,PUT或DELETE）；第二个是认证信息（主要是用户的身份信息）；第三个是指示资源地址的URL（包含域名或地址及Account, Container,Object）；第四个是（可选项）数据和元数据。</li>
@@ -546,9 +542,7 @@
 </blockquote>
 </li>
 </ul>
-<ol>
-<li>Cinder组件解析</li>
-</ol>
+<p>3.Cinder组件解析</p>
 <ul>
 <li>传统数据中心的存储设备：SAN或盘阵，指一类设备，通过网络连接给服务器提供存储空间。SAN设备和服务器之间的网络连接主要有两种形式，第一种叫Fibre Channel（FC），用专用光线连接网络; 另外一种叫iSCSI，基于以太网协议/IP协议。</li>
 </ul>
@@ -559,9 +553,7 @@
 <li>Cinder Volume<br>①通过Driver适配其它设备。（屏蔽底层硬件异构性）</li>
 </ul>
 </blockquote>
-<ol>
-<li>Neutron组件解析</li>
-</ol>
+<p>4.Neutron组件解析</p>
 <ul>
 <li>传统数据中心的网络：它分为几个层(Tier)，首先是服务器接入的第一级交换机叫接入交换机（往往在机架的顶部又称为(TOR)架顶交换机）；往上会接入一个汇聚层的交换机叫汇聚交换机（往往放在一排机架的顶头位置）；再往上会接入核心交换机，它把汇聚交换机连接起来，往往不只一个。</li>
 <li>根据ISO网络模型，网络分为七个层(此处是协议栈里的层，layer)，OpenStack和Neutron主要关注其中的二三层，分别是数据链层和网络层。</li>
@@ -589,18 +581,19 @@
 <li>KeyStone组件解析</li>
 </ol>
 <ul>
-<li>KeyStone的作用：<br>a.权限管理：用户，租户，角色（Role,keystone访问控制机制的核心）。<br>★注：用户和租户之间是多对多的关系。可通过Role进行权限管理以及将同一个用户分配到不同的tenant。<br>b.服务目录：服务，端点</li>
-<li>keystone只是云安全的一部分，二者不可等同。公有云上常见的安全防护手段：<br>a.安全访问：允许使用安全的Https访问<br>b.内置防火墙功能：通过配置内置防火墙让云上的环境或应用更安全<br>c.加密数据存储<br>d.帮助租户监测安全状况：主动监测租户的安全状况并给出提示</li>
+<li>KeyStone的作用：<br>a.权限管理：用户，租户，角色（Role,keystone访问控制机制的核心）。</li>
 </ul>
 <blockquote>
+<p>★注：用户和租户之间是多对多的关系。可通过Role进行权限管理以及将同一个用户分配到不同的tenant。<br>b.服务目录：服务，端点</p>
+<ul>
+<li>keystone只是云安全的一部分，二者不可等同。公有云上常见的安全防护手段：<br>a.安全访问：允许使用安全的Https访问<br>b.内置防火墙功能：通过配置内置防火墙让云上的环境或应用更安全<br>c.加密数据存储<br>d.帮助租户监测安全状况：主动监测租户的安全状况并给出提示</li>
+</ul>
 <p>问题集：</p>
 <ul>
-<li>比较Swift和Cinder两种存储之间的异同<br>异：Swift比较独立，它和其它组件的耦合度比较低，有自己完整的存储体系，不依赖第三方软件或设备（如不依赖keystone做用户认证和建权）,采用RESTful接口，支持直接从互联网访问存储系统进行数据的读写。<br>而Cinder本身并不是提供数据存储的，它需要接一个存储的后端，即EMC的散设备等，它有一个很重要的功能叫卷管理功能。虚拟机并不直接去使用存储设备（或使用后端的存储系统），它使用的是虚拟机上的块设备，可称为卷(Volume），实际上Cinder就是去创建和管理这些Volume，并且把它挂载到虚拟机上。<br>同：二者整体架构都是RESTful  API，但Swift是通过一个叫Proxy Server来实现的。Cinder API不同于Swift的RESTful API，它提供一些操作和管理功能。</li>
-</ul>
-</blockquote>
-<ul>
+<li>比较Swift和Cinder两种存储之间的异同<br>异： Swift比较独立，它和其它组件的耦合度比较低，有自己完整的存储体系，不依赖第三方软件或设备（如不依赖keystone做用户认证和建权）,采用RESTful接口，支持直接从互联网访问存储系统进行数据的读写。<br>而Cinder本身并不是提供数据存储的，它需要接一个存储的后端，即EMC的散设备等，它有一个很重要的功能叫卷管理功能。虚拟机并不直接去使用存储设备（或使用后端的存储系统），它使用的是虚拟机上的块设备，可称为卷(Volume），实际上Cinder就是去创建和管理这些Volume，并且把它挂载到虚拟机上。<br>同： 二者整体架构都是RESTful  API，但Swift是通过一个叫Proxy Server来实现的。Cinder API不同于Swift的RESTful API，它提供一些操作和管理功能。</li>
 <li>比较Neutron和Nova-Network的异同<br>Nova Network只是早先Nova中的一个管理网络模块，它在网桥的基础上增加了一个模块，它可以有两种工作模式：①Flat DHCP工作模式②基于VLAN的隔离，它勉强满足了云的要求，所以可在一个简单的，对网络要求不高的云计算环境中使用Nova Network实现一个比较简单的网络。Neutron做为一个Openstack项目出现之后，租户可以定制rich topology的虚拟网络；可以通过各种agent和plugin实现具体功能并和第三方设备，软件对接。</li>
 </ul>
+</blockquote>
 <h2 id="第四章-OpenStack各组件解析（进阶）"><a href="#第四章-OpenStack各组件解析（进阶）" class="headerlink" title="第四章 OpenStack各组件解析（进阶）"></a>第四章 OpenStack各组件解析（进阶）</h2><p>1.Ceilometer组件解析</p>
 <ul>
 <li>Ceilometer又称为Openstack Telemetry: 远程测量收集数据</li>
@@ -638,7 +631,7 @@
 <li>Ironic实际上是由Nova的一个部分演化而来（以前Nova中专门管理物理机器的Nova driver）（同样的，先前说的Cinder是Nova Volume演化而来）</li>
 </ul>
 <blockquote>
-<p>问题集：<br>Heat中的模板和Sahara中的模板的异同：<br>异：<br>Heat和AWS里的CloudFormation比较类似，它按照用户写的模板或脚本(Template)把Openstack的各种资源（如虚拟机或卷）实例化并组织起来形成一个完整的应用。按照Tempalte生成的东西叫stack(栈), Tempalte写了创建一个stack需要用到哪些资源，及这些资源的相互关系。<br>Sahara 的Iaas模式/管理模式中，通过节点组模板定义节点组，通过集群模板定义集群。<br>同：都包含了配置信息，用来对组件进行配置，通常包括 version ,description , resources，parameters, outputs等信息。</p>
+<p>问题集：<br>Heat中的模板和Sahara中的模板的异同：<br>异:  Heat和AWS里的CloudFormation比较类似，它按照用户写的模板或脚本(Template)把Openstack的各种资源（如虚拟机或卷）实例化并组织起来形成一个完整的应用。按照Tempalte生成的东西叫stack(栈), Tempalte写了创建一个stack需要用到哪些资源，及这些资源的相互关系。<br>Sahara 的Iaas模式/管理模式中，通过节点组模板定义节点组，通过集群模板定义集群。<br>同:  都包含了配置信息，用来对组件进行配置，通常包括 version ,description , resources，parameters, outputs等信息。</p>
 </blockquote>
 <h2 id="第五章-OpenStack实际操作"><a href="#第五章-OpenStack实际操作" class="headerlink" title="第五章 OpenStack实际操作"></a>第五章 OpenStack实际操作</h2><p>1.OpenStack部署环境准备</p>
 <ul>
@@ -704,35 +697,37 @@
 <p>注：HDFS把文件分成块，把块做三个副本存储到不同节点上，形成一个比较高可靠性的文件系统；MapReduce把我们提交的数据处理任务（job）拆分成不同的task分发到不同的节点上，以实现并行处理。MapReduce最大的特点是能够把任务调度到离数据近的节点上，尽量减少数据在网络间的传输，使我们可用通用廉价的X86服务器和网络设备来构筑一个数据并行处理系统。</p>
 <p>★Openstack虚拟机调度和Hadoop任务调度实际上是两个不同层次的资源调度。要把Hadoop做云化就需要解决两个不同层次上的资源和任务调度问题。Hadoop最重要的两个部分HDFS和MapReduce云化时也会出现相应问题，为解决相关问题Hadoop提供了一个由VMware主导的开源项目HVE(Hadoop Virtual Extensions)。</p>
 </blockquote>
-<ol>
-<li>基于OpenStack实现Hadoop云化</li>
-</ol>
+<p>3.基于OpenStack实现Hadoop云化</p>
 <ul>
 <li>Sahara分别从部署管理和提供数据处理服务两个层次上对Hadoop云化做了一些工作。</li>
 <li>HDFS和Swift集成：在Hadoop集群里仍用本地根硬盘来构筑 HDFS，但是把数据源和job放在Swift里。此外，由VMware主导的开源项目BDE(Big Data Extensions)，它和Openstack的Sahara很类似，但是在各个方面都做得比Sahara好得多，且它和HVE 集成做得很好。</li>
 </ul>
-<ol>
-<li>Ceph简介</li>
-</ol>
+<p>4.Ceph简介</p>
 <ul>
 <li>Ceph现在经常被用来做为RBD设备提供块存储服务。</li>
-<li>Ceph层次结构：<br>底层RADOS，中间层LIBRADOS ,顶层RADOS GW, RBD, CEPH FS<br>① RADOS：可靠的，自动化的，分布式的对象存储。底层是一个完整的存储系统，它的核心是OSD(Object Storage Daemon)，Daemon是一个服务软件（进程），它和Cinder里定义的OSD(Object Storage Device)之间有很强的对应关系，可认为是其简略版本。<br>注：不同于Swift存储 的对象（文件），Ceph的对象实际上是把一个文件拆分成若干个Object，分别放到底层的存储设备上。<br>★RADOS逻辑结构：OSDs , Monitors , Clients<br>注：此处的客户端和Swift客户端有本质区别，Swift客户端只是用Pyhon写的一个供用户使用能够调用RESTful 接口的客户端程序而已，没有它我们直接调用RESTful 接口也可以读写Swift，但是在RADOS里如果没有Clients,整个数据读写就难以实现，它是存储系统的一部分。</li>
+<li>Ceph层次结构：<br>底层RADOS，中间层LIBRADOS ,顶层RADOS GW, RBD, CEPH FS</li>
 </ul>
+<p>① RADOS：可靠的，自动化的，分布式的对象存储。底层是一个完整的存储系统，它的核心是OSD(Object Storage Daemon)，Daemon是一个服务软件（进程），它和Cinder里定义的OSD(Object Storage Device)之间有很强的对应关系，可认为是其简略版本。</p>
 <blockquote>
-<p>★Ceph系统中的寻址流程（文件存储到底层OSD上）<br>它首先把文件拆分成若干个Objects，然后把Objects放到PG组里面，每个组再通过CRUSH算法给它映射到不同的OSD上。此存储过程特点是它每一步都是通过计算得到的，它中间没有查表，这使得Ceph拥有较好的扩展性。<br>②LIBRADOS: 提供一组直接访问RADOS的API<br>③RADOS GW, RBD, CEPH FS：RADOS GateWay把底层对象存储系统往外再次封装，提供兼容Swift和亚马逊S3对象存储接口，这个接口也是HTTP的。RBD经常作为Cinder的后端为虚拟机提供卷。CEPH FS是在Ceph基础上封装了一个POSIX接口，形成文件系统。</p>
+<p>注：不同于Swift存储 的对象（文件），Ceph的对象实际上是把一个文件拆分成若干个Object，分别放到底层的存储设备上。</p>
 </blockquote>
-<ol>
-<li>Ceph在OpenStack中的应用</li>
-</ol>
+<p>★RADOS逻辑结构：OSDs , Monitors , Clients</p>
+<blockquote>
+<p>注：此处的客户端和Swift客户端有本质区别，Swift客户端只是用Pyhon写的一个供用户使用能够调用RESTful 接口的客户端程序而已，没有它我们直接调用RESTful 接口也可以读写Swift，但是在RADOS里如果没有Clients,整个数据读写就难以实现，它是存储系统的一部分。</p>
+<p>★Ceph系统中的寻址流程（文件存储到底层OSD上）<br>它首先把文件拆分成若干个Objects，然后把Objects放到PG组里面，每个组再通过CRUSH算法给它映射到不同的OSD上。此存储过程特点是它每一步都是通过计算得到的，它中间没有查表，这使得Ceph拥有较好的扩展性。</p>
+</blockquote>
+<p>②LIBRADOS: 提供一组直接访问RADOS的API<br>③RADOS GW, RBD, CEPH FS：RADOS GateWay把底层对象存储系统往外再次封装，提供兼容Swift和亚马逊S3对象存储接口，这个接口也是HTTP的。RBD经常作为Cinder的后端为虚拟机提供卷。CEPH FS是在Ceph基础上封装了一个POSIX接口，形成文件系统。</p>
+<p>5.Ceph在OpenStack中的应用</p>
 <ul>
 <li>Ceph在OpenStack中受欢迎的原因：<br>①有了Ceph，可基于X86搭建分布式块存储系统</li>
 </ul>
 <blockquote>
-<p>附：块存储有强一致性和高性能的要求，这对于Swift和HDFS都是没有或比较弱的。<br>★Cinder支持Ceph提供的RBD设备，二者结合可基于X86普通服务器更加廉价方便地搭建一个块存储系统提供（卷）给虚拟机去使用。<br>②提供Swift兼容的对象接口</p>
-<p>★Ceph和Swift仍不可互为替代，二者比较如下：<br><img src="./images/Ceph%20VS%20Swift.jpg" alt="enter description here" title="Ceph VS Swift.jpg"></p>
+<p>附：块存储有强一致性和高性能的要求，这对于Swift和HDFS都是没有或比较弱的。<br>★Cinder支持Ceph提供的RBD设备，二者结合可基于X86普通服务器更加廉价方便地搭建一个块存储系统提供（卷）给虚拟机去使用。<br>②提供Swift兼容的对象接口<br>③★Ceph和Swift仍不可互为替代，二者比较如下：<br><img src="./images/Ceph%20VS%20Swift.jpg" alt="enter description here" title="Ceph VS Swift.jpg"><br>案例一：目前OpenStack规模小，节点数量少，此时使用Swift节点浪费存储，可选用Ceph<br>案例二：提供云盘服务（面对大量用户，强调用户体验，用户可选存储策略（Storage Policy）），此时选用Swift更好，它更好地支持规模化部署，有先进的Feature，成本比Ceph更低<br>④现在OpenStack所有存储都（开始）支持Ceph作为后端</p>
 </blockquote>
-<p>案例一：目前OpenStack规模小，节点数量少，此时使用Swift节点浪费存储，可选用Ceph<br>案例二：提供云盘服务（面对大量用户，强调用户体验，用户可选存储策略（Storage Policy）），此时选用Swift更好，它更好地支持规模化部署，有先进的Feature，成本比Ceph更低。<br>④现在OpenStack所有存储都（开始）支持Ceph作为后端</p>
-<p>6.OpenStack与Docker<br>附：HyperVisor：在一个宿主机上搭建环境，可在环境里创建虚拟机，再在虚拟机里装客户操作系统(Guest OS)，然后在其上面装中间件，之后再装应用等。<br>Container技术：另外一种虚拟化技术，无需再装Guest OS，而直接基于宿主机操作系统来操作，可在其上做运行环境隔离，资源划分等，并形成容器，让应用在容器中运行。容器之间底层是共享一个操作系统的，甚至可以共享一些公用的库。和传统的HyperVisor相比，它的优势在于省去了Guest OS的开销；劣势在于只能使用和宿主机相同的操作系统。</p>
+<p>6.OpenStack与Docker</p>
+<blockquote>
+<p>附：HyperVisor：在一个宿主机上搭建环境，可在环境里创建虚拟机，再在虚拟机里装客户操作系统(Guest OS)，然后在其上面装中间件，之后再装应用等。<br>Container技术：另外一种虚拟化技术，无需再装Guest OS，而直接基于宿主机操作系统来操作，可在其上做运行环境隔离，资源划分等，并形成容器，让应用在容器中运行。容器之间底层是共享一个操作系统的，甚至可以共享一些公用的库。和传统的HyperVisor相比，它的优势在于省去了Guest OS的开销；劣势在于只能使用和宿主机相同的操作系统。</p>
+</blockquote>
 <ul>
 <li>Docker：是基于容器的一个引擎，让开发者可以打包应用，并将其依赖包打到可移植的容器里，而容器可发布到任何linux机器上。OpenStack里将Docker也看成是一种HyperVisor</li>
 <li>OpenStack+Docker:（结合点）<br>①使用Swift做Docker镜像的存储后端<br>②Nova里有针对Docker的Driver或插件，可用Nova调度和管理Docker容器。<br>③使用Heat来实现Docker的Ochestration<br>④基于Neutron设计与实现适用于Docker的SDN方案<br>⑤使用Glance来管理Ducker镜像<br>……</li>
