@@ -669,9 +669,7 @@
 <li>在控制节点上创建网络</li>
 <li>启动虚拟机（用nova boot命令）</li>
 </ul>
-<ol>
-<li>OpenStack支撑服务的安装配置<br>支撑服务：NTP（时间同步服务），mysql数据库服务，RabbitMQ（消息中间件服务）。配置host文件，实现通过主机名访问虚拟机。</li>
-</ol>
+<p>5.OpenStack支撑服务的安装配置<br>支撑服务：NTP（时间同步服务），mysql数据库服务，RabbitMQ（消息中间件服务）。配置host文件，实现通过主机名访问虚拟机。</p>
 <ul>
 <li>NTP服务：它有两个作用，一是将本机时间和网络上的一台时间同步器去同步；另外一个作用是将本机作为一个时间同步器提供给其它节点去使用。<br>在Opentstack部署环境中，建议让Controller结点去和互联网上的一个时间同步器同步，让其它结点和这个Controller结点同步，这样一来，其它结点和这个Controller结点的时间同步就在一个局域网内，时间同步性更高。安装完NTP后为实现把Controller结点做为时间同步源，需在其它结点上编辑它的配置文件（etc文件夹下的ntp.conf,加上server controller）。</li>
 <li>在Contorller结点上安装mysql服务（需安装python-mysqdb客户端和mysql-server服务进程），并修改配置文件（etc文件夹中mysql下的my.cnf,<br>修改bind-address（绑定访问mysql服务器所需要的IP地址）；修改或添加数据库引擎配置（mysql默认或推荐的数据库引擎是InnoDB）。<br>注：【实际运用中可把数据库服务安装到单独的一个机器上(可配置全ssd)，公司里常用全ssd服务器来支撑数据库服务，提高其性能】<br>其它结点上不用再安装数据库服务，只需安装一个python客户端即可，Openstack就可以访问Contorller结点上的那个数据库了。</li>
