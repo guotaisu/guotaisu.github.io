@@ -861,7 +861,8 @@
 <li>安卓长度单位<br><code>（为适应不同设备）使用与像素和密度无关的单位：dp（可自动换算：1dp=[density/160]px），sp（用于设定与density及scale无关的字体单位）</code></li>
 </ol>
 <p>4.代码调试<br>用日志器【不能用system.out.println()，它只能是在真机上执行完毕后由adb回显数据。】<br><code>eg.Log.i(“标签” , ”要输出的内容”);</code></p>
-<p>5.<code>IDE把源代码进行编译（生成.des字节码文件，与sun公司的.class文件不尽相同），编译完后进行打包（. apk文件），之后通过安卓的adb传到AVD或真机上，传完后adb再发送一条指令把安装好的.apk进行启动，启动过程中adb会收集到很多调试信息并返回。</code><br>6.<code>在Manifests文件中可设置用户权限：&lt;uses permission ...&gt;</code></p>
+<p>5.<code>IDE把源代码进行编译（生成.des字节码文件，与sun公司的.class文件不尽相同），编译完后进行打包（. apk文件），之后通过安卓的adb传到AVD或真机上，传完后adb再发送一条指令把安装好的.apk进行启动，启动过程中adb会收集到很多调试信息并返回。</code></p>
+<p>6.<code>在Manifests文件中可设置用户权限：&lt;uses permission ...&gt;</code></p>
 <h3 id="五．安卓布局管理"><a href="#五．安卓布局管理" class="headerlink" title="五．安卓布局管理"></a>五．安卓布局管理</h3><blockquote>
 <p>gravity: 容器自身对于内部组件的重力位置。<br>layout_gravity: 组件自身对于容器的重力位置。</p>
 <blockquote>
