@@ -1,0 +1,649 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="核心Java及拓展（含问题集），其它," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一：WebUI二:  JAVA三：oracle四:  JavaWeb, J2ee1.框架：
+
+Hibernate:（xml版）
+框架搭建：
+
+2015.12.30
+12345678910111213141516171819202122232425262728293031323334353637383940String和StringBuffer的区别：示例：Private String randNa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="核心Java">
+<meta property="og:url" content="http://www.guotai.cn.com/2016/04/25/核心Java/index.html">
+<meta property="og:site_name" content="苏国泰专属空间">
+<meta property="og:description" content="一：WebUI二:  JAVA三：oracle四:  JavaWeb, J2ee1.框架：
+
+Hibernate:（xml版）
+框架搭建：
+
+2015.12.30
+12345678910111213141516171819202122232425262728293031323334353637383940String和StringBuffer的区别：示例：Private String randNa">
+<meta property="og:updated_time" content="2016-08-23T06:42:23.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="核心Java">
+<meta name="twitter:description" content="一：WebUI二:  JAVA三：oracle四:  JavaWeb, J2ee1.框架：
+
+Hibernate:（xml版）
+框架搭建：
+
+2015.12.30
+12345678910111213141516171819202122232425262728293031323334353637383940String和StringBuffer的区别：示例：Private String randNa">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.guotai.cn.com/2016/04/25/核心Java/"/>
+
+  <title> 核心Java | 苏国泰专属空间 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">苏国泰专属空间</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">个人博客</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                核心Java
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-25T00:00:00+08:00" content="2016-04-25">
+              2016-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程基础/" itemprop="url" rel="index">
+                    <span itemprop="name">编程基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一：WebUI"><a href="#一：WebUI" class="headerlink" title="一：WebUI"></a>一：WebUI</h3><h3 id="二-JAVA"><a href="#二-JAVA" class="headerlink" title="二:  JAVA"></a>二:  JAVA</h3><h3 id="三：oracle"><a href="#三：oracle" class="headerlink" title="三：oracle"></a>三：oracle</h3><h3 id="四-JavaWeb-J2ee"><a href="#四-JavaWeb-J2ee" class="headerlink" title="四:  JavaWeb, J2ee"></a>四:  JavaWeb, J2ee</h3><p>1.框架：</p>
+<ul>
+<li>Hibernate:（xml版）</li>
+<li>框架搭建：</li>
+</ul>
+<p>2015.12.30</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">String和StringBuffer的区别：示例：</div><div class="line">Private String randName(int len)&#123;</div><div class="line"> </div><div class="line">String s= “hello”;</div><div class="line">s=”abc”;</div><div class="line"> </div><div class="line">StringBuffer sb = new StringBuffer();</div><div class="line">For(int i = 0; i&lt;len;i++)&#123;</div><div class="line">s += (char)(Math.random()*26+65)</div><div class="line">sb.append((char)(Math.random()*26+65));</div><div class="line">//产生随机大写字母（对应数字65~90，小写对应数字97~122）</div><div class="line">&#125; </div><div class="line">Return sb.toString();//StringBuffer要通过toString()转换成String</div><div class="line">&#125;</div><div class="line">上面的两个s指向两个不同地址+=后把两个地址合并后放入一个新地址，即一直在切换地址。</div><div class="line">s放在堆内存中，java中GC机制会自动回收(影响性能)，而在c++中没有回收机制，使用时要进行释放，否则会造成内存溢出。</div><div class="line"> </div><div class="line">double后面小数点保留15位，float后面小数点保留6位 </div><div class="line">若要取小数点后两位则有：</div><div class="line">1)用DecimalForamt 类进行数据格式转换</div><div class="line">DecimalForamt  df = new DecimaForamt(“#0.00”) //括号里指明格式</div><div class="line">String sd = df.format(Math.random()*100 )</div><div class="line">2）用Stirng类的fomat静态方法</div><div class="line">String sd = Stirng.format(“%.2f”,Math.random()*100)</div><div class="line"> </div><div class="line">Hibernate中分页代码：</div><div class="line">String hql =”from Book”;</div><div class="line">int pageSize=4;</div><div class="line">int currentPage = 1;</div><div class="line">int records = 0;</div><div class="line">int totalpage = 0;</div><div class="line">Quetry query = session.createQuery(hql);</div><div class="line">records = query.list.size();</div><div class="line">query.setMaxResults(pageSize);</div><div class="line">query.setFirstResult((currentPage-1)*pageSize);</div><div class="line">totalPage = records/pageSize;</div><div class="line">if(records%pageSize!=0)&#123;</div><div class="line">totalPage++;</div><div class="line">&#125;</div><div class="line">System.err.println(totalPage);//err（区别于out）：标记分页</div></pre></td></tr></table></figure>
+<p>2016.1.02</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">文件上传（用户管理系统头像上传）：</div><div class="line"></div><div class="line">表单（二进制提交）取出字段用getFieldName()不能用request.getParameter()</div></pre></td></tr></table></figure>
+<p>2016.1.03</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">计算机编码主要区分：</div><div class="line">ASCLL：英文编码。其中ISO-8859-1是ASCLL码的一个子集。</div><div class="line">Unicode:中文编码 （除英文外的其他语言用的编码）。</div><div class="line">UTF-8：是Unicode的一个分支。</div><div class="line">gbk:是UTF-8的一个分支。(big5（大五码/繁体中文，也是UTF-8的一个分支)。</div><div class="line">gb2312:是gbk的子集。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">编码存储：</div><div class="line">ASCLL（255个字符，122后就是乱码）：字节存储（1byte=8bit），一个字节表示一个英文字母。大写字母A~Z（65~90），小写字母a~z（97~122）。数字编码0~9（48~57），其它符号如13表示空格。。。</div><div class="line">Unicode（0~65535）:2byte=16bit</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">中文乱码：</div><div class="line">（1）Get提交（URL重写）： </div><div class="line">Tomcat7 修改配置文件（server）在容器connector中的端口后加URIEncoding=”UTF-8”。</div><div class="line">Tomcat8无需修改配置文件可直接处理get提交的中文乱码。</div><div class="line">（2）post提交</div><div class="line">源程序中添加： </div><div class="line">String tex = request.getParameter(“text”);</div><div class="line">Text=new String(text.getBytes(“ISO-8859-1”),”UTF-8”); </div><div class="line">或源程序中添加：request.setCharacterEncoding(“UTF-8”)；//控制器中表单采用二进制（字节）提交时不起作用。若数据库存储依然乱码，需统一数据库编码，要在数据库连接处告诉数据库采用何种编码（？useUnicode=true&amp;characterEncoding=UTF8)。（oracle一般能自动统一数据库编码） </div><div class="line">（3）输出到浏览器乱码：response.getWriter().print(text);</div><div class="line">源程序中添加: Response.setContentType(“text/html,;charset-UTF-8”);//设置的是响应头或请求头不是设置输出文件。</div></pre></td></tr></table></figure>
+<p>2016.1.06</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">java读取属性文件</div><div class="line">1.例一（读取系统属性）</div><div class="line">Properties p = System.getProperties();//导入uitil工具包</div><div class="line">p.list(System.out);/、获取所有的属性</div><div class="line">System.out.println(p.getProperty(“os.name”));//获取单个属性</div><div class="line"> </div><div class="line">2.例二（连接池动态加载）</div><div class="line">写配置文件(driver,url；不加引号)，并定义类变量driver,url</div><div class="line">在源程序中添加代码（如init（）方法中）： </div><div class="line">Properties p  = new Properties();</div><div class="line">//获取类的存放目录（用类反射）</div><div class="line">String path = 类名.class.getResource(“/属性文件名”).toString().substring(6);</div><div class="line">InputStream in = new FileInputStream(new File(“path”));</div><div class="line">p.load(in);</div><div class="line">driver = p.getProperty(“driver”);</div><div class="line">url  = p.getProperty(“url”)</div><div class="line">``` </div><div class="line"></div><div class="line">2016.01.14</div></pre></td></tr></table></figure>
+<p>UserDAOImpl.java:<br>public class UserDAOImpl extends HibernateDaoSupport implements UserDAO{</p>
+<p>Public void delete(long id){<br>Session session = getSession();<br>Obeject o = Session.get(User.class,id);<br>//用get,记录不存在就返回空；<br>Obeject o = Session.load(User.class,id);<br>//用load,没有记录的话，会抛异常，程序终止，后面不再执行，确定存在记录则可大胆使用<br>session.delete(o);<br>  }<br>}<br>```</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/核心Java及拓展（含问题集），其它/" rel="tag">#核心Java及拓展（含问题集），其它</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/22/数据结构要点笔记/" rel="next" title="数据结构要点笔记">
+                <i class="fa fa-chevron-left"></i> 数据结构要点笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/26/Java多线程/" rel="prev" title="Java多线程">
+                Java多线程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://pan.baidu.com/s/1jIfiwwY"
+               alt="sgt_tiger" />
+          <p class="site-author-name" itemprop="name">sgt_tiger</p>
+          <p class="site-description motion-element" itemprop="description">技术 | 生活</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一：WebUI"><span class="nav-number">1.</span> <span class="nav-text">一：WebUI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-JAVA"><span class="nav-number">2.</span> <span class="nav-text">二:  JAVA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三：oracle"><span class="nav-number">3.</span> <span class="nav-text">三：oracle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四-JavaWeb-J2ee"><span class="nav-number">4.</span> <span class="nav-text">四:  JavaWeb, J2ee</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sgt_tiger</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

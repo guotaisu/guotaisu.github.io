@@ -1,0 +1,964 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="安卓系统架构，安卓生命周期，安卓布局管理，安卓Wegit组件（可视化控件），安卓四大组件，安卓多线程，安卓数据存储策略," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一．adb的安装及使用配置adb(后台使用adb):在系统环境中的path添加adb路径：sdk中的platform-tools
+二． 安卓系统架构三． 安卓生命周期
+四个状态：（1）运行（2）暂停（3）停止（4）死亡
+七个函数：
+
+四． 开发基础1.安卓最基本的文件结构
+
+Manifests: 反射层文件，启动时加载
+java代码： 安卓自动调用生命周期方法把.xml文件结合起来
+res（资源文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android">
+<meta property="og:url" content="http://www.guotai.cn.com/2016/04/28/Android/index.html">
+<meta property="og:site_name" content="苏国泰专属空间">
+<meta property="og:description" content="一．adb的安装及使用配置adb(后台使用adb):在系统环境中的path添加adb路径：sdk中的platform-tools
+二． 安卓系统架构三． 安卓生命周期
+四个状态：（1）运行（2）暂停（3）停止（4）死亡
+七个函数：
+
+四． 开发基础1.安卓最基本的文件结构
+
+Manifests: 反射层文件，启动时加载
+java代码： 安卓自动调用生命周期方法把.xml文件结合起来
+res（资源文">
+<meta property="og:updated_time" content="2016-08-23T10:25:48.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android">
+<meta name="twitter:description" content="一．adb的安装及使用配置adb(后台使用adb):在系统环境中的path添加adb路径：sdk中的platform-tools
+二． 安卓系统架构三． 安卓生命周期
+四个状态：（1）运行（2）暂停（3）停止（4）死亡
+七个函数：
+
+四． 开发基础1.安卓最基本的文件结构
+
+Manifests: 反射层文件，启动时加载
+java代码： 安卓自动调用生命周期方法把.xml文件结合起来
+res（资源文">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.guotai.cn.com/2016/04/28/Android/"/>
+
+  <title> Android | 苏国泰专属空间 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">苏国泰专属空间</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">个人博客</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-28T00:00:00+08:00" content="2016-04-28">
+              2016-04-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程基础/" itemprop="url" rel="index">
+                    <span itemprop="name">编程基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一．adb的安装及使用"><a href="#一．adb的安装及使用" class="headerlink" title="一．adb的安装及使用"></a>一．adb的安装及使用</h3><p>配置adb(后台使用adb):在系统环境中的path添加adb路径：sdk中的platform-tools</p>
+<h3 id="二．-安卓系统架构"><a href="#二．-安卓系统架构" class="headerlink" title="二． 安卓系统架构"></a>二． 安卓系统架构</h3><h3 id="三．-安卓生命周期"><a href="#三．-安卓生命周期" class="headerlink" title="三． 安卓生命周期"></a>三． 安卓生命周期</h3><ul>
+<li>四个状态：<br>（1）运行<br>（2）暂停<br>（3）停止<br>（4）死亡</li>
+<li>七个函数：</li>
+</ul>
+<h3 id="四．-开发基础"><a href="#四．-开发基础" class="headerlink" title="四． 开发基础"></a>四． 开发基础</h3><p>1.安卓最基本的文件结构</p>
+<ul>
+<li>Manifests: 反射层文件，启动时加载</li>
+<li>java代码： 安卓自动调用生命周期方法把.xml文件结合起来</li>
+<li>res（资源文件）：</li>
+</ul>
+<blockquote>
+<p>注：Java代码实现功能设计，.xml实现渲染（实现颜色，布局，大小等），如此安卓实现二者的分离。</p>
+</blockquote>
+<p>2.安卓本质是一个优秀的框架，适合做界面开发，功能由Java代码实现（GUI开发是Java的弱项，因为它没有把结构和表现做分离</p>
+<p>3.安卓长度单位</p>
+<p><code>（为适应不同设备）使用与像素和密度无关的单位：dp（可自动换算：1dp=[density/160]px），sp（用于设定与density及scale无关的字体单位）</code></p>
+<p>4.代码调试<br>用日志器【不能用system.out.println()，它只能是在真机上执行完毕后由adb回显数据。】<br><code>eg.Log.i(“标签” , ”要输出的内容”);</code></p>
+<p>5.安卓编译原理</p>
+<p><code>IDE把源代码进行编译（生成.des字节码文件，与sun公司的.class文件不尽相同），编译完后进行打包（. apk文件），之后通过安卓的adb传到AVD或真机上，传完后adb再发送一条指令把安装好的.apk进行启动，启动过程中adb会收集到很多调试信息并返回。</code></p>
+<p>6.其它</p>
+<p><code>在Manifests文件中可设置用户权限：&lt;uses permission ...&gt;</code></p>
+<h3 id="五．安卓布局管理"><a href="#五．安卓布局管理" class="headerlink" title="五．安卓布局管理"></a>五．安卓布局管理</h3><blockquote>
+<p>gravity: 容器自身对于内部组件的重力位置。<br>layout_gravity: 组件自身对于容器的重力位置。</p>
+<blockquote>
+<ul>
+<li>gravity和layout_gravity可能由冲突，如gravity重力场在下，而layout_gravity在上。</li>
+<li>gravity对于垂直方向的影响优先于layout_gravity，对于水平方向的影响低layout_gravity。</li>
+</ul>
+</blockquote>
+</blockquote>
+<ol>
+<li><p>线性布局（LinearLayout）<br>1）不同于Java的流式布局（flow）, 线性布局不会自动向下横排，计算时要考虑其大小。<br>2）默认横向排列，可设置为竖向排列。【orientation=”vertical”】<br>3）默认重力场在左上角，可以修改。【gravity=”bottom”(左下)，=”bottom|right”(右下) …】<br>4）重力场可在容器上设置，也可在组件上设置。<br>5）组件分配比例问题：layout_weight=”数字” //数字表示权重（空间占比），且”layout_weight”优先级高于”wrap_content”和dp。（横排方向的组件大小设置以dp为准）<br>6）LinearLayout容器对外而言其自身也是组件，可嵌套使用。</p>
+</li>
+<li><p>相对布局（RelativeLayout）<br>1）按照各子元素之间的位置关系完成布局（根据前一个已定位的组件来确定自身的位置）。是安卓五大布局里最灵活的一种布局结构，比较适合一些复杂界面的布局。<br>2）给一个组件定位，即加id（@+id/a）。另一个组件即可根据该id实现自身定位。<br>【如layout_toRightOf=@id/a(在a右边)，_below(在a下面)，alignleft(与a左对齐) …】<br>3）可设置组件间的间距。（margin和padding）</p>
+</li>
+</ol>
+<blockquote>
+<p>★编程方式使用组件<br>基于配置文件使用静态布局管理器不能做一些动态上的组件控制。可将.xml配置文件所有内容移植到编码中实现灵活布局。</p>
+</blockquote>
+<ol>
+<li><p>表格布局（TableLayout）<br>1）定义组件较多需按行（列）排列时可用表格布局。<br>2）它里面设置button无需设置高度和宽度，由其容纳的表格确定。<br>3）和html不同，它无td设置，只可设置行。（TableRow）<br>4）不设置其单元格大小则默认为装下其内容大小。可在容器设置单元格（列）的大小。<br>【如（stretchColumns=”0”(第1列扩展),=“1”，（第2列扩展）,=“0,1”（1，2列平分）】<br>5）可设置单元格（列）里的内容不可见。【如collapseColumns=”0”(第一列内容不可见)】<br>6）其它设置【如shrinkColumns（压缩）】</p>
+</li>
+<li><p>绝对布局（AbsoluteLayout）<br>1）以左上角的点为原点，用x,y来控制。（layout_x=”50dp”,layout_y=”100”）</p>
+</li>
+<li><p>其它布局（如网格布局(GridLayout)）</p>
+</li>
+</ol>
+<h3 id="六．安卓Wegit组件（可视化控件）"><a href="#六．安卓Wegit组件（可视化控件）" class="headerlink" title="六．安卓Wegit组件（可视化控件）"></a>六．安卓Wegit组件（可视化控件）</h3><p>1）TextView：textColor；textSize,background …<br>2）EditText：hint(提示)；inputType(限定输入内容) …<br>3）ImageView: src(源):@drawalbe/图片名称 …<br>4）RadioButton（单选按钮）: checked=ture(默认选中)；允许加文本 …</p>
+<blockquote>
+<p>★两个单选按钮实现互锁:用RadioGroup包含两个RadioButton，并且都需要有id 。<br>RadioGroup自身也是ViewGroup,支持布局。它默认竖排，可设置为横排。（orientation=”horizontal”）</p>
+<blockquote>
+<p>注：要想知道是否选上，只需绑定id,然后调用isChecked()。</p>
+</blockquote>
+</blockquote>
+<p>5）CheckBox（复选按钮）:默认竖排，同上，可将其放入LinearLayout，然后设置为横排。<br>6）Switch（控制开关）: 应用于开关控制（如wifi开关的控制）。安卓中还提供了另一个控件：ToggleButton .<br>7）SeekBar（拖动条）: max(设置最大值)；progress(设置当前值)</p>
+<blockquote>
+<p>★给SeekBar添加监听事件【（不用onClick）类比Java给一个按钮添加监听器】：<br>给SeekBar起名（添加id）<br>在onCreate中获取上述id(即实例化)并给它添加(set)相应的监听事件（含匿名内部类）。<br>【在此也可直接实现相应的监听事件接口（上述内部类便可用this代替）】<br>重写接口中的方法</p>
+<p>★附：SeekBar控制图形透明度：改变Alpha（灰度）通道即可<br>给图片起名（添加id）<br>在onCreate中获取上述id(即实例化)并重写SeekBar监听接口中的方法（onProgressChanged()）。添加(set)Alpha(progress/100.0f)方法即可，注意Alpha（）参数要求为浮点型数据，100为SeekBar的max值，progress/100.0f将自动转换成浮点型数据。</p>
+<blockquote>
+<p><code>注：还可做调色板，改变其它三个颜色通道（RGB）即可：Color.rgb(x,y,z)//参数分别是红绿蓝颜色的分量，取值范围为0-255（int）。</code></p>
+</blockquote>
+</blockquote>
+<p>8）RatingBar（星评图标）：是SeekBar的子类（二者完成同样动作，方式不一样而已）。<br>numStars（设定星数,默认星数为5个）；stepSize（选择方式，可设为选半颗星（=“0.5”））；<br>max(设置最大值)；progress(设置当前值)<br>9）ProgressBar（进度图标）: 默认样式为转圈，可更改其样式。style；max；progress …<br>应用：如显示播放或下载进度【开子线程，在里面实现更新即可）】</p>
+<blockquote>
+<p>★★补：三个重要控件【和后台数据有关；重点在于Adapter，和数据有关的都可以使用它】</p>
+<blockquote>
+<ul>
+<li><code>注：Spinner和ListView的使用原理与AutoCompleteView一样，关键在于Adapter的使用。</code></li>
+</ul>
+</blockquote>
+</blockquote>
+<ul>
+<li>1）AutoCompleteView（自动完成框）：表面看起来和文本框一样，关键在于它里面包含内容，打字时会有提示功能，可应用于用户检索功能。<br>completionThreshold【可设置自动完成的阈值（默认为2），=“1”(打一个字母就会出现提示)】<blockquote>
+<ul>
+<li>★AutoCompleteView需要增加一个Adapter（适配器）用于适配两个事件，View（或ViewGroup）和Data（从网络或数据库中获得）。<blockquote>
+<ul>
+<li>【Data要进入View，此过程称为渲染，即把一个数据渲染成一个View，此过程靠Adapter给我们自动完成。</li>
+</ul>
+</blockquote>
+</li>
+<li>AutoCompleteView使用方法：<br>给AutoCompleteView起名（添加id）<br>在onCreate中获取上述id(即实例化，假设为lv1)并给它增加(set)一个Adapter；</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">eg.此处要个Arrayadapter：</div><div class="line">Arrayadapter&lt;String&gt; adapter = new ArrayAdapter&lt;String&gt;(this,View,data );</div><div class="line">setAdapter(adapter)【Adapter是泛型类，在此是个父类接口，要个adapter即可.】</div></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<ul>
+<li><code>注：ArrayAdapter的构造有三个参数，它将自动在其内部实现渲染。
+【第一个参数表示渲染位置，this表示当前位置；第二个参数为View；第三个参数为Data。】
+【第二个参数写ViewId即可。可自己做一个View,但已经系统提供了一个View,可直接使用.（调用安卓jar包：android.R.layout.simple_list_item_1，它是TextView布局（源码）】</code><br><code>【第三个参数实际上是String数组，可外置。new String[]{“abc”,”def”,”g”,...}】</code><br><code>可给lv1添加事件:setOnItemClickListener(new onItemClickListener(){…});</code></li>
+<li><code>注： 一个Item可能有多个View，此处不能实现给某个具体的View添加事件，因为渲染是在内部完成的，这也是ArrayAdapter的一个重大缺陷。</code><blockquote>
+<ul>
+<li><code>★获得数据有可有两种方式：可把View转换成TextView，然后getText()获得data值；也可以通过data加上position获得data的值，此处用后者更好些：Log.i(“tiger”,data[position]);
+//点击某个区域可获得相应数据（此处只是作为整体组件进行响应）</code></li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+<ul>
+<li><p>2）Spinner（类似html中的下拉列表）</p>
+</li>
+<li><p>3）ListView（列表显示）<br>ListView应用广泛。如果使用大量ListView可以做简化，即继承ListActivity。这个Activity专门为ListView服务，它有如下特点：<br>a.它自身内部就有一个ListView,所以无需布局文件。<br>b.它实现了onItemClickListener接口(即它自身就是监听器)这样一来便可减少不少工作。<br>我们无需setContentView(…)和setOnItemClickListener(…)，直接实例化一个数据和一个adapter，再添加一个监听器onListItemClick(…)即可。</p>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<ul>
+<li>★附：Adapter基本作用和原理：<br>1）Adapter将数据内容与组件进行绑定<br>2）AdapterView的所有继承类都是具备setAdapter(Adapter)<br>3）ListView,GridView,Spinner,ExapendableView是重要的子类型</li>
+<li>*Adapter是一个父类型，我们使用时将会用到它的各种子类型，比较常见的三个子类型如：<br>①ArrayAdaper：支持泛型操作，最为简单，只能展示一行字。<br>②SimpleAdapter：有最好的扩充性，可以自定义出各种效果。<br>③BaseAdapter：是一个抽象类，继承它需要实现较多的方法，所以也就具有较高的灵活性。<br>④SimpleCursorAdapter:是SimpleAdapter的一个变种，它可以把一个Corsor对象映射到View上。可以认为是SimpleAdapter对数据库的简单结合，可以方便地把数据库的内容以列表的形式展示出来。（一般无需使用它）</li>
+</ul>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">eg1.SimpleAdapter</div><div class="line">★其最终目的是要把一个Map结构的数据映射到一个布局上，即把复杂数据变成一个布局文件(View)。</div><div class="line">使用示例：</div><div class="line">a.可先自定义一个layout布局（如sgt_layout），再写一个Activity类继承ListActivity。</div><div class="line">b.实例化一个数据: private List&lt;Map&lt;String,Object&gt;&gt; data;</div><div class="line">写一个方法进行初始化：          </div><div class="line">private void init()&#123;</div><div class="line">data = new ArrayList&lt;Map&lt;String,Object&gt;&gt;();</div><div class="line">Map&lt;String,Object&gt; mp1 = new HashMap&lt;String,Object&gt;();</div><div class="line">mp1.put(key,value);mp2.put(key,value);mp3.put(key,value);…//添加内容</div><div class="line">data.add(mp1); data.add(mp2); data.add(mp3); …//添加数据</div><div class="line">&#125;                        </div><div class="line">c.在onCreate()方法里调用init()产生数据，然后使用SimpleAdapter:</div><div class="line">SimpleAdapter adapter=new SimpleAdapter(this,data,View,String[]from,Int[]to);</div><div class="line">setListAdapter(adapter);</div><div class="line">＊注：SimpleAdapter的构造有五个参数，它将自动在其内部实现渲染。</div><div class="line">【第一个参数表示渲染位置，this表示当前位置。第二个参数是数据，第三个参数是先前自定义的布局。第四个参数是一个字符串数组（写key的数组，用它来找value）。第五个参数表示往哪渲染，它是一个Int[]类型数组（其id就是布局里定义的id），它要求data与View的position顺序对应。】</div><div class="line">d.可添加事件(仍不能实现给某个具体的View添加事件)，获得有关数据：</div><div class="line">onListItemClick(…)&#123;</div><div class="line">Log.i(“tiger”,data.get(position).get(“content”).toString); &#125;</div><div class="line">//点击content区域可获取相应数据。（此处只是作为整体组件进行响应）</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">eg2.BaseAdapter</div><div class="line">★需求----如果使用更加“复杂”的数据模型；如果需要更加精确的控制“适配“的细节；如果需要实现每个组件独立添加事件处理。</div><div class="line">*原理及细节：BaseAdapter是一个抽象类，需要继承并实现以下四个方法：</div><div class="line">int getCount()&#123; return as.length; &#125; //提交给渲染引擎（渲染的数据个数）</div><div class="line">Object getItem(int position)&#123; return as[position]; &#125;//返回自定义对象</div><div class="line">Long getItemId(int position)&#123; return position; &#125; //可自定义返回Object id</div><div class="line">View getView(int position,View convertView,ViewGroup parent)&#123;…&#125;//渲染引擎主要的操作代码，是渲染过程，返回View</div><div class="line">使用示例：</div><div class="line">a.可使用先前自定义的layout布局(如sgt_layout）,然后写一个Adapter类（sgtAdapter）继承BaseAdapter,复写它的四个方法。</div><div class="line">b.新建一个类（如Suguotai）设定属性和构造（自定义对象）,然后在Adapter类中用构造方法把自定义对象的数据传进来（例如可传进List&lt;自定义对象&gt;型数据（data） ）。</div><div class="line">c.int getCount()&#123;return data.seze();&#125;；</div><div class="line">Object getItem(int position)&#123; return data.get(position); &#125;</div><div class="line">Long getItemId(int position)&#123; return data.get(position).getId(); &#125;</div><div class="line"> </div><div class="line"> View getView(int position,View convertView,ViewGroup parent)&#123;</div><div class="line">   //用data和layout生成最终的View</div><div class="line">layoutInflater inflater=layoutInflater.from(context);//“吹”出View。</div><div class="line">context表示此ListView将来在哪个Activity中产生出来。而现在Apater类并不知道ListView将来究竟在哪个Activity中出现，所以在构造Adapter时应该把Activity传入。【Activity和Service都是Context的子类，此处声明一个Context属性传进来即可。】</div><div class="line">convertView=inflater.inflate(R.layout.sgt_layout,null);</div><div class="line">//第一个参数就是id，第二个参数ViewGroup可不管</div><div class="line">Suguotai s=data.get(position);//当前数据</div><div class="line">…//接下来将数据逐条渲染到View中：(id为layout里对应的id)</div><div class="line">eg. ImageView show=(ImageView)convertView.findViewById(R.id.sgtShow);</div><div class="line">show.getBackgroundResource(s.getShow());</div><div class="line">TextView title=(TextView)convertView.findViewById(R.id.title);</div><div class="line">title.setText(s.getTitle()); </div><div class="line">……</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//★可实现给某个具体的View添加事件，获得有关数据：</div><div class="line">eg. title.setOnclickListener(new onItemClickListener()&#123;</div><div class="line">…onClick(Viewview)&#123;</div><div class="line">Log.i(“tiger”,data.get(position).getTitle()); &#125;</div><div class="line">&#125;);</div><div class="line">return convertView;</div><div class="line">&#125;</div><div class="line">d.同SimpleAdapter的使用一样，先写一个Activity类继承ListActivity。</div><div class="line">e.实例化一个数据: private List&lt;Suguotai&gt; data;</div><div class="line">写一个方法进行初始化：          </div><div class="line">private void init()&#123;</div><div class="line">data = new ArrayList&lt;Suguotai&gt;();</div><div class="line">Suguotai s1=new Suguotai(id,…); Suguotai s2=new Suguotai(id,…);</div><div class="line">……//添加内容</div><div class="line">data.add(s1); data.add(s2); …//添加数据</div><div class="line">&#125;                        </div><div class="line">f.在onCreate()方法里调用init()产生数据，然后使用前面的sgtAdapter:</div><div class="line">sgtAdapter adapter=new sgtAdapter(this,data);</div><div class="line">setListAdapter(adapter);</div></pre></td></tr></table></figure>
+<h3 id="七：安卓四大组件"><a href="#七：安卓四大组件" class="headerlink" title="七：安卓四大组件"></a>七：安卓四大组件</h3><blockquote>
+<p>附: ★intent详解<br>1）是下述前三大组件之间及其内部的通信桥梁，负责消息传递。作用类比Servlet转发jsp页面中的request(中间对象)。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">eg1.（两个Activity之间的跳转）</div><div class="line">FirstActivity.java:</div><div class="line">Public void go(View view)&#123;</div><div class="line">Intent intent = new Intent(); //实例化intent</div><div class="line">//intent.setClass(this,SecondActivity.class); //“想找谁就找谁”，显式启动（不建议使用）</div><div class="line">Intent.setAction(“codding”);//隐式启动（建议使用）；</div><div class="line">//Intent.addCategory(Intent.CATEGORY_DEFAULT); //隐式启动隐含的代码</div><div class="line">表示找CATEGORY_DEFAULT分类下的codding（内容任意写）【在Manifests中配置】</div><div class="line">...  //可设置intent的其它属性，如intent.putExtra(“key”,”value”);可传递各种数据；startActivity(intent); </div><div class="line">&#125;</div><div class="line">SecondActivity.java:</div><div class="line">（在onCreate()方法中接收intent）</div><div class="line">Intent intent = this.getIntent();</div><div class="line">...  //获得各种数据如String uname = intent.getStringExtra(“uname”);</div><div class="line">...</div><div class="line">￭数据量较大时可新建一个类进行封装，该类实现序列化接口。在一端实例化该类并添加数据，在另一端用序列化类型接收（getSerializableExtra(“key”)）。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">eg2.（启动下一个Activity并获取返回结果）</div><div class="line">FirstActivity.java:</div><div class="line">...</div><div class="line">startActivityForResult(intent,12); //第二个参数为请求码（任意数字）</div><div class="line"> </div><div class="line">//在上述启动过的Activity执行结束时才会执行下面的回调方法</div><div class="line">Protected void onActivityResult(int requestCode,int resultCode,Intent data)&#123;</div><div class="line">//此处的intent为另一个Activity中的intent；由 requestCode,resultCode 确认关联关系</div><div class="line"> </div><div class="line">if(requestCode=12&amp;resultCode==11) </div><div class="line">Log.i(“标签” , data.getStringExtra(“msg”)); //进行调试</div><div class="line">&#125;</div><div class="line"> </div><div class="line">SecondActivity.java:</div><div class="line">Public void finish(View view)&#123;</div><div class="line">Intent intent = getIntent();</div><div class="line">intent.putExtra(“msg”,”内容”);</div><div class="line"> </div><div class="line">setResult(11,intent); //第一个参数为结果码（不同于请求码的任意数字）；第二个参数为上述SecondActivity操作后的intent，对应FirstActivity中回调方法参数的（Intent data）项。</div><div class="line"> </div><div class="line">finish(); //完成任务后结束</div><div class="line">&#125;</div><div class="line">补：在.xml定义EditText，添加id(如tvl); 之后在其Activitity中获得并查看其内容：</div><div class="line">TextView tvl = (TextView)findViewById(R.id.tv1); //TextView是View的子类，所以要强转。</div><div class="line">Tv1.getText().toString();</div></pre></td></tr></table></figure>
+<p>1.Activity<br>1）类比Java中的Jsp（表现层）<br>2）Activity的栈式管理<br>3）Activity的生命周期</p>
+<p>2.Service</p>
+<ul>
+<li>是APP组件之一，驻留于后台，类似Windows后台程序。运行于调用它的APP的进程的UI线程中，不会随着启动它的组件一并销毁。利用它可以实现IPC通信，不等同于“业务层bean对象”。</li>
+<li>Service开发：<br>继承Service类，并Override生命周期方法【onCreate(),onStartCommand(),onDestroy()】。在清单文件中（注册）加以描述，并加入适当的intent-filter。Service是隐式启动，但无需加CATEGORY_DEFAULT，它只需加action即可（name=”MySer”），外界Activity通过该action就可以启动该Service。【方法如下：做一个启动按钮。须有一个intent找到相应的intent，<br>（Intent intent=new Intent(“MySer”)，然后startService(intent); 同理可以做一个按钮来杀死该Service】<br>启停方法：startService(intent);stopService(Intent)/stopSelf(); 【服务启动后不会自动停止，必须显示停止】; onStartCommand()（由安卓系统回调）;</li>
+</ul>
+<blockquote>
+<p>￭开发实例（音乐播放器）：</p>
+<ul>
+<li>A. 做启停按钮（含启停方法）。在Activity中的onCreate()方法里实例化一个MediaPlayer的对象，之后在play()中首先需调用reset()和setDataSource(“/sdcard/mp3/a.mp3”)方法加载资源。<br>（此处需事先将mp3文件压入sdcard或storage/emulated下新建的一个mp3文件夹 ）。【setDataSource(String path)，此方法可从SD卡中加载资源，它还允许把一个网络资源的流（InputString） 加载到DataSource，即允许在线播放，边下边听和本地缓存等功能。】</li>
+<li>B. 根据时序图，下一步是预备（prepare()）,再下一步是开始播放（start()）。给play()抛出异常即可。最后再写暂停方法（pause()）。</li>
+<li><ul>
+<li>￭在Activity中播放，将处于非UI子线程并且退出后音乐不停止，此时无法正常结束音乐。</li>
+</ul>
+</li>
+<li><ul>
+<li>￭在Service中播放，退出Activity虽无法停止音乐，但可以通过Service来控制音乐。<br>所以在此进一步考虑把播放器放入Service，便可通过Service杀死播放器后台进程。<blockquote>
+<ul>
+<li><ul>
+<li>A. <code>新建一个Service。和前面相同，先在onCreate()方法里实例化一个MediaPlayer对象，在onStartCommand()里面控制播放器的播放，暂停，停止。而在相应Activity中则不再在onCreate()方法里实例化一个MediaPlayer对象，然后在play()和pause()方法中控制启停，此时play()和pause()方法用来告诉Servise做出相应动作，向其发送指令信息。</code></li>
+</ul>
+</li>
+<li><ul>
+<li>B. <code>在play()中通过intent发送信息（Intent intent = new Intent(“music”) ;//music表示动作）;需再进一步指明具体动作（intent.putExtra(“action”,1);//1代表播放指令，也可写PLAY,但应在开头事先声明：public static final int PLA Y = 1;）; 然后startService(intent)即可。</code></li>
+</ul>
+</li>
+<li><ul>
+<li>C. <code>同理在pause()中相应发送相应暂停指令即可。当然，除了play()和pause()方法，还可以有其它方法，通过它们发送指令信息。</code></li>
+</ul>
+</li>
+<li><ul>
+<li>D. <code>在新建的Service中的onStartCommand()方法里用swith()方法接收并处理Activity发送的指令信息。</code></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">【（int action = intent.getIntExtra(“action”,-1);//第二参数表示接收不到值就显示-1），</div><div class="line">swith(action)&#123;</div><div class="line">   case MainActivity.PLAY :</div><div class="line">     拷贝原先Activity中play()方法的reset(),setDataSource(),prepare(),start()</div><div class="line">    //setDataSource(),prepare()处理异常即可</div><div class="line">break;</div><div class="line">   case MainActivity.PAUSE:</div><div class="line">     拷贝原先Activity中pause()方法</div><div class="line">break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>★附：OnStartCommand的返回值：</p>
+</blockquote>
+<ul>
+<li><code>OnStartCommand（Intent intent, int flags, int startid）{...}</code><br><code>//第一个参数是Activity传递过来的intent；OnStartCommand()可被反复调用，而第三个参数便是用来区分每次调用的编号；OnStartCommand有多种启动方式（如粘性启动和非粘性启动），第二个参数便是用来区分启动方式的。</code></li>
+<li><code>OnStartCommand()方法不是startService()调用的而是安卓系统调用的，凡是on开头的方法都是回调方法，由安卓系统自动调用，startService()只是通知安卓系统去调用。</code></li>
+</ul>
+<blockquote>
+<blockquote>
+<p>★从音乐播放器开发实例中可进一步发现Service和Activity之间的关系：<br>Service掌管播放器所有事宜，而Activity只是承担命令发送者的角色，即接收用户请求，把该请求翻译成命令交给Service,然后由Service根据该命令做出不同动作。</p>
+</blockquote>
+<p>★附：IntentService()【为我们封装了多线程的内容，可在主线程中实现一次性启停一个子线程】<br>1）新建IntentService,因IntentService没写无参构造，需人为添加一个无参构造（调用带参构造）；之后重写onHandleIntent()方法。</p>
+</blockquote>
+<ul>
+<li>★★★绑定Service</li>
+</ul>
+<blockquote>
+<ul>
+<li>A.主要应用于IPG通信。第一次被绑定时实例化，最后一个客户端解绑定时完成onUnbind和onDestroy，在一个进程中使用bind方式无实际意义。</li>
+<li>B.它的使用以调用bindService()开始；onCreate()；onBind()（只有在第一次访问时调用一次，此处不同于先前的onStartCommand()随反复访问Service可以多次调用。）；onUnbind()（解绑后并不会马上回调，该Service运行期间可能有多个客户端或Activity来绑定它，只有所有的绑定Service都回调onUnbind()时，此处才会最后调用一次onUnbind()）；onDestroy()【此处无需finish()，所有客户端或Activity都解绑后自动调用，最后自动shut down。当然，该Service允许被其它Activity启动，并照常回调onStartCommand(),但如果它以onStartCommand()启动了，所有客户端解绑后它也不会Destroy(),需被finish()。<code>★即一个Service可以被启动和绑定，即startService()和bindService()。】</code></li>
+</ul>
+<blockquote>
+<p>★由上述可见onBind()和onUnbind()都只调用一次，前者是第一个客户端绑定的时候回调一次，后者是最后一个客户端调用时它回调一次。</p>
+</blockquote>
+<ul>
+<li>C.onBind()方法有一个返回值：IBinder（苹果公司发布的一个新产品）是一个接口，包含很多接口方法，为避免麻烦可写一个类（MyBinder）直接继承Binder（它已实现Ibinder），并增加自己的方法，然后在onBind()中实例化。</li>
+<li>D.服务器端RmiService（onBind()）写完后在Manifests中注册（需加action（name=”rmi”））即可，然后再写客户端Activity（onCreate()方法或按钮对应的事件（方法））:</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Intent intent = new Intent(“rmi”);</div><div class="line">bindService(intent,new ServiceConnection,BIND_AUTO_CREATE);</div></pre></td></tr></table></figure>
+<p><code>//第三个参数是指示器，指示如果另外一端的Service没启动该怎么办；第二个参数ServiceConnection，ServiceConnection仍然是一个接口，在此处可直接使用匿名内部类实现它【重写里面的抽象方法，其中onServiceConnected()方法里含有Ibinder代理对象(proxy)，其本质是另一端Rmi中的MyBinder的变身，（开头处声明）直接在此处强转即可：RmiService.MyBinder mybinder= (RmiService.MyBinder)proxy;
+//此后便可由此代理对象获取另一端IBinder的传值。】</code></p>
+<blockquote>
+<p>应用：例如可用它完善前面的音乐播放器。</p>
+<blockquote>
+<p>【在Service端的play()方法里开一个子线程监控进度，在Activity端的play()方法里也开启一个子线程获取不断变化的progress,拿它更新SeekBar。】</p>
+<ul>
+<li>①定义并获取SeekBar，在play()方法里开启一个子线程，循环查找MyBinder里的progress（定期休眠和获取即可），并在主线程里实现更新（包装成Message，调用handler()）。</li>
+<li>②Activity承担发送指令的角色，所以要在play(),pause(),resume()等方法中发送指令并启动Service（StartService()）。</li>
+<li>③Service根据该指令做出不同动作（回调OnStartCommand()）。play(),pause(),resume()之间通过同步机制（Synchronized）实现通信。</li>
+</ul>
+<blockquote>
+<p>★上述音乐播放器退出后，Activity开启的子线程仍在运行，说明在play()中开启子线程不合适，需进一步完善，分析可知将该子线程置于bindService()的onServiceConnected()里用于更新进度再合适不过了。<code>另外，Activity退出后，需杀死子线程，所以可增加条件：while（…&amp;&amp; isRun）//isRun表示判断是否运行。开头处声明正常情况下让isRun=true。</code><br><code>当Activity退出后,肯定要执行OnDestroy(),所以增加该回调方法,让isRun=false即可。</code></p>
+</blockquote>
+</blockquote>
+<ul>
+<li>E. 当Activity用完之后则进行解绑（调用onUnbind()）。</li>
+</ul>
+</blockquote>
+<p>3.ContentProvider</p>
+<blockquote>
+<p>＊主要用来做数据存储，实际上它自身并不提供存储机制，而是一个中间抽象层（中间件）。<br>Activity，Service，BroadcastReceiver 三大组件之间通过Intent连接，而ContentProvider则是通过URI连接。</p>
+<ul>
+<li>它是Android数据共享标准（区分与RDBMS），也是Android的组件之一（需要注册）。</li>
+<li>它由开发者继承并重写其CURD的方法，注册后暴露其URI，即一系列的URI对应到相应的CURD方法。</li>
+<li>其URI符合Result风格，统一了数据共享的API操作，即屏蔽了内部对文件和数据库等一系列操作的不同，APP的开发者只需要关注Android所提供的API即可。</li>
+<li>其访问的URI规则如下：<blockquote>
+<ul>
+<li>a.Scheme: ContentProvider的scheme已经由Android所规定为：content://</li>
+<li>b.主机名（或Authority）: 用于唯一标识这个ContentProvider（即包名）</li>
+<li>c.路径（path）: 可以用来表示我们要操作的数据，路径的构建应根据业务而定，如下：<br>要操作contact表中id为10的记录，可以构建这样的路径：/contact/10<br>要操作contact表中id为10的记录的name字段，可以构建路径：/contact/10/name<br>要操作contact表中的所有记录，可以构建这样的路径：/contact</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>ContentProvider开发：<blockquote>
+<ul>
+<li>新建类(如TigerContentProvider)继承ContentProvider复写其CURD方法。</li>
+<li>注册:（exported=”true”,authorities=”tiger1.cn”,name=”.TigerContentProvider”）</li>
+<li>增加按钮(做查询)和对应事件（方法），方法中不可能直接去实例化TigerContentProvider（因为组件及其实例化是由安卓系统管理的）， 但可以实例化getContentResolver() ,<br><code>（ContentResolver resolver=getContentResolver()）,它相当于ContentProvider客户端，里面含有CURD方法，通过对这个resolver进行增删改查的动作，然后它会命令Android系统回调TigerContentProvider里面的增删改查，即间接实现CURD方法。（使用解耦合）</code></li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">eg1.(查询)</div><div class="line">public void query(View view)&#123;</div><div class="line">Uri uri = Uri.parse(“content://tiger1.cn”);</div><div class="line">//此处为URI连接协议，主机名（或Authority）对应先前注册的authorities</div><div class="line">ContentResolver resolver=getContentResolver();</div><div class="line">Cursor cs = resolver.query(uri,null,null,null,null);</div><div class="line">//参数分别为uri,投影，选择，排序；null表示没有；结果返回一个Cursor,可对其操作。</div><div class="line">&#125;</div><div class="line">＊应用：对电话簿的ContentProvider的访问</div></pre></td></tr></table></figure>
+<p>4.BroadcastReceiver<br>1）进行广播</p>
+<h3 id="八．★★安卓多线程"><a href="#八．★★安卓多线程" class="headerlink" title="八．★★安卓多线程"></a>八．★★安卓多线程</h3><ul>
+<li>安卓中，在子线程里更新UI组件会报错；而在UI线程里调用网络连接会报错，强制性要求只能在子线程中调用。（这是利用安卓的框架自身来保证代码的正确性）</li>
+<li>多线程处理机制（线程间通信）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">eg1.</div><div class="line">public class MainActivityextends AppCompatActivity &#123;</div><div class="line">    private TextView tv;</div><div class="line">    private Handler handler;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123; //UI线程</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        tv = (TextView)findViewById(R.id.tv);</div><div class="line">        sb = (SeekBar)findViewById(R.id.sb);</div><div class="line">        handler=new Handler() &#123;</div><div class="line">//UI线程绑定一个Handler,可监听Massage对象。handler中有消息队列（MessageQueen）。</div><div class="line">  注：子线程也可以绑定Handler，即反过来在UI线程中包装Message，在子线程中改变相应的值。</div><div class="line">            @Override</div><div class="line">            public void handleMessage(Message msg) &#123;//复写回调方法，在主线程中更新UI</div><div class="line">                int i = msg.getData().getInt(&quot;pro&quot;);</div><div class="line">                tv.setText(&quot;test:&quot;+i);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    public void start(View view) &#123;</div><div class="line">    new Thread()&#123;</div><div class="line">        @Override</div><div class="line">        public void run() &#123;</div><div class="line">            for(int i=0;i&lt;101;i++)&#123;</div><div class="line">                try &#123;</div><div class="line">                    Thread.sleep(20);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                //把上面的进度包装成一个消息</div><div class="line">                Message msg = new Message();</div><div class="line">                Bundle bundle = new Bundle();</div><div class="line">                bundle.putInt(&quot;pro&quot;,i);</div><div class="line">                msg.setData(bundle);</div><div class="line">                //把消息发到消息队列中，发100次</div><div class="line">                handler.sendMessage(msg);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line">eg2.(在主线程中干预子线程的运行&gt;&gt;Synchronized , wait , notify)</div><div class="line">在eg1基础上增加SeekBar,pause,resume按钮和相应事件（方法），在子线程中设置运行条件，而在主线程中控制条件即可。</div><div class="line">public class MainActivity extends AppCompatActivity &#123;</div><div class="line">    private TextView tv;</div><div class="line">    private Handler handler;</div><div class="line">    private SeekBar sb;</div><div class="line">    private boolean isPause=false;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        tv = (TextView)findViewById(R.id.tv);</div><div class="line">        sb = (SeekBar)findViewById(R.id.sb);</div><div class="line">        handler=new Handler() &#123;</div><div class="line">            @Override</div><div class="line">            public void handleMessage(Message msg) &#123;</div><div class="line">                int i = msg.getData().getInt(&quot;pro&quot;);</div><div class="line">                tv.setText(&quot;test:&quot;+i);</div><div class="line">                sb.setProgress(i);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    public void start(View view) &#123;</div><div class="line">        new Thread()&#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                synchronized (handler) &#123;</div><div class="line">//这把锁在主线程和主线程中都是共用的，其中的对象是二者皆可见的唯一对象，否则wait()调用处无效。此处选择Handler作为共用对象更为合适。</div><div class="line">MainActivity自身可做锁对象。但此处不能用public Synchronized void  run()&#123;…&#125;，因为此处用的是子线程对象，况且run()方法里面没有Synchronized，它是复写的，所以此处只能用同步代码块。</div><div class="line"> // 另外，wait()和notify()配套使用，且二者被调用时要求必须处于一个同步代码块的内部（Synchronized）,还要求其调用对象必须是同步代码块中的那个同步锁。</div><div class="line">                    for (int i = 0; i &lt; 101; i++) &#123;</div><div class="line">                        if (isPause) &#123;</div><div class="line">                            try &#123;</div><div class="line">                                handler.wait();</div><div class="line">                            &#125; catch (InterruptedException e) &#123;</div><div class="line">                                e.printStackTrace();</div><div class="line">                            &#125;</div><div class="line">                         &#125;</div><div class="line">                        try &#123;</div><div class="line">                            Thread.sleep(20);</div><div class="line">                        &#125; catch (InterruptedException e) &#123;</div><div class="line">                            e.printStackTrace();</div><div class="line">                        &#125;</div><div class="line">                        Message msg = new Message();</div><div class="line">                        Bundle bundle = new Bundle();</div><div class="line">                        bundle.putInt(&quot;pro&quot;, i);</div><div class="line">                        msg.setData(bundle);</div><div class="line">                        handler.sendMessage(msg);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;.start();</div><div class="line">    &#125;</div><div class="line">    public void pause(View view) &#123; isPause=true;  &#125;</div><div class="line">/*  public synchronized void resume(View view) &#123; //将MainActivity自身作为锁对象</div><div class="line">        isPause=false;</div><div class="line">        notify(); &#125;*/</div><div class="line">    public synchronized void resume(View view) &#123; //此处用MainActivity锁对象自身</div><div class="line">        synchronized (handler)&#123;</div><div class="line">            isPause=false;</div><div class="line">            handler.notify();//唤醒，让其重新进入线程调用机...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="九．安卓数据存储策略"><a href="#九．安卓数据存储策略" class="headerlink" title="九．安卓数据存储策略"></a>九．安卓数据存储策略</h3><blockquote>
+<p>毕竟安卓系统不是做服务器的，在安卓系统中，数据库只是一个很小的范围，它并不认为数据一定要保存在数据库里，它只要能把数据存储到某个地方即可。</p>
+</blockquote>
+<p>1.文件系统（首选）</p>
+<blockquote>
+<blockquote>
+<p>File存储：<br>原理：使用一个普通自定义文件做为存储媒介，以流的方式进行读写操作。</p>
+</blockquote>
+</blockquote>
+<ul>
+<li><code>OutputStream out = context.openFileOutput(fileName,mode);</code><br> //此方法打开<data packname="" files="" filename="">的输出流；Mode可以是MODE_PRIVATE|MODE_APPEND（前者为默认操作模式，代表该文件是私有数据,只能被应用本身访问,在该模式下,写入的内容会覆盖原文件的内容。后者为最佳模式，会检查文件是否存在,存在就往文件追加内容,否则就创建新文件。）等。其中按位或|可做权限叠加。</data></li>
+<li><code>Inputstream in = context.openFileInput(fileName);</code></li>
+<li>常用方法：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">File getFileDir[];//获取data/packName/files的目录对象；</div><div class="line">File getDir[dirName,mode];</div><div class="line">String[] fileList[];</div><div class="line">deleteFile[fileName];</div><div class="line">注：上述方法无需new File()（需找文件路径），文件存储在data/packName/files下。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eg1.(存储)</div><div class="line">OutputStream out = openFileOutput(“tiger.data”,MODE_PRIVATE|MODE_APPEND);</div><div class="line">//out.write(“Hello World!”.getByte());</div><div class="line">  out.write(“Hello World!,世界你好”.getByte(“UTF-8”));</div><div class="line">★补：Java中一般不会使用字符流，即reader和writer，因为它不能设定文字编码，它是自动转码的，我们没办法随心所欲地控制它。</div><div class="line">out.close();//流要自己管理，此处需手动关闭</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">eg2.（取出）</div><div class="line">Inputstream in = openFileInput(“tiger.data”);</div><div class="line">byte[] buf = new byte[4];//在内存中开辟一个缓存读取文件,此处按一次4个字节读取</div><div class="line">/* int count=0;</div><div class="line">while(count=in.read(buf)!=-1)&#123;</div><div class="line">//此处可用来边读边写</div><div class="line">&#125;  */</div><div class="line">byte[] buf = new byte[in.available()];//此处一次性读取</div><div class="line">in.read(buf);</div><div class="line">String msg = new String(buf,”UTF-8”);//此处将buf重新编码成UTF-8</div><div class="line">Log.i(“tiger”,msg);</div><div class="line">in.close();</div><div class="line">＊附：加大难度写一个对象进去，这是纯Java的知识，把上述流包装成对象流即可：</div><div class="line">ObjectoutputStream oout = new ObjectOutputStream(out);</div><div class="line">oout.write(new Object());</div></pre></td></tr></table></figure>
+<blockquote>
+<p>★★附：SharedPreferences存储</p>
+<blockquote>
+<p>原理：由保存在data/data/<packname>/shared_prefs/xxx.xml完成数据的存储。<br>实际上SharedPreferences用的是map(key-value)键值对存储，它是轻量级存储，常用来存储一些轻量级数据。其底层仍然用inputStream和outputSteam，但是其上层API看不见这些，它的存储不需要考虑流的问题。</packname></p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">eg1.(存储)</div><div class="line">定义SharedPreferences pref，在onCreate()方法中得到它：</div><div class="line">（pref = PreferenceManager.getDefaultSharedPreferences(this);）</div><div class="line"> Set &lt;String&gt; set = new HashSet&lt;String&gt;();</div><div class="line">   set.add(“basket”); set.add(“foot”);</div><div class="line">   SharedPreferences.Editor editor = pref.edit(); //存储需借助Editor</div><div class="line">   editor.putString(“uname”,”tiger”);editor.putInt(“age”,100);</div><div class="line">   editor.putStringSet(“sport”,set); //可存储集合数据 </div><div class="line">   editor.commit(); // 此前的操作都在内存,通过commit()存储</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">eg2.（取出）</div><div class="line">String uname = pref.getString(“uname”,”xxxxx”);//第二参数为默认值,以下同理</div><div class="line">int age = pref.getInt(“age”,-1);</div><div class="line">Set&lt;String&gt; sport = pref.getStringSet(“sprot”,null);</div><div class="line">Log.i(“tiger”uname+”...”+age);</div><div class="line">for(String key:sport)&#123;</div><div class="line">Log.i(“tiger”,key);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>注：上述存储过程可不断被覆盖，适合存储进度。<br>附：File存储不适合变动数据的存储，数据库系统更优，它适合增删改查</p>
+</blockquote>
+</blockquote>
+<p>2.数据库系统</p>
+<blockquote>
+<p>标准方案：使用jdbc的jar包连接数据库进行存储，不过使用概率小。</p>
+<blockquote>
+<p>★安卓自身存储方案：只针对一种数据库：SQLite</p>
+</blockquote>
+</blockquote>
+<p>SQLite是Linux底层的一个非常轻量级的基于文件（一个文件即一个db，区别于Oracle：非文件型，一个db实例包含多个文件）的关系型数据库，支持SQL92，海量存储，并发，性能，安全方面较弱，但体积小，开销低，较适合用于便携及嵌入式设备。</p>
+<blockquote>
+<p>1）* SQLite数据类型(比较少):NULL(空值)，INTEGER(整型)，REAL(实数型//浮点数字)，TEXT(字符串文本),BLOB(二进制对象)</p>
+<p>2）* ★SQLite的核心对象：SQLiteDatabase</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  获取方式：SQLiteDatabase.openDatabase(...)//打开现有的数据库</div><div class="line">                          .openOrCreateDatabase(...)//打开或创建数据库</div><div class="line">  使用方式：.execSQL()//执行更新类操作；.rawQuery()//执行查询，返回Cursor对象</div><div class="line">            .close()//关闭</div><div class="line">＊注：Cursor（和jdbc核心对象中的Resulset是同一类对象）</div><div class="line">            .moveToNext()//如果有下一条记录返回true，否则返回false</div><div class="line">            .getXXX(index)//返回查询到的某个Index列的数据，index从0开始。</div></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>★SQLiteDatabase使用方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">实例化一个对象SQLiteDatabase db，在onCreate()方法中用工厂方法打开或创建数据库：</div><div class="line">db = SQLiteDatabase.openOrCreateDatabase(“tiger.data”，null);</div><div class="line">//第一个参数是文件路径； 第二个参数是CursorFactory,里面有一个回调器，可供查询后处理遍历问题。这样的好处是把对Corsor的处理封装到对象中去。此处null表示不使用。</div><div class="line">注：此处tiger.data不在项目目录下而存储在用户根目录下，我们最好将其存储在外存上（需开放相应权限）。</div></pre></td></tr></table></figure></p>
+<p>★附：Sdcard的操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">可使用Environment.getExternalStorageState()：获取是否挂载的信息（即是否有外存）；</div><div class="line">File Environment.getExternalStorageDirectory():获取Sdcar的挂载点，返回File文件。</div><div class="line">需加入（权限）：</div><div class="line">&lt;user-permission android:name=”android.permission.MOUNT_UNMOUNT_FILESYSTEMS”&gt;</div><div class="line">&lt;user-permission android:name=”android.permission.WEITE_EXTERNAL_STORAGE”/&gt;</div></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eg1.(创建db)</div><div class="line">File sdcardPath = Environment.getExternalStorageDirectory();</div><div class="line">db=SQLiteDatabase.openOrCreateDatabase(“sdcardPath.getAbsolutePath()</div><div class="line">+”/tiger.data”，null); //db的生成</div><div class="line">创建表：定义按钮，可在其对应事件（方法）内创建表（String ddl=“create table users(_id interger primary key autoincrement,uname text)”;db.execSQL(ddl);）</div><div class="line">存取数据：</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">eg2.(存储)</div><div class="line">String sql=”insert into users (uname) valus (?)”</div><div class="line">Try&#123; //支持事务</div><div class="line">db.beginTransaction();</div><div class="line">//db.execSQL(sql);//抛异常时下行代码不执行，直接回滚</div><div class="line">db.execSQL(sql,new Object[]&#123;“tiger”+i++&#125;);</div><div class="line">//在开头声明变量i并初始化为0，此处表示点击一次加一次</div><div class="line">db.setTransactionSuccessful();</div><div class="line">&#125;catch(Exception e)&#123;</div><div class="line">&#125; finally&#123; db.endTransaction(); //必须结束事务 &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">eg3.（取出/查询）</div><div class="line">String sql=”select id,uname from users where id&gt;?”</div><div class="line">//强烈建议不要使用seclect * from ...</div><div class="line">Cursor cs= db.rawQuery(sql,new String[]&#123;“2”&#125;);</div><div class="line">//第二参数表示条件（id&gt;2）,是由于API设计时规定其它类型在此都变成String类型</div><div class="line">while (c.moveToNext())&#123;</div><div class="line">String uname = c.getString(1);</div><div class="line">//此处1对应select语句中的uname,如果上述代码使用seclect * from，则无此对应顺序。</div><div class="line">int id=cs.getInt(cs.getColumnIndex(“_id”));</div><div class="line">//参数可以写0，它仍保留使用字段名的方式，但明显麻烦。</div><div class="line">Log.i(“tiger”,uname+”...”+id); &#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>3）★上述数据库存储中还存在其它问题，安卓系统不允许二次创建（覆盖）表格，况且app升级一般会涉及数据库结构更新，因此需要另一个SQLite的核心对象：SQLiteOpenHelper：会自动处理数据库的第一次创建，结构更新等操作的工作类型.(帮助完成初始化和升级)需要override其onCreate(),onUpgrade()等方法.</p>
+<p>★SQLiteOpenHelper使用方法：<br>新建类(如TigerOpenHelper)继承SQLiteOpenHelper，实现其onCreate()，onUpgrade()。</p>
+<blockquote>
+<p>注：SQLiteOpenHelper没有无参构造，新建的类需添加SQLiteOpenHelper的带参构造，并在其中调用super(context,name,factory,version);</p>
+<blockquote>
+<p>￭onCreate()代码段只有在第一次利用此类获得database时才执行。</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eg1. onCreate(...)&#123;</div><div class="line">//可去除先前创建表的按钮和对应事件（方法）。把创建表的代码移到此处，实现自动建表。</div><div class="line">&#125;</div><div class="line">在原来使用SQLiteDatabase的基础上，在Activity里实例化一个TigerOpenHelper对象TigerOpenHelper helper，在onCreate()方法中实例化helper并获得数据库：</div><div class="line">helper=new TigerOpenHelper(this,sdcardPath.getAbsolutePath()+”/tiger1.data”，null,1); // 版本号1对应onUpgrade()中的oldVersion，本号加1则表示升级下一个版本，升级时onCreate()不会执行而执行onUpgrade()，不升级时相反。</div><div class="line">db=helper.getWritableDatabase();//可写包含可读功能</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">eg2. onUpgrade(...)&#123;</div><div class="line">//结构变化代码</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>WebService</li>
+</ol>
+<blockquote>
+<p>在安卓系统中安装一些WebService标准的API，调用这些API时自动连接网络存储数据。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/安卓系统架构，安卓生命周期，安卓布局管理，安卓Wegit组件（可视化控件），安卓四大组件，安卓多线程，安卓数据存储策略/" rel="tag">#安卓系统架构，安卓生命周期，安卓布局管理，安卓Wegit组件（可视化控件），安卓四大组件，安卓多线程，安卓数据存储策略</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/26/Java多线程/" rel="next" title="Java多线程">
+                <i class="fa fa-chevron-left"></i> Java多线程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/30/OpenStack/" rel="prev" title="OpenStack">
+                OpenStack <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://pan.baidu.com/s/1jIfiwwY"
+               alt="sgt_tiger" />
+          <p class="site-author-name" itemprop="name">sgt_tiger</p>
+          <p class="site-description motion-element" itemprop="description">技术 | 生活</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一．adb的安装及使用"><span class="nav-number">1.</span> <span class="nav-text">一．adb的安装及使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二．-安卓系统架构"><span class="nav-number">2.</span> <span class="nav-text">二． 安卓系统架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三．-安卓生命周期"><span class="nav-number">3.</span> <span class="nav-text">三． 安卓生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四．-开发基础"><span class="nav-number">4.</span> <span class="nav-text">四． 开发基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五．安卓布局管理"><span class="nav-number">5.</span> <span class="nav-text">五．安卓布局管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六．安卓Wegit组件（可视化控件）"><span class="nav-number">6.</span> <span class="nav-text">六．安卓Wegit组件（可视化控件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七：安卓四大组件"><span class="nav-number">7.</span> <span class="nav-text">七：安卓四大组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八．★★安卓多线程"><span class="nav-number">8.</span> <span class="nav-text">八．★★安卓多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#九．安卓数据存储策略"><span class="nav-number">9.</span> <span class="nav-text">九．安卓数据存储策略</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sgt_tiger</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
