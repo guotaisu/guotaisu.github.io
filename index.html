@@ -1060,8 +1060,7 @@
 </blockquote>
 <p>3.ContentProvider</p>
 <blockquote>
-<p>＊主要用来做数据存储，实际上它自身并不提供存储机制，而是一个中间抽象层（中间件）。</p>
-<p>Activity，Service，BroadcastReceiver 三大组件之间通过Intent连接，而ContentProvider则是通过URI连接。</p>
+<p>＊主要用来做数据存储，实际上它自身并不提供存储机制，而是一个中间抽象层（中间件）。<br>Activity，Service，BroadcastReceiver 三大组件之间通过Intent连接，而ContentProvider则是通过URI连接。</p>
 <ul>
 <li>它是Android数据共享标准（区分与RDBMS），也是Android的组件之一（需要注册）。</li>
 <li>它由开发者继承并重写其CURD的方法，注册后暴露其URI，即一系列的URI对应到相应的CURD方法。</li>
@@ -1099,9 +1098,7 @@
 <h3 id="九．安卓数据存储策略"><a href="#九．安卓数据存储策略" class="headerlink" title="九．安卓数据存储策略"></a>九．安卓数据存储策略</h3><blockquote>
 <p>毕竟安卓系统不是做服务器的，在安卓系统中，数据库只是一个很小的范围，它并不认为数据一定要保存在数据库里，它只要能把数据存储到某个地方即可。</p>
 </blockquote>
-<ol>
-<li>文件系统（首选）</li>
-</ol>
+<p>1.文件系统（首选）</p>
 <blockquote>
 <blockquote>
 <p>File存储：<br>原理：使用一个普通自定义文件做为存储媒介，以流的方式进行读写操作。</p>
@@ -1128,15 +1125,13 @@
 <p>注：上述存储过程可不断被覆盖，适合存储进度。<br>附：File存储不适合变动数据的存储，数据库系统更优，它适合增删改查</p>
 </blockquote>
 </blockquote>
-<ol>
-<li>数据库系统<blockquote>
+<p>2.数据库系统</p>
+<blockquote>
 <p>标准方案：使用jdbc的jar包连接数据库进行存储，不过使用概率小。</p>
 <blockquote>
 <p>★安卓自身存储方案：只针对一种数据库：SQLite</p>
 </blockquote>
 </blockquote>
-</li>
-</ol>
 <p>SQLite是Linux底层的一个非常轻量级的基于文件（一个文件即一个db，区别于Oracle：非文件型，一个db实例包含多个文件）的关系型数据库，支持SQL92，海量存储，并发，性能，安全方面较弱，但体积小，开销低，较适合用于便携及嵌入式设备。</p>
 <blockquote>
 <p>1）* SQLite数据类型(比较少):NULL(空值)，INTEGER(整型)，REAL(实数型//浮点数字)，TEXT(字符串文本),BLOB(二进制对象)</p>
