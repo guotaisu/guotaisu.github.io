@@ -1,0 +1,769 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C语言基础，函数，数组，指针，堆和栈，const_extern_static修饰符详解，Makefile的使用," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一．基础
+位运算补码（取反加一）是为了计算负数。
+编译原理：源文件——.i文件——.s文件（汇编文件）——.o文件（二进制文件）——可执行文件（预处理——汇编——编译——执行）
+Gcc（C语言编译器）+vim（linux自带的字符编辑器）【eg.  vim 文件名，gcc 文件名，./a.out（输出）】
+C语言基础语法：1）if嵌套最多15层，If语句一般三到四层，else if最多写7个，sw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言要点笔记">
+<meta property="og:url" content="http://www.guotai.cn.com/2016/04/20/C语言要点笔记/index.html">
+<meta property="og:site_name" content="苏国泰专属空间">
+<meta property="og:description" content="一．基础
+位运算补码（取反加一）是为了计算负数。
+编译原理：源文件——.i文件——.s文件（汇编文件）——.o文件（二进制文件）——可执行文件（预处理——汇编——编译——执行）
+Gcc（C语言编译器）+vim（linux自带的字符编辑器）【eg.  vim 文件名，gcc 文件名，./a.out（输出）】
+C语言基础语法：1）if嵌套最多15层，If语句一般三到四层，else if最多写7个，sw">
+<meta property="og:updated_time" content="2016-08-23T04:49:48.212Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C语言要点笔记">
+<meta name="twitter:description" content="一．基础
+位运算补码（取反加一）是为了计算负数。
+编译原理：源文件——.i文件——.s文件（汇编文件）——.o文件（二进制文件）——可执行文件（预处理——汇编——编译——执行）
+Gcc（C语言编译器）+vim（linux自带的字符编辑器）【eg.  vim 文件名，gcc 文件名，./a.out（输出）】
+C语言基础语法：1）if嵌套最多15层，If语句一般三到四层，else if最多写7个，sw">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.guotai.cn.com/2016/04/20/C语言要点笔记/"/>
+
+  <title> C语言要点笔记 | 苏国泰专属空间 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">苏国泰专属空间</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">个人博客</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C语言要点笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-20T00:00:00+08:00" content="2016-04-20">
+              2016-04-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程基础/" itemprop="url" rel="index">
+                    <span itemprop="name">编程基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一．基础"><a href="#一．基础" class="headerlink" title="一．基础"></a>一．基础</h3><ol>
+<li>位运算补码（取反加一）是为了计算负数。</li>
+<li>编译原理：<br>源文件——.i文件——.s文件（汇编文件）——.o文件（二进制文件）——可执行文件（预处理——汇编——编译——执行）</li>
+<li>Gcc（C语言编译器）+vim（linux自带的字符编辑器）<br>【eg.  vim 文件名，gcc 文件名，./a.out（输出）】</li>
+<li>C语言基础语法：<br>1）if嵌套最多15层，If语句一般三到四层，else if最多写7个，switch（里面的表达式只能是char和Int类型）。<br>2）循环语句的老祖宗Goto语句【语法：（声明变量，定义标签（：），if判断，goto 标签）】</li>
+</ol>
+<h3 id="二．-函数"><a href="#二．-函数" class="headerlink" title="二． 函数"></a>二． 函数</h3><ol>
+<li>函数调用过程原理</li>
+</ol>
+<blockquote>
+<p>应用程序启动后(剩余)内存分配如下：</p>
+<ul>
+<li>环境变量区：path，language… </li>
+<li>栈区：执行代码段；弹栈压栈（先进后出）；无论32位还是64位系统，栈的大小是固定的（2M），则如果声明一个结构体大小超过2M，则会造成内存溢出；  </li>
+<li>Static（静态区）：</li>
+<li>常量区：</li>
+<li>代码段区：函数体…</li>
+</ul>
+<ol>
+<li>★（static）静态变量 全局变量</li>
+</ol>
+<ul>
+<li>Static修饰的变量为静态变量，采用静态存储形式，但反过来，静态存储形式的不一定就是局部静态变量，例如全局变量也是静态存储形式。</li>
+<li>静态变量分为全局静态变量和局部静态变量</li>
+</ul>
+<p>全局静态变量与全局变量有区别：<br>虽然同为静态存储方式，但是全局静态变量失去了全局的“普遍含义”它所指的“全局”仅限制在本文件里，而全局变量却是各个文件可见的。</p>
+<p>局部静态变量与局部变量有区别：</p>
+<ul>
+<li>A.存储方式不同，前者为静态存储方式，后者为动态存储方式；</li>
+<li>B.作用域是一致的，只局限于“模块”或者“代码段”；<br>©局部静态变量最大的特点就是作用类似于全局变量，而作用域类似于局部变量，（生命周期）与应用程序同生共死，在走出了某个函数或者代码段后生命周期延续，当再次回到这个函数或者代码段时，上次走出时的值仍然保存到现在，所以一般用它来做计数器。</li>
+</ul>
+</blockquote>
+<p>3.自动变量（auto）和寄存器变量（register），外部变量（extern）</p>
+<blockquote>
+<p>★变量类型用来说明变量所占空间的大小，变量存储类型用来说明变量的作用范围。<br>C语言变量存储类型有：</p>
+<ul>
+<li>自动类型：不加则默认（局部变量）</li>
+<li>寄存器类型：放在一个CPU寄存器中（数据在寄存器中操作比在内存中快），提高了程序代码执行速度。注意：取地址符&amp;不能用于寄存器变量，它只能用于整型和字符型。</li>
+<li>静态类型和外部类型</li>
+</ul>
+</blockquote>
+<p>4.const修饰符【修饰只读变量（声明了const的变量是不能修改的）】</p>
+<blockquote>
+<p>C语言中的Const放在不同位置有不同的作用，在不同情况下有不同用法。在此之前，开发者一直使用宏定义：#define VAR 100 来定义一下有特殊用途的类常量，不过因其存在一些劣势，const应运而生，后来便使用const int VAR=100 来定义类常量了。两种写法存储区域不同，前者放在常量区，后者放在栈区。</p>
+<blockquote>
+<p>★★总结：</p>
+<ul>
+<li>const声明的变量必须要进行初始化赋值，如果错过这个机会，以后就不能再给const的变量赋值了。</li>
+<li>int const和const int “颠倒写”都是可以的，但当const和指针掺和到一起时，“颠倒写”的规律可未必成立。</li>
+<li>const和指针搭配是噩梦</li>
+</ul>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">eg1. </div><div class="line">int main()&#123;</div><div class="line">int a = 5;</div><div class="line">int b = 6;</div><div class="line">//int const *p=&amp;a;//const在*前面，修饰指向的对象，p可变，p指向的变量的值不可变</div><div class="line">int * const p=&amp;a;//const在*后面，修饰指针，p不可变(只读)，p指向的变量的值可变</div><div class="line">//const int *const p=&amp;a;//指针p和p指向的对象都不可变</div><div class="line">//p = &amp;b;</div><div class="line">*p = 100;</div><div class="line">return 0; </div><div class="line">&#125;</div><div class="line">结论：通俗的说，A指针可以随便指向一个整型，但只要被A盯上了的整型变量在使用*A引用时就不能修改了。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">eg2.</div><div class="line">int num=12;</div><div class="line">int tmp=100;</div><div class="line">const int *A=#</div><div class="line">A=&amp;tmp;</div><div class="line">tmp=3</div><div class="line">printf(“result=%d\n”,*A);//输出结果为3</div><div class="line">return 0;</div><div class="line">&#125;</div><div class="line">eg3.char *find_char(char const * source)&#123;</div><div class="line">char *p=(char*)source;//强制转换</div><div class="line">return p;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>结论：即使A指向了tmp，虽然不能修改<em>A，但是仍然可以用tmp来修改这个值，不管 </em>A</p>
+</blockquote>
+<p>5.volatile 修饰符<br>volatile影响编译器编译的结果变量是随时肯发生变化的，与volatile变量有关的运算，不要进行编译优化，以免出错。<br>valatile可以保证对特殊地址的稳定反应，不会出错。<br>6.可变参数列表<br><code>eg. void fun(int a,...) //不知道a后面有多少个参数，写三个点。</code><br>7.递归函数（解决复杂问题）<br>8.程序结构（以函数为最小单位）<br>9.系统函数</p>
+<ul>
+<li>随机数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rand()%100：%100表范围0-100，另外，可以srand((unsigned)time(NULL))为参照物。</div><div class="line">Math.h</div><div class="line">Sqrt()：在gcc编译的时候要加-lm参数，把math库文件加进来。</div></pre></td></tr></table></figure>
+<h3 id="三．-数组"><a href="#三．-数组" class="headerlink" title="三． 数组"></a>三． 数组</h3><ul>
+<li>字符数组：char[5]={‘h’, ‘e’ , ‘l’ , ‘l’ , ‘o’};结尾没有”\0”。</li>
+<li>字符串数组：char[10]=”hello”;虽然使用双引号初始化，但是编译器会给数组的结尾加上”\0”(转义字符)，表示结束。</li>
+</ul>
+<h3 id="四．-指针"><a href="#四．-指针" class="headerlink" title="四． 指针"></a>四． 指针</h3><ol>
+<li><p>指针是保存内存地址的变量；可以用来存放任何已被定义的变量地址，即使他们没有被赋值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">eg.</div><div class="line">int num=5;//定义Int类型的变量</div><div class="line">int *p;(int*)p //声明一个Int类型的指针用来保存Int类型变量的地址</div><div class="line">p=# //取num变量的地址放到p里面</div><div class="line">printf(“%d\n,*p”); </div><div class="line">指针变量 p</div><div class="line">变量指针 *p //此处（声明后）加*（间接运算符）表示取指针里面的值，即用指针来访问值。</div></pre></td></tr></table></figure>
+</li>
+<li><p>空指针可以指向任何地址并对该地址的数值进行修改或者删除，所以需将其初始化为0。</p>
+</li>
+<li><p>不同类型变量所占内存大小不同，指针只能保存与它类型相同的变量的内存地址。<br><code>【32位系统中所有类型的指针大小都是是4个字节（正好保存4G内存地址），64位系统中是8个字节】，(sizeof(指针))</code></p>
+</li>
+<li><p>易混淆概念：指针地址，指针保存的地址和改地址的值。</p>
+</li>
+<li>为什么使用指针（堆和栈的概念）<br>虽然通过变量名可以访问数据，但在操作大型数据和类时，由于指针可以通过内存地址直接访问数据，从而避免在程序中复制大量的代码，因此指针的效率最高，一般来说，指针会有三大用途：<br>1）处理堆中堆放的大型数据。<br>2）快速访问类的成员数据和函数。<br>3）以别名的方式向函数传递参数</li>
+</ol>
+<blockquote>
+<p>★堆和栈<br>一般来说，程序就是与数据打交道，程序执行某一功能时将给功能所需数据加载到内存中，然后在执行完毕时释放掉该内存。</p>
+<ul>
+<li>数据在内存中的存放形式：<br>1）栈区（stack）:由操作系统自己分配并释放，一般存放函数和参数值，局部变量等。<br>其操作方式类似于数据结构中的栈。<br>2）堆区(heap): 由程序员分配并显示释放（一般用molloc,realloc,new等函数从堆中分配到一块内存），若程序员不释放程序结束时可能由操作系统回收。<br>注意：它与数据结构中的堆是两回事，分配方式倒是类似于链表。<br>3）寄存器区：用来保存栈顶指针和指令指针（用于控制程序中指令的执行顺序）<br>4）全局区（静态区 static）：全局变量和静态变量的存储是放在一起的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和静态变量在相邻的另一块区域，程序结束后由系统释放。<br>5）文字常量区：存放常量字符串，程序结束后由系统释放。<br>6）程序代码区：存放函数体的二进制代码。</li>
+</ul>
+<p>附注：★C语言的标准内存分配函数：malloc，calloc，realloc，free等。</p>
+<ul>
+<li>malloc与calloc的区别为1块与n块的区别：<blockquote>
+<ul>
+<li>malloc调用形式为(类型*)malloc(size)：在内存的动态存储区中分配一块长度为“size”字节的连续区域，返回该区域的首地址。</li>
+<li>calloc调用形式为(类型*)calloc(n，size)：在内存的动态存储区中分配n块长度为“size”字节的连续区域，返回首地址。</li>
+<li>realloc调用形式为(类型<em>)realloc(</em>ptr，size)：将ptr内存大小增大到size。</li>
+<li>free的调用形式为free(void*ptr)：释放ptr所指向的一块内存空间。<br>C++中为new/delete函数。 </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>★★堆和栈的区别：</p>
+<ul>
+<li>内存的申请方式不同：前者需程序员自己申请，因此也需指明变量大小；后者由系统自动分配。</li>
+<li>系统响应的不同<br>对于栈，当栈的剩余空间大于所申请的空间，系统会为程序提供内存，否则提示栈溢出。<br>对于堆，系统收到申请空间的请求后会变量一个记录内存空闲地址的链表，找到一个空间大于所申请空间的堆结点时，就将该节点从接了内存空闲地址的链表中删除，并将该结点的内存分配给程序。然后在这块区域的首地址处记录分配的大小，这样使用free函数，delete(C++ )函数释放内存时，函数才能正确识别并删除该内存区域的所有变量。另外，所申请的内存空间与堆结点上的内存空间不一定相等，系统会自动将堆节点上多出的那一部分内存空间回收到空闲链表中。</li>
+<li>空间大小的不同<br>栈是一块连续的内存区域，它的大小是2M，也有的说是1M，总之是一个编译时就确定的常数，是由系统预先根据栈顶的地址和栈的最大容量定义好的。<br>堆是不连续的内存区域，各块区域由链表将它们串联起来，它的上限是由系统中的有效虚拟内存来定的，因此获得的空间较大，获得方式也较灵活。</li>
+<li>执行效率的不同<br>栈由系统自动分配，因此速度较快，但是程序员不能对其进行操作。<br>堆是由程序员分配的内存，一般速度较慢，而且容易产生碎片，不过用起来很方便。</li>
+<li>执行函数时的不同<br>栈：先进后出原则<br>堆：效率比栈低的多，也容易产生碎片，好处是可以存储相当大的数据，并且一些细节也可以由程序员来安排 </li>
+</ul>
+</blockquote>
+<ol>
+<li>内存泄露<br>简单的说就是申请了一块内存空间使用完毕后没有释放，表现为随着程序运行时间越长，占用内存越多，最终用尽全部内存，整个系统崩溃。由程序申请的一块内存，没有任何一个指针指向它，那么这块内存就泄露了。</li>
+</ol>
+<h3 id="五．-指针与数组"><a href="#五．-指针与数组" class="headerlink" title="五． 指针与数组"></a>五． 指针与数组</h3><ol>
+<li>用指针操作数组</li>
+<li>字符串：<br><code>strcat(连接)，strlen(长度)，strcpy(拷贝)，strcmp(比较大小，相等返回0，不相等返回-1)</code></li>
+<li>命令行参数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">在main函数的参数列表中可以写入形参：</div><div class="line">Int main(int argc, char *argv[])</div><div class="line">&#123; </div><div class="line">int i; </div><div class="line">printf(“argc:d%\n,argc”);//以空格为单位分割</div><div class="line">printf(“s%\n”,argv[0]”);//输出命令本身</div><div class="line">for(i=1;i&lt;argc;i++)&#123;</div><div class="line">printf(“s%\n”,argv[i]”);//把输入的命令行参数打印出来</div><div class="line">&#125;</div><div class="line">return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="六．-预处理与VT码（在未用windows界面早期使用命令时使用VT码）"><a href="#六．-预处理与VT码（在未用windows界面早期使用命令时使用VT码）" class="headerlink" title="六． 预处理与VT码（在未用windows界面早期使用命令时使用VT码）"></a>六． 预处理与VT码（在未用windows界面早期使用命令时使用VT码）</h3><ol>
+<li>#include 指令<br><code>#include “file.h”  #include &lt;file.h&gt;</code><br>“ ”：编译器从用户的工作路径开始搜索(当前目录找不到会到系统库查找)<br>&lt;&gt;：编译器从标准库路径开始搜索<br>导入.h文件：是为了建立文件之间的联系，.h文件只是存放函数声明，比较小。</li>
+<li>条件编译<br><code>#if,  #else,  #endif,  #ifdef,  #ifndef,  #undef(取消宏定义)</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">eg1. 多行注释：</div><div class="line">#if  0/1（不显示/显示）</div><div class="line">...</div><div class="line">#endif</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">eg2.宏替换</div><div class="line">#define OFF 0/1</div><div class="line">...</div><div class="line">OFF</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">eg3.</div><div class="line">#ifndef  _HHHH_H</div><div class="line">#define  _HHHH_H</div><div class="line">...</div><div class="line">#endif</div><div class="line">//以上代码防止头文件被重复引用 </div><div class="line">``` </div><div class="line">3. 宏替换（#define 标识符（即符号常量） 字符串）//宏替换有问题，因运而生内联函数</div><div class="line"> </div><div class="line">&gt; `★typedef 关键字【重新定义(数据类型)（eg.  UINT x ; //无符号整形 PINT p;//整形的指针）】`</div><div class="line"></div><div class="line">&gt;注：typeof还可以重新定义结构体（例如结构体嵌套中使用它重新命名结构体）或枚举等:</div><div class="line">`eg. Typeof struct date_st DATE或tepeof struct date_st&#123;...&#125;DATE;`</div><div class="line"> </div><div class="line">&gt; ★#define 定义swap(A,B)：</div><div class="line">1） `&#123;int temp=a; a=b; b=temp;&#125;`</div><div class="line">这种方法最常见，也是最不容易出错的。</div><div class="line">2）`&#123;a = a+b; b = a-b; a = a-b;&#125;`</div><div class="line">这种方法少了一个中间变量，缺点是有可能溢出。</div><div class="line">3）`&#123;a ^= b; b^= a; a ^= b; &#125;`</div><div class="line">这种位运算方法速度快也不需第三个变量。</div><div class="line"> </div><div class="line">&gt; ★补充：#号(双引号)和##号（连接字符串）的用法：</div></pre></td></tr></table></figure>
+<p>eg. define str(s1,s2)  #s2#s2<br>//以字符串形式（加” ”）输出”s1””s2” ，如果s1,s2是string类型则直接输出。</p>
+<p>#define slink(s1,s2)  s1##s2 //s1,s2不能加” ”<br>【#define link(s1,s2) s1 s2 //s1,s2加” ”】<br>//无论s1,s2是字符还是int，##只是将s1,s2进行连接。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">### 七． C语言模块编程</div><div class="line"> </div><div class="line">拆分文件，以多个文件编写C语言程序（头部引入头文件）。</div><div class="line"> `eg:   *.c   *.h   main.c`</div><div class="line"> </div><div class="line"> </div><div class="line">### 八． 静态链接库与动态链接库</div></pre></td></tr></table></figure></p>
+<p>//存放函数库的常用目录 /lib  /usr/lib<br>//静态链接库：对函数库的链接是放在编译时期完成的，对象文件（.o）与牵涉到的函数库被拷贝到一个执行文件，通常文件名为libxx.a （xx(库名)）<br>//.so结尾的是动态链接库，.a结尾的是静态链接库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">### 九． 指针的高级应用</div><div class="line">1.指针变量赋值问题</div></pre></td></tr></table></figure></p>
+<p>int <em>a;<br>int </em>b;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt; ★将指针b赋值给指针a，即a=b，之前要释放指针a所指向的内存空间，否则a的内存空间不再被访问，造成内存丢失。</div><div class="line">&gt; ★C语言规定指针只能指向类型相同的变量，指向不同类型变量的时候一定要进行强制类型转换。</div><div class="line"> </div><div class="line">2.指针用于数组</div><div class="line">* 数组名与指针变量的区别：数组名是一个地址常量，数组名是不能改变的，而指针是一个变量，操作数组中的元素可以用指针实现。</div><div class="line">&gt; 指针越界错误（段错误：不再访问范围内）</div><div class="line">* 数组与指针的区别：当用指针存储字符串的时候，字符串存储在静态存储区，此时字符串不能用指针修改。`eg.  Char *s=”Hello World”;`</div><div class="line"></div><div class="line">3.二级指针（指向指针的指针）</div><div class="line"></div><div class="line">&gt; 二级指针的值传递与指针传递。</div></pre></td></tr></table></figure></p>
+<p>eg.</p>
+<p>#include <stdio.h></stdio.h></p>
+<p>#include<stdlib.h><br>void init(int <em>*p){
+</em>p=malloc(4);<br>}<br>int mian(){<br>int <em>p=NULL;<br>init(&amp;p)
+</em>p=100<br>printf(“d%\n,*p”);<br>free(p);<br>retrun 0;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">4.多级指针</div><div class="line"></div><div class="line">5.函数指针（基本上作函数的参数）【可用来实现C语言接口】</div></pre></td></tr></table></figure></stdlib.h></p>
+<p>eg. </p>
+<p>#include<stdio.h><br>int add(int a,int b){<br>return a+b;<br>}<br>int main(){<br>int(*cal)(int,int);//函数指针<br>cal = add;//将函数指针指向add函数<br>printf(“d%\n”,cal(1,2));<br>return 0;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">### 十． 组合数据类型</div><div class="line">1. 结构体类型</div><div class="line">+ 结构体定义：不同数据类型的变量的集合。</div><div class="line"></div><div class="line">&gt; 结构体就是C语句，结束必须加分号。结构体内，字符数组成员赋值用strcpy()。</div></pre></td></tr></table></figure></stdio.h></p>
+<p>eg.<br>struct(结构体) student(类型名){…}; //结构体声明<br>struct(结构体) student(类型名) stu(变量名);  //结构体使用<br>注：可在结构体声明时就定义一个结构体变量,可写在{…}前或{…}后。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">+ 结构体数组的使用跟普通数组一样。</div><div class="line">`eg.struct student stu[50]`</div><div class="line"> </div><div class="line">+ ★访问结构体成员：</div><div class="line">结构体变量名.成员名  </div><div class="line">结构体指针变量-&gt;成员名</div><div class="line"></div><div class="line">&gt; 注：第一种是栈中变量定义的结构体，第二种放在堆里面，是使用剩余内存来开辟（molloc）的空间【结构体申请空间要在main()中】。如果结构体很大，里面涉及变量很多时用第二种方式。</div><div class="line"> </div><div class="line">+ 结构体的嵌套</div><div class="line"> </div><div class="line">+ 结构体中，char类型由占用一个字节变为4个字节【与前边对齐】。</div><div class="line">在结构体结尾加上 __attribute__((packed))【不自动对齐】。</div></pre></td></tr></table></figure></p>
+<p>eg. #include<stdio.h><br>sturct a_st{<br>char ch;<br>int i;<br>}attribute__((packed));//不自动对齐</stdio.h></p>
+<p>int main(){<br>struct a_st A[10000];//如果自动对齐，声明此数组将会浪费很多空间<br>printf(“d%\n”,sizeof(stuct a_st));<br>return 0;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">+ 将结构体定义为指针类型</div><div class="line">©用指针操作数组或字符串的时候，不能用sizeof()计算字符串或数组的长度，应为指针的大小是固定的。 </div><div class="line"> </div><div class="line">&gt; 补充：★class与struct的区别:</div><div class="line">&gt; * `【structs过渡到class，C++是C的升级版。C语言的编译器gcc不支持class关键字，所以可用c++或g++编译。gcc也可以编译.cpp(c++)文件，但要求该.cpp文件格式是C的格式，调用库要用C语言的库去调用而不能用C++的库去调用】`</div><div class="line">&gt; * `【eg.C++由很多特性：(源程序文件头部有:#include&lt;iostream&gt;,using namespace std;)；(结构体使用时不用写stuct)；(C++输出count&lt;&lt;..&lt;&lt;..&lt;&lt;endl;)；等等】`</div><div class="line">&gt; * `C语言编译器gcc最新版本支持在结构体里写函数，先前早期版本不行。` </div><div class="line">&gt; * `★用stuct(结构体)，里面的成员属性和函数都是公共的，谁都能访问。而用class，要加修饰符，默认的是private：将它改成public:即可。`</div><div class="line"></div><div class="line">2. 枚举类型（经常作为函数 返回值 ）</div></pre></td></tr></table></figure></p>
+<p>eg.<br>enum bool{false,ture}; //java中的ture和false就是通过枚举定义的<br>enum bool isNum(int n){…}</p>
+<p>typedef enum status STATUS; //用typedef重定义（重命名）<br>enum status{FAIL=-1,NOLINK,ONLINK};//可以自己约定开始的值<br>STATUS isAction(){…}</p>
+<p>int main(){<br>// enum bool b;<br>prinft(“d%\n”,false);//输出结果为0<br>prinft(“d%\n”,FAIL);//输出结果为-1<br>prinft(“d%\n”,ONLINK);//输出结果为1，则中间是0<br>}</p>
+<blockquote>
+<p>以上enum（枚举）类似宏（#define False 0）,但是宏返回的是 int类型，而enum返回的是boolean类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">3.类型定义 typedef</div><div class="line"></div><div class="line">4.联合(union)</div><div class="line"></div><div class="line">&gt; 定义：将几个基本数据类型组合在一起（所有数据类型的空间都是在一起的）。</div><div class="line">网络编程中使用广泛。</div><div class="line"> </div><div class="line">&gt; ©位域（由于内存空间的发展，已经被淘汰了）： </div><div class="line">￭位域只存储在char类型和int类型</div><div class="line">￭位域就是按位分配内存的结构体</div><div class="line">￭位域不能跨段（一段位域不能跨两个字节）</div><div class="line">￭不支持数组位域</div><div class="line"></div><div class="line"></div><div class="line">### 十一． vin的使用</div><div class="line"></div><div class="line">&gt; a：在光标后追加   A：在一行后追加    i：在光标钱面插入  I：在一行前面插入</div><div class="line">s: 删除当前光标后插入  S: 删除整行后插入   o: 另起一行插入  O：在当前行上面插入</div><div class="line">yy: 复制当前行  pp：粘贴当前行在光标的下一行  dd: 剪切当前行  u:撤销</div><div class="line">nyy: 多行复制(n表示数字，从光标的位置开始向下复制n行)</div><div class="line">ngg: 定位(n表示数字)  gg：调到文件开头   GG：跳到文件的最后一行</div><div class="line">查找：在正常模式下输入 / 所要查找的单词；next n：向下查找，N:向上查找</div><div class="line">替换：（%表示整个文件，也可用具体行号范围如：0，40）%s/要查找的字符/要替换的字符</div><div class="line">添加注释：（开头如上用具体行号）s/^/\/\/(^表示文件的开头，\位转义字符)</div><div class="line">去掉注释：开头如上用具体行号）s/^\/\/(^表示文件的开头，\位转义字符)</div><div class="line">自动补全：ctrl+p</div><div class="line">查看多个源程序：vim 文件名1 文件名2 -o(小写o为上下屏,大写O为左右屏)</div><div class="line">退出多个源程序: :qa   切屏：按两下ctrl+w  </div><div class="line">找到头部引入文件：:sp(split ) 文件名  或者：vs(vsplit) 文件名</div><div class="line"></div><div class="line"></div><div class="line">### 十二． gcc与gdb的使用</div><div class="line"></div><div class="line">&gt; 版本：gcc -v  帮助：gcc  - -help  查手册：man 参数 ...</div><div class="line">&gt; + 预处理：gcc  -E 文件名(.c) -o 文件名(.i)</div><div class="line">&gt; + 汇编：gcc  -S 文件名(.i)  -o 文件名(.s)(不写则默认生成.s文件)</div><div class="line">&gt; + 编译：gcc  -c  文件名(.s)  -o 文件名(.o)(不写则默认生成.o文件)</div><div class="line">&gt; &gt; 注：vim生成的是文本文件，将.o文件转换成二进制文件：%!xxd ，返回原样: %!xxd -r </div><div class="line">&gt; + 连接：gcc test.o -o test 可以直接执行第四步跳过前面3步</div><div class="line">&gt; + gcc其它参数：</div><div class="line">-g: 添加程序的调试信息，然后可以使用GDB调试程序 (-&gt;gdb  a.out)</div><div class="line">`eg. Start: 单步执行(-&gt;s)   run: 执行完   bt: 查看栈，看有多少函数执行  n: 执行下一步`</div><div class="line"> </div><div class="line">### 十三． ubuntu下的DDD调试工具的使用</div><div class="line">用法和gdb一样，只是在gdb的基础上实现了可视化界面</div><div class="line"> </div><div class="line">### 十四． 文件操作</div><div class="line">&gt; ＊C语言对文件的操作分为两种方式，即流式文件操作和I/O文件操作（前者调用标准库实现。后者调用内核函数库实现,在linux操作系统中，通过其提供的底层接口实现）</div><div class="line"></div><div class="line">1. 流式文件操作</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>1)  fopen()<br>fopen 的原型是：FILE <em>fopen（const char </em>filename, const char *mode）,<br>fopen实现三个功能：为使用而打开一个流；把一个文件和此流相连接；给此流返回一个FILE指针参数；filename指向要打开的文件名，mode表示打开状态的字符串，其取值如下表：<br>“r” ：  以只读方式打开文件<br>“r+”：  以读/写方式打开文件，如无文件则出错<br>“w”：  以只写方式打开文件（并清空文件内容）<br>“w+”： 以读/写方式打开文件，如无文件则生成新文件<br>“a”：  以追加方式打开只写文件，（文件存在，写入的数据会被加到文件尾，即文件原先的内容会被保留，如无文件则生成新文件）<br>“a+”： 以追加方式打开读/写文件，同上<br>FILE这个结构包含了文件操作的基本属性，对文件的操作都要通过这个结构的指针来进行，此种文件操作常用的函数及功能如下：<br>fgetc()：从流中读取一个字符<br>fgets()：从流中读一行或指定个字符<br>fputc(): 写一个字符到流中<br>fputs(): 写字符串到流<br>fseek(): 在流中定位到指定的字符（移动文件中的指针）<br>rewind(): 复位文件定位器到文件开始处<br>ftell(): 读取字节数<br>fread(): 从流中读指定个数的字符<br>fwrite(): 向流中写指定个数的字符<br>fprintf(): 按格式输入到流<br>ferror(): 发生错误时返回其值<br>feof(): 到达文件尾时返回真值<br>…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">&gt; ★fgets()</div><div class="line">函数功能：用于从文件流中读取一行或指定个数的字符。</div><div class="line">原型：char * fgets(char * string, int size, FILE * stream);</div><div class="line">参数说明：</div><div class="line">&gt; + string为一个字符数组，用来保存读取到的字符。</div><div class="line">&gt; + size为要读取的字符的个数。如果该行字符数大于size-1，则读到 size-1 个字符时结束，并在最后补充&apos; \0&apos;；如果该行字符数小于等于 size-1，则读取所有字符，并在最后补充 &apos;\0&apos;。即，每次最多读取 size-1 个字符。</div><div class="line">&gt; + (3)stream为文件流指针。</div><div class="line">&gt; &gt; 【返回值】：读取成功，返回读取到的字符串，即string；失败或读到文件结尾返回NULL。因此我们不能直接通过fgets()的返回值来判断函数是否是出错而终止的，应该借助feof()函数或者ferror()函数来判断。</div><div class="line">&gt; &gt; &gt; 注意：fgets()与gets()不一样，不仅仅是因为gets()函数只有一个参数 FILE *stream，更重要的是，fgets()可以指定最大读取的字符串的个数，杜绝了gets()使用不当造成缓存溢出的问题。</div><div class="line"></div><div class="line">&gt; ★fread和fwrite </div><div class="line"> 函数功能：用来读写一个数据块。 </div><div class="line">一般调用形式：fread(buffer,size,count,fp);  fwrite(buffer,size,count,fp); </div><div class="line">参数说明：</div><div class="line">&gt; + buffer：是一个指针，对fread来说，它是读入数据的存放地址。对fwrite来说，是要输出数据的地址。 </div><div class="line">&gt; + size：要读写的字节数； </div><div class="line">&gt; + count：要进行读写多少个(次)size字节的数据项； </div><div class="line">&gt; + fp：文件流指针。 </div><div class="line">&gt; &gt; 注意：1 完成读写(fwrite())操作后必须关闭流(fclose())。</div><div class="line"></div><div class="line">&gt; ★fprintf()：按格式输入到流，其原型是int fprintf(FILE *stream, const char *format[, argument, ...]);其用法和printf()相同，不过不是写到控制台，而是写到流罢了。</div><div class="line"></div><div class="line">&gt; ★fseek()</div><div class="line">函数功能：用来移动文件流的读写位置.</div><div class="line">头文件：#include &lt;stdio.h&gt;</div><div class="line">定义函数：int fseek(FILE * stream, long offset, int whence);</div><div class="line">参数说明：</div><div class="line">&gt; + 参数stream为已打开的文件指针,</div><div class="line">&gt; + 参数offset为根据参数whence来移动读写位置的位移数。</div><div class="line">&gt; + 参数whence 为下列其中一种:</div><div class="line">SEEK_SET 从距文件开头offset位移量为新的读写位置. </div><div class="line">SEEK_CUR 以目前的读写位置往后增加offset个位移量.</div><div class="line">SEEK_END 将读写位置指向文件尾后再增加offset 个位移量. </div><div class="line">当whence 值为SEEK_CUR 或SEEK_END 时, 参数offset 允许负值的出现.</div><div class="line">&gt; &gt; 下列是较特别的使用方式：</div><div class="line">&gt; &gt; + 欲将读写位置移动到文件开头时:fseek(FILE *stream, 0, SEEK_SET);</div><div class="line">&gt; &gt; + 欲将读写位置移动到文件尾时:fseek(FILE *stream, 0, 0SEEK_END);</div><div class="line">&gt; &gt; &gt; + 返回值：当调用成功时则返回0, 若有错误则返回-1, errno 会存放错误代码.</div><div class="line">&gt; &gt; &gt; + 附注：fseek()不像lseek()会返回读写位置, 必须用ftell()取得目前读写的位置。</div></pre></td></tr></table></figure></p>
+<p>eg.<br>创建文件1.text （内容：ABC）<br>读取文件：<br>eg1. </p>
+<p>#include<stdio.h><br>int main(){<br>FILE *fp = fopen(“1.tex”,” r”);  //r表示以只读方式打开文件1.text<br>char c = fgetc(fp);<br>printf(“c%\n”,c); //读取A<br>printf(“c%\n”,fgetc(fp));//第一次读取后指针往后移一位，则第二次读取B，同理第三次读取C，而第四次将输出空格<br>fclose(fp);<br>return 0;<br>}<br>注：可用循环结构实现上述打印<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">eg2. </div><div class="line">#include&lt;stdio.h&gt; </div><div class="line">#include&lt;stdlib.h&gt;</div><div class="line">#include&lt;string.h&gt; </div><div class="line">int main()&#123;</div><div class="line">FILE *fp = fopen(“1.tex”,” r”);  </div><div class="line">char *p = molloc(100);</div><div class="line">memcpy(p,”\0”,100); //此处不能用strcpy(p,0)，”\0”在此表示填充</div><div class="line">fgets(p,4,fp);//4表示读取的字节数（计算机最小单位是字节而不是位）</div><div class="line">printf(“s%\n”,p);</div><div class="line">putchar(‘\n’); //去掉空格（按原格式读取）</div><div class="line">free(p);</div><div class="line">fclose(fp);</div><div class="line">feturn 0; </div><div class="line">&#125;</div><div class="line">``` </div><div class="line">&gt;&gt; 补充：★strcpy和memcpy</div><div class="line">&gt;&gt; * strcpy和memcpy都是标准C库函数，它们有下面的特点：</div><div class="line">strcpy提供了字符串的复制。即strcpy只用于字符串复制，并且它不仅复制字符串内容，还会复制字符串的结束符。【已知strcpy函数的原型是：char* strcpy(char* dest, const char* src);】</div><div class="line">memcpy提供了内存地址的复制。即memcpy对于需要复制的内容没有限制，因此用途更广。</div><div class="line">&gt;&gt; * strcpy和memcpy主要有以下3方面的区别：</div><div class="line">1）复制的内容不同。strcpy只能复制字符串，而memcpy可以复制任意内容，例如字符数组、整型、结构体、类等。</div><div class="line">2）复制的方法不同。strcpy不需要指定长度，它遇到被复制字符的串结束符&quot;\0&quot;才结束，所以容易溢出。memcpy则是根据其第3个参数决定复制的长度。</div><div class="line">3）用途不同。通常在复制字符串时用strcpy，而需要复制其他类型数据时则一般用memcpy。</div><div class="line"></div><div class="line">``` </div><div class="line">eg3. </div><div class="line">#include&lt;stdio.h&gt; </div><div class="line">int main(int argc , ch ar*argv[ ])&#123;</div><div class="line">FILE *fp = NULL;</div><div class="line">int size = 0;</div><div class="line">if(argc &lt; 2)&#123;</div><div class="line">return 1;</div><div class="line">&#125;</div><div class="line">fp = fopen(argv[1] ,” r”);  //命令行读取第一个参数 </div><div class="line">fseek(fp, 0 , SEEK_END); //把fp从开头移动到结尾</div><div class="line">size = ftell(fp); //ftell()表示读取字节数</div><div class="line">printf(“file size:d%\n”, size);</div><div class="line">fclose(fp);</div><div class="line">feturn 0;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></stdio.h></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">eg4. </div><div class="line">#include&lt;stdio.h&gt; </div><div class="line">int main(int argc , char*argv[ ])&#123;</div><div class="line">int size = 0;</div><div class="line">FILE *fp = NULL;</div><div class="line">char *str = NULL;</div><div class="line">fp = fopen(argv[1] ,” r”);  //命令行读取第一个参数 </div><div class="line">If(fp == NULL)&#123; //做判断，如果文件不存在就退出</div><div class="line">perror(“error”);</div><div class="line">retrun 1;</div><div class="line">&#125;</div><div class="line">//perror( ) 用来将上一个函数发生错误的原因输出到标准设备(stderr)。（不可以丢了#include&lt;stdio.h&gt;这个头文件，perror是包含在这个文件里的）</div><div class="line">fseek(fp, 0 , SEEK_END); //把fp从开头移动到结尾（0—SEEK_END）</div><div class="line">size = ftell(fp); //ftell()表示读取字节数</div><div class="line">rewind(fp);//复位指针</div><div class="line">str = malloc(size+1); //size+1: 包括”\n”</div><div class="line">memcpy(str , “0” , size+1)；//第二个参数是个地址</div><div class="line">fread(str , size , 1 , fp); //数字1表示读1次</div><div class="line">str[size]=’\0’; //读完后将其终止</div><div class="line">printf(“s%\n”, str);</div><div class="line">fclose(fp);</div><div class="line">Free(str); </div><div class="line">feturn 0;  </div><div class="line">&#125;</div><div class="line">``` </div><div class="line"></div><div class="line">### 十五．const_extern_static修饰符详解</div><div class="line">1. extern称为外部变量。为了使变量除了在定义它的源文件中可以使用外，还要被其它文件使用，因此，必须将全程变量通知每一个程序模块文件，此时可用extern说明。</div><div class="line">2. .c文件中static修饰的变量或方法只限制在本文件里访问，加extern关键字也访问不了。</div><div class="line">3. 不要在头文件(.h)文件中用static关键字修饰变量或方法（基本上关键字都写在实现文件(.c)里面）。</div><div class="line"></div><div class="line">### 十六．动态数组</div><div class="line"></div><div class="line">### 十七．Makefile的使用</div></pre></td></tr></table></figure>
+<p>创建test.c文件<br>eg . 编写Makefile文件：<br>all:test //目标条件<br>test:test.o //依赖(.o)文件, ：表示依赖关系<br>  gcc test.o -o test<br>test.o:test.s<br>  gcc -c test.s -o test.o<br>test.s:test.i<br>  gcc -S test.i -o test.s -std=c99<br>test.i:test.c<br>  gcc -E test.c -o test.i<br>执行：make all<br>clean: //处理（删除）命令<br>rm -rf  <em>.i  </em>.o  *.s<br>执行：make clean (不写clean，默认是执行第一个all)<br>直接生成汇编：make test.s<br>（可用变量替换的方式）修改程序：<br>TARGET=test<br>OBJ=test.o<br>All:$(TARGET)<br>$(TARGET):test.o<br>gcc test.o -o test //可写成：gcc $^ -o $@,$^指代依赖文件(test.o ) ,S@指代目标文件($(TARGET))<br>…</p>
+<p>也可跳过预处理和汇编：（注释语句用#）<br>TARGET=test<br>All:$(TARGET)<br>$(TARGET):$(OBJ)<br>  gcc $^ -o $@,$^<br>test.i:test.c //可用%代替test,写成%.i : %.c，%代表当前文件，此外<em>代表当前文件夹<br>  gcc -c test.c -o test.o //同上可写成：gcc -c $^ -o $@<br>clean:<br>rm -rf  </em>.i  <em>.o  </em>.s<br>.PHONY:$(TARGET)   all   //不管程序代码是不是最新的（有没有变动）都从新编译<br>```</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C语言基础，函数，数组，指针，堆和栈，const-extern-static修饰符详解，Makefile的使用/" rel="tag">#C语言基础，函数，数组，指针，堆和栈，const_extern_static修饰符详解，Makefile的使用</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/22/数据结构要点笔记/" rel="prev" title="数据结构要点笔记">
+                数据结构要点笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://pan.baidu.com/s/1jIfiwwY"
+               alt="sgt_tiger" />
+          <p class="site-author-name" itemprop="name">sgt_tiger</p>
+          <p class="site-description motion-element" itemprop="description">技术 | 生活</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一．基础"><span class="nav-number">1.</span> <span class="nav-text">一．基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二．-函数"><span class="nav-number">2.</span> <span class="nav-text">二． 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三．-数组"><span class="nav-number">3.</span> <span class="nav-text">三． 数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四．-指针"><span class="nav-number">4.</span> <span class="nav-text">四． 指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五．-指针与数组"><span class="nav-number">5.</span> <span class="nav-text">五． 指针与数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六．-预处理与VT码（在未用windows界面早期使用命令时使用VT码）"><span class="nav-number">6.</span> <span class="nav-text">六． 预处理与VT码（在未用windows界面早期使用命令时使用VT码）</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sgt_tiger</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
