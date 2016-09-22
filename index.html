@@ -530,8 +530,8 @@
             <hr>
 <h2 id="jsp-EL-jstl"><a href="#jsp-EL-jstl" class="headerlink" title="jsp[EL,jstl]"></a>jsp[EL,jstl]</h2><h3 id="jsp内置对象"><a href="#jsp内置对象" class="headerlink" title="jsp内置对象"></a>jsp内置对象</h3><p>Page、Request、Session、Application …</p>
 <h3 id="JSTL常用标签"><a href="#JSTL常用标签" class="headerlink" title="JSTL常用标签"></a>JSTL常用标签</h3><h4 id="条件标签"><a href="#条件标签" class="headerlink" title="条件标签"></a>条件标签</h4><ol>
-<li><c:choose>：它是用于条件选择，和<c:when>,<c:otherwise>一起使用，它的条件选择是排斥性的，相当于jsp中的&lt;%switch(i){case 0: … case 1:… default :}%&gt;，也可以完成&lt;%if{}…else if{}….else if{} else{} %&gt;的功能。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:choose&gt;</div><div class="line">Body内容(&lt;c:when&gt;,&lt;c:otherwise&gt;)</div><div class="line">&lt;/c:choose&gt;</div></pre></td></tr></table></figure>
-</c:otherwise></c:when></c:choose></li>
+<li><strong><c:choose>：</c:choose></strong><code>它是用于条件选择，和&lt;c:when&gt;,&lt;c:otherwise&gt;一起使用，它的条件选择是排斥性的，相当于jsp中的&lt;%switch(i){case 0: … case 1:… default :}%&gt;，也可以完成&lt;%if{}…else if{}….else if{} else{} %&gt;的功能。</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:choose&gt;</div><div class="line">Body内容(&lt;c:when&gt;,&lt;c:otherwise&gt;)</div><div class="line">&lt;/c:choose&gt;</div></pre></td></tr></table></figure>
+</li>
 </ol>
 <blockquote>
 <p>注意：它的body内容只能是由以下的元素组成：</p>
@@ -542,8 +542,8 @@
 </ul>
 </blockquote>
 <ol>
-<li><c:when>： 它是<c:choose>的一个分支<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:when test=”testCondition”&gt;</div><div class="line">Body内容</div><div class="line">&lt;/c:when&gt;</div></pre></td></tr></table></figure>
-</c:choose></c:when></li>
+<li><strong><c:when>：</c:when></strong> <code>它是&lt;c:choose&gt;的一个分支</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:when test=”testCondition”&gt;</div><div class="line">Body内容</div><div class="line">&lt;/c:when&gt;</div></pre></td></tr></table></figure>
+</li>
 </ol>
 <blockquote>
 <p>注意：它有两个限制：</p>
@@ -553,8 +553,8 @@
 </ul>
 </blockquote>
 <ol>
-<li><c:otherwise>：他代表了<c:choose>的最后选择相当于jsp的&lt;%switch(i){case 0: … case 1:… default :}%&gt; 中的default语句。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:otherwise&gt;</div><div class="line">Conditional block</div><div class="line">&lt;/c:otherwise&gt;</div></pre></td></tr></table></figure>
-</c:choose></c:otherwise></li>
+<li><strong><c:otherwise>：</c:otherwise></strong><code>他代表了&lt;c:choose&gt;的最后选择相当于jsp的&lt;%switch(i){case 0: … case 1:… default :}%&gt; 中的default语句。</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:otherwise&gt;</div><div class="line">Conditional block</div><div class="line">&lt;/c:otherwise&gt;</div></pre></td></tr></table></figure>
+</li>
 </ol>
 <blockquote>
 <p>注意：它的使用有两个限制：</p>
