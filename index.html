@@ -278,6 +278,192 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/20/Scala/" itemprop="url">
+                  Scala编程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T00:00:00+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Scala编程思想/" itemprop="url" rel="index">
+                    <span itemprop="name">Scala编程思想</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="编程范式"><a href="#编程范式" class="headerlink" title="编程范式"></a>编程范式</h3><p>函数式编程是一种编程范式，我们常见的编程范式有<strong>命令式编程</strong>（Imperative programming），<strong>函数式编程</strong>，<strong>辑式编程</strong>，常见的面向对象编程是也是一种命令式编程。</p>
+<blockquote>
+<p>命令式编程是面向计算机硬件的抽象，有变量（对应着存储单元），赋值语句（获取，存储指令），表达式（内存引用和算术运算）和控制语句（跳转指令），一句话，命令式程序就是一个冯诺依曼机的指令序列。而函数式编程是面向数学的抽象，将计算描述为一种表达式求值，一句话，函数式程序就是一个表达式。</p>
+</blockquote>
+<h3 id="函数式编程的本质"><a href="#函数式编程的本质" class="headerlink" title="函数式编程的本质"></a>函数式编程的本质</h3><ul>
+<li>函数式编程中的<strong>函数</strong>这个术语不是指计算机中的函数（实际上是Subroutine），而是指数学中的函数，即自变量的映射。也就是说一个函数的值仅决定于函数参数的值，不依赖其他状态。比如sqrt(x)函数计算x的平方根，只要x不变，不论什么时候调用，调用几次，值都是不变的。</li>
+</ul>
+<blockquote>
+<p>在函数式语言中，函数作为一等公民，可以在任何地方定义，在函数内或函数外，可以作为函数的参数和返回值，可以对函数进行组合。</p>
+</blockquote>
+<ul>
+<li><p>纯函数式编程语言中的<strong>变量</strong>也不是命令式编程语言中的变量，即存储状态的单元，而是代数中的变量，即一个值的名称。变量的值是不可变的（immutable），也就是说不允许像命令式编程语言中那样多次给一个变量赋值。比如说在命令式编程语言我们写“x = x + 1”，这依赖可变状态的事实，拿给程序员看说是对的，但拿给数学家看，却被认为这个等式为假。</p>
+</li>
+<li><p>函数式语言的<strong>条件语句，循环语句</strong>也不是命令式编程语言中的控制语句，而是函数的语法糖，比如在Scala语言中，if else不是语句而是三元运算符，是有返回值的。</p>
+</li>
+<li><p>严格意义上的函数式编程意味着不使用可变的变量，赋值，循环和其他命令式控制结构进行编程。</p>
+</li>
+<li><p>从理论上说，函数式语言也不是通过冯诺伊曼体系结构的机器上运行的，而是通过<strong>λ演算</strong>来运行的，就是通过变量替换的方式进行，变量替换为其值或表达式，函数也替换为其表达式，并根据运算符进行计算。λ演算是<strong>图灵完全（Turing completeness）的</strong>，但是大多数情况，函数式程序还是被编译成（冯诺依曼机的）机器语言的指令执行的。</p>
+</li>
+</ul>
+<h3 id="函数式编程的好处"><a href="#函数式编程的好处" class="headerlink" title="函数式编程的好处"></a>函数式编程的好处</h3><blockquote>
+<p>由于命令式编程语言也可以通过类似函数指针的方式来实现高阶函数，函数式的最主要的好处主要是<strong>不可变性</strong>带来的。<em>没有可变的状态，函数就是引用透明（Referential transparency）的和没有副作用（No Side Effect）</em>。</p>
+<ul>
+<li>不变性带来的一个好处是，函数即不依赖外部的状态也不修改外部的状态，函数调用的结果不依赖调用的时间和位置，这样写的代码容易进行推理，不容易出错。这使得单元测试和调试都更容易。</li>
+<li>不变性带来的另一个好处是：由于（多个线程之间）不共享状态，不会造成资源争用(Racecondition)，也就不需要用锁来保护可变状态，也就不会出现死锁，这样可以更好地并发起来，尤其是在对称多处理器（SMP）架构下能够更好地利用多个处理器（核）提供的并行处理能力。</li>
+</ul>
+</blockquote>
+<p>2005年以来，计算机计算能力的增长已经不依赖CPU主频的增长，而是依赖CPU核数的增多，如图：<br><img src="./images/2016-09-21_161836.jpg" alt="enter description here" title="2016-09-21_161836.jpg"></p>
+<p>图中深蓝色的曲线是时钟周期的增长，可以看到从2005年前已经趋于平缓。 在多核或多处理器的环境下的程序设计是很困难的，难点就是在于共享的可变状态。在这一背景下，这个好处就有非常重要的意义。</p>
+<blockquote>
+<p>由于函数是引用透明的，以及函数式编程不像命令式编程那样关注执行步骤，这个系统提供了优化函数式程序的空间，包括<strong>惰性求值和并性处理</strong>。</p>
+<ul>
+<li>不变性还有一个好处是，由于函数式语言是面向数学的抽象，更接近人的语言，而不是机器语言，代码会比较简洁，也更容易被理解。</li>
+</ul>
+</blockquote>
+<h3 id="函数式编程的特性"><a href="#函数式编程的特性" class="headerlink" title="函数式编程的特性"></a>函数式编程的特性</h3><blockquote>
+<p>由于变量值是不可变的，对于值的操作并不是修改原来的值，而是修改新产生的值，原来的值保持不便。例如一个Point类，其moveBy方法不是改变已有Point实例的x和y坐标值，而是返回一个新的Point实例。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class Point(x: Int, y: Int)&#123;</div><div class="line">    override def toString() = &quot;Point (&quot; + x + &quot;, &quot; + y + &quot;)&quot;</div><div class="line"></div><div class="line">    def moveBy(deltaX: Int, deltaY: Int) = &#123;</div><div class="line">        new Point(x + deltaX, y + deltaY)</div><div class="line">    &#125;</div><div class="line">&#125; </div><div class="line">（示例来源：Anders Hejlsberg在echDays 2010上的演讲）</div></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>同样由于变量不可变，纯函数编程语言无法实现循环，这是因为For循环使用可变的状态作为计数器，而While循环或DoWhile循环需要可变的状态作为跳出循环的条件。<strong>因此在函数式语言里就只能使用递归来解决迭代问题，这使得函数式编程严重依赖递归。</strong></p>
+</blockquote>
+</blockquote>
+<p><img src="./images/2016-09-21_164243.jpg" alt="enter description here" title="2016-09-21_164243.jpg"></p>
+<p>我们可以看到，没有使用循环，没有使用可变的状态，函数更短小，不需要显示地使用累积器保存中间计算结果，而是使用参数n（在栈上分配）来保存中间计算结果。</p>
+<p>当然，这样的递归调用有更高的开销和局限（调用栈深度），那么尽量把递归写成尾递归的方式，编译器会自动优化为循环，这里就不展开介绍了。</p>
+<p>一般来说，递归这种方式与循环相比被认为是更符合人的思维的，即告诉机器做什么，而不是告诉机器怎么做。递归还是有很强大的表现力的，比如换零钱问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">问题：假设某国的货币有若干面值，现给一张大面值的货币要兑换成零钱，问有多少种兑换方式。</div><div class="line">递归解法：</div><div class="line"></div><div class="line">def countChange(money: Int, coins: List[Int]): Int = &#123; </div><div class="line">  if (money == 0) </div><div class="line">    1 </div><div class="line">  else if (coins.size == 0 || money &lt; 0) </div><div class="line">    0 </div><div class="line">  else </div><div class="line">    countChange(money, coins.tail) + countChange(money - coins.head, coins) </div><div class="line">&#125;</div><div class="line"></div><div class="line">（示例来源：有趣的 Scala 语言: 使用递归的方式去思考）</div></pre></td></tr></table></figure></p>
+<p>从这个例子可以看出，<strong>函数式程序非常简练，描述做什么，而不是怎么做。</strong></p>
+<p>函数式语言当然还少不了以下特性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">高阶函数（Higher-order function）</div><div class="line">偏应用函数（Partially Applied Functions）</div><div class="line">柯里化（Currying）</div><div class="line">闭包（Closure）</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p><strong>高阶函数就是参数为函数或返回值为函数的函数。有了高阶函数，就可以将复用的粒度降低到函数级别，相对于面向对象语言，复用的粒度更低。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">举例来说，假设有如下的三个函数，</div><div class="line"></div><div class="line">def sumInts(a: Int, b: Int): Int =</div><div class="line">  if (a &gt; b) 0 else a + sumInts(a + 1, b)</div><div class="line"></div><div class="line">def sumCubes(a: Int, b: Int): Int =</div><div class="line">  if (a &gt; b) 0 else cube(a) + sumCubes(a + 1, b)</div><div class="line"></div><div class="line">def sumFactorials(a: Int, b: Int): Int =</div><div class="line">  if (a &gt; b) 0 else fact(a) + sumFactorials(a + 1, b)</div><div class="line"></div><div class="line">分别是求a到b之间整数之和，求a到b之间整数的立方和，求a到b之间整数的阶乘和。</div><div class="line"></div><div class="line">其实这三个函数都是以下公式的特殊情况</div><div class="line">\sum_&#123;n=a&#125;^&#123;b&#125;&#123;f(n)&#125;</div><div class="line">三个函数不同的只是其中的f不同，那么是否可以抽象出一个共同的模式呢？</div><div class="line"></div><div class="line">我们可以定义一个高阶函数sum：</div><div class="line"></div><div class="line">def sum(f: Int =&gt; Int, a: Int, b: Int): Int =</div><div class="line">  if (a &gt; b) 0</div><div class="line">  else f(a) + sum(f, a + 1, b)</div><div class="line"></div><div class="line">其中参数f是一个函数，在函数中调用f函数进行计算，并进行求和。</div><div class="line"></div><div class="line">然后就可以写如下的函数</div><div class="line"></div><div class="line">def sumInts(a: Int, b: Int) = sum(id, a, b)</div><div class="line">def sumCubs(a: Int, b: Int) = sum(cube, a, b)</div><div class="line">def sumFactorials(a: Int, b: Int) = sum(fact, a, b)</div><div class="line"></div><div class="line">def id(x: Int): Int = x</div><div class="line">def cube(x: Int): Int = x * x * x</div><div class="line">def fact(x: Int): Int = if (x == 0) 1 else fact(x - 1)</div><div class="line"></div><div class="line">这样就可以重用sum函数来实现三个函数中的求和逻辑。</div><div class="line">（示例来源：https://d396qusza40orc.cloudfront.net/progfun/lecture_slides/week2-2.pdf）</div></pre></td></tr></table></figure></p>
+<p><strong>高阶函数提供了一种函数级别上的依赖注入（或反转控制）机制</strong>，在上面的例子里，sum函数的逻辑依赖于注入进来的函数的逻辑。很多GoF设计模式都可以用高阶函数来实现，如Visitor，Strategy，Decorator等。比如Visitor模式就可以用集合类的map()或foreach()高阶函数来替代。</p>
+</blockquote>
+<p>函数式语言通常提供非常强大的集合类（Collection），提供很多高阶函数，因此使用非常方便。</p>
+</blockquote>
+<p>比如说，我们想对一个列表中的每个整数乘2，在命令式编程中需要通过循环，然后对每一个元素乘2，但是在函数式编程中，我们不需要使用循环，只需要使用如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">scala&gt; val numbers = List(1, 2, 3, 4)</div><div class="line">numbers: List[Int] = List(1, 2, 3, 4)</div><div class="line"></div><div class="line">scala&gt; numbers.map(x=&gt;x*2)</div><div class="line">res3: List[Int] = List(2, 4, 6, 8)</div><div class="line"></div><div class="line">（示例来源：Programming Scala: Tackle Multi-Core Complexity on the Java Virtual Machine一书的Introduction）</div></pre></td></tr></table></figure></p>
+<p>其中<code>x=&gt;x*2</code>是一个<em>匿名函数</em>，接收一个参数x，输出<code>x*2</code>。这里也可以看出来函数式编程关注做什么（x*2），而不关注怎么做（使用循环控制结构）。程序员完全不关心，列表中的元素是从前到后依次计算的，还是从后到前依次计算的，是顺序计算的，还是并行进行的计算，如Scala的并行集合（Parallel collection）。</p>
+<p>使用集合类的方法，可以使对一些处理更简单，例如上面提到的求阶乘的函数，如果使用集合类，就可以写成：</p>
+<p><code>def fact(n: Int): Int = (1 to n).reduceLeft((acc,k)=&gt;acc*k)</code></p>
+<p>其中(1 to n)生成一个整数序列，而reduceLeft()高阶函数通过调用<em>匿名函数</em>将序列化简。</p>
+<p>那么，在大数据处理框架<code>Spark</code>中，一个<code>RDD</code>就是一个集合。以词频统计的为例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">val file = spark.textFile(&quot;hdfs://...&quot;)</div><div class="line">val counts = file.flatMap(line =&gt; line.split(&quot; &quot;))</div><div class="line">                 .map(word =&gt; (word, 1))</div><div class="line">                 .reduceByKey(_ + _)</div><div class="line">counts.saveAsTextFile(&quot;hdfs://...&quot;)</div><div class="line"></div><div class="line">（示例来源：https://spark.apache.org/examples.html）</div></pre></td></tr></table></figure></p>
+<p>示例里的flatMap()，map()，和集合类中的同名方法是一致的，这里的map方法的参数也是一个<em>匿名函数</em>，将单词变成一个元组。写这个函数的人不用关心函数是怎么调度的，而实际上，<em>Spark框架会在多台计算机组成的分布式集群上完成这个计算。</em></p>
+<p>此外，如果对比一下<code>Hadoop</code>的词频统计实现：<code>WordCount - Hadoop Wiki</code>，就可以看出函数式编程的一些优势。</p>
+<blockquote>
+<p>函数式编程语言还提供<strong>惰性求值</strong>（Lazy evaluation，也称作call-by-need），是在将表达式赋值给变量（或称作绑定）时并不计算表达式的值，而在变量第一次被使用时才进行计算。这样就可以通过避免不必要的求值提升性能。</p>
+</blockquote>
+<p>在Scala里，通过lazy val来指定一个变量是惰性求值的，如下面的示例所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">scala&gt; val x = &#123; println(&quot;x&quot;); 15 &#125;</div><div class="line">x</div><div class="line">x: Int = 15</div><div class="line"></div><div class="line">scala&gt; lazy val y = &#123; println(&quot;y&quot;); 13 &#125;</div><div class="line">y: Int = &lt;lazy&gt;</div><div class="line"></div><div class="line">scala&gt; y</div><div class="line">y</div><div class="line">res3: Int = 13</div><div class="line"></div><div class="line">scala&gt; y</div><div class="line">res4: Int = 13</div><div class="line"></div><div class="line">（示例来源：scala - What does a lazy val do?）</div></pre></td></tr></table></figure></p>
+<p>可以看到，在Scala的解释器中，当定义了x变量时就打印出了“x”，而定义变量y时并没有打印出”y“，而是在第一次引用变量y时才打印出来。</p>
+<blockquote>
+<p>函数式编程语言一般还提供强大的<strong>模式匹配</strong>（Pattern Match）功能。在函数式编程语言中可以定义<strong>代数数据类型</strong>（Algebraic data type），通过组合已有的数据类型形成新的数据类型，如在Scala中提供case class，代数数据类型的值可以通过模式匹配进行分析。</p>
+<p>总结<br>函数式编程是给软件开发者提供的另一套工具箱，为我们提供了另外一种抽象和思考的方式。<br>函数式编程也有不太擅长的场合，比如处理可变状态和处理IO，要么引入可变变量，要么通过Monad来进行封装（如State Monad和IO Monad）。 </p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/11/mogoroom/" itemprop="url">
                   mogoroom
                 </a>
@@ -342,17 +528,72 @@
         
           
             <hr>
-<hr>
-<p><strong>前端</strong></p>
-<hr>
-<h4 id="jsp-EL-jstl"><a href="#jsp-EL-jstl" class="headerlink" title="jsp[EL,jstl]"></a>jsp[EL,jstl]</h4><ul>
-<li><p>jsp内置对象<br>Page、Request、Session、Application …</p>
-</li>
-<li><p>代码段</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/***计算统计周期用（Java计算时间差（年月日））**/</span></div><div class="line">public <span class="built_in">String</span> getDateDiff(<span class="built_in">Date</span> date1,<span class="built_in">Date</span> date2)&#123;</div><div class="line">    int diffYear  = getDateDiff(date1,date2,Calendar.YEAR);</div><div class="line">       int diffMonth = getDateDiff(date1,date2,Calendar.MONTH);</div><div class="line">       int diffDay   = getDateDiff(date1,date2,Calendar.DAY_OF_MONTH);</div><div class="line">       </div><div class="line">       <span class="keyword">return</span> diffYear + <span class="string">"年"</span> + diffMonth + <span class="string">"月"</span> + diffDay + <span class="string">"天"</span>;</div><div class="line">&#125;</div><div class="line">   public int getDateDiff(<span class="built_in">Date</span> date1,<span class="built_in">Date</span> date2,int diffType)&#123;</div><div class="line">       Calendar cdate1 = Calendar.getInstance();</div><div class="line">       cdate1.setTime(date1);</div><div class="line">       Calendar cdate2 = Calendar.getInstance();</div><div class="line">       cdate2.setTime(date2);</div><div class="line">       </div><div class="line">       <span class="keyword">if</span>(cdate1.getTime().getTime() - cdate2.getTime().getTime() &lt;=<span class="number">0</span> )&#123;</div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       &#125;</div><div class="line">       int year1  = cdate1.get(Calendar.YEAR);</div><div class="line">       int month1 = cdate1.get(Calendar.MONTH);</div><div class="line">       int day1   = cdate1.get(Calendar.DAY_OF_MONTH);</div><div class="line">       </div><div class="line">       int year2  = cdate2.get(Calendar.YEAR);</div><div class="line">       int month2 = cdate2.get(Calendar.MONTH);</div><div class="line">       int day2   = cdate2.get(Calendar.DAY_OF_MONTH);</div><div class="line">       </div><div class="line">       <span class="keyword">if</span>(Calendar.YEAR == diffType)&#123;<span class="comment">//计算相差的年份数据</span></div><div class="line">           <span class="keyword">if</span>(year1 - year2 &gt;= <span class="number">1</span>)&#123;</div><div class="line">               <span class="keyword">return</span> getDiffYear(year1,year2,month1,month2,day1,day2);</div><div class="line">           &#125;<span class="keyword">else</span>&#123;</div><div class="line">               <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">           &#125;</div><div class="line">       &#125;<span class="keyword">else</span> <span class="keyword">if</span>(Calendar.MONTH == diffType)&#123;<span class="comment">//计算相差的月份数据,除去相差的年份数据</span></div><div class="line">           int diffYear = getDateDiff(date1,date2,Calendar.YEAR);</div><div class="line">           <span class="keyword">if</span>(diffYear &gt; <span class="number">0</span>)&#123;</div><div class="line">               Calendar cdate3 = Calendar.getInstance();</div><div class="line">               cdate3.set(Calendar.YEAR, year1 + diffYear);</div><div class="line">               cdate3.set(Calendar.MONTH, month2);</div><div class="line">               cdate3.set(Calendar.DAY_OF_MONTH, day2);</div><div class="line">               </div><div class="line">               int month3 = cdate3.get(Calendar.MONTH);</div><div class="line">               int day3   = cdate3.get(Calendar.DAY_OF_MONTH);</div><div class="line">               </div><div class="line">               <span class="keyword">return</span> getDiffMonth(month1,month3,day1,day3);</div><div class="line">           &#125;<span class="keyword">else</span>&#123;</div><div class="line">               <span class="keyword">return</span> getDiffMonth(month1,month2,day1,day2);</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">       &#125;<span class="keyword">else</span> <span class="keyword">if</span>(Calendar.DAY_OF_MONTH == diffType)&#123;</div><div class="line">           int diffYear  = getDateDiff(date1,date2,Calendar.YEAR);</div><div class="line">           int diffMonth = getDateDiff(date1,date2,Calendar.MONTH);</div><div class="line">           Calendar cdate3 = Calendar.getInstance();</div><div class="line">           cdate3.set(Calendar.YEAR, year2 + diffYear);</div><div class="line">           cdate3.set(Calendar.MONTH, month2 + diffMonth);</div><div class="line">           cdate3.set(Calendar.DAY_OF_MONTH, day2);</div><div class="line">           </div><div class="line">           long diffDay = <span class="number">0</span>;</div><div class="line">           <span class="keyword">if</span>((cdate1.getTime().getTime() - cdate3.getTime().getTime())%(<span class="number">24</span> * <span class="number">3600000</span>) == <span class="number">0</span>)&#123;</div><div class="line">               diffDay = (cdate1.getTime().getTime() - cdate3.getTime().getTime())/(<span class="number">24</span> * <span class="number">3600000</span>);</div><div class="line">           &#125;<span class="keyword">else</span>&#123;</div><div class="line">               diffDay = (cdate1.getTime().getTime() - cdate3.getTime().getTime())/(<span class="number">24</span> * <span class="number">3600000</span>) + <span class="number">1</span>;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">return</span> Long.valueOf(diffDay).intValue();</div><div class="line">       &#125;<span class="keyword">else</span>&#123;</div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
+<h2 id="jsp-EL-jstl"><a href="#jsp-EL-jstl" class="headerlink" title="jsp[EL,jstl]"></a>jsp[EL,jstl]</h2><h3 id="jsp内置对象"><a href="#jsp内置对象" class="headerlink" title="jsp内置对象"></a>jsp内置对象</h3><p>Page、Request、Session、Application …</p>
+<h3 id="JSTL常用标签"><a href="#JSTL常用标签" class="headerlink" title="JSTL常用标签"></a>JSTL常用标签</h3><h4 id="条件标签"><a href="#条件标签" class="headerlink" title="条件标签"></a>条件标签</h4><ol>
+<li><c:choose>：它是用于条件选择，和<c:when>,<c:otherwise>一起使用，它的条件选择是排斥性的，相当于jsp中的&lt;%switch(i){case 0: … case 1:… default :}%&gt;，也可以完成&lt;%if{}…else if{}….else if{} else{} %&gt;的功能。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:choose&gt;</div><div class="line">Body内容(&lt;c:when&gt;,&lt;c:otherwise&gt;)</div><div class="line">&lt;/c:choose&gt;</div></pre></td></tr></table></figure>
+</c:otherwise></c:when></c:choose></li>
+</ol>
+<blockquote>
+<p>注意：它的body内容只能是由以下的元素组成：</p>
+<ul>
+<li>空格；</li>
+<li>0个或多个<c:when>子标签，<c:when>必须在<c:otherwise>子标签之前出现；</c:otherwise></c:when></c:when></li>
+<li>0个或多个<c: otherwise="">子标签；</c:></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//金额格式化（千分位显示）</div><div class="line">var formatMoney = function(amount)&#123;</div><div class="line">	var num = parseFloat(amount).toFixed(2);</div><div class="line">	num = num.toString().replace(/\$|\,/g,&apos;&apos;); </div><div class="line">	if(isNaN(num)) num = &quot;0&quot;;</div><div class="line">	var sign = (num == (num = Math.abs(num)));</div><div class="line">	num = Math.floor(num*100+0.50000000001);</div><div class="line">	var cents = num%100;</div><div class="line">	num = Math.floor(num/100).toString();</div><div class="line">	if(cents&lt;10) cents = &quot;0&quot; + cents;</div><div class="line">	for (var i = 0; i &lt; Math.floor((num.length-(1+i))/3); i++)&#123;</div><div class="line">		num = num.substring(0,num.length-(4*i+3))+&apos;,&apos;+num.substring(num.length-(4*i+3)); </div><div class="line">	&#125;</div><div class="line">	return (((sign)?&apos;&apos;:&apos;-&apos;) + num + &apos;.&apos; + cents);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</blockquote>
+<ol>
+<li><c:when>： 它是<c:choose>的一个分支<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:when test=”testCondition”&gt;</div><div class="line">Body内容</div><div class="line">&lt;/c:when&gt;</div></pre></td></tr></table></figure>
+</c:choose></c:when></li>
+</ol>
+<blockquote>
+<p>注意：它有两个限制：</p>
+<ul>
+<li>必须以<c:choose>作为它的父标签；</c:choose></li>
+<li>必须在<c:otherwise>标签之前出现；</c:otherwise></li>
+</ul>
+</blockquote>
+<ol>
+<li><c:otherwise>：他代表了<c:choose>的最后选择相当于jsp的&lt;%switch(i){case 0: … case 1:… default :}%&gt; 中的default语句。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">&lt;c:otherwise&gt;</div><div class="line">Conditional block</div><div class="line">&lt;/c:otherwise&gt;</div></pre></td></tr></table></figure>
+</c:choose></c:otherwise></li>
+</ol>
+<blockquote>
+<p>注意：它的使用有两个限制：</p>
+<ul>
+<li>必须以<c:choose>作为它的父标签；</c:choose></li>
+<li>必须以<c:choose>的最后分支方式出现；</c:choose></li>
+</ul>
+</blockquote>
+<h3 id="Ajax技术"><a href="#Ajax技术" class="headerlink" title="Ajax技术"></a>Ajax技术</h3><blockquote>
+<p>Adaptive Path公司的Jesse James Garrett这样定义Ajax：<br>Ajax不是一种技术。实际上，它由几种蓬勃发展的技术以新的强大方式组合而成。</p>
+</blockquote>
+<ol>
+<li>Ajax技术内容：</li>
+</ol>
+<ul>
+<li>基于XHTML和CSS标准的表示；</li>
+<li>使用Document Object Model进行动态显示和交互；</li>
+<li>使用XMLHttpRequest与服务器进行异步通信</li>
+<li>使用JavaScript绑定一切。<br>这非常好，但为什么要以Ajax命名呢？其实术语Ajax是由Jesse James Garrett创造的，他说它是“Asynchronous JavaScript + XML的简写”。</li>
+</ul>
+<ol>
+<li><p>Ajax工作原理<br>通过上述的定义，我们应该已经知道Ajax的组成了，即他是由XHTML，XML，CSS，DOM，XMLHttpRequest,JavaScript等技术综合而成的，然而，真正使用Ajax能实现异步通信，要真正实现这种绚丽的奇迹，必须非常熟悉一个JavaScript 对象，即<strong>XMLHttpRequest</strong>。因此我们要了解Ajax的工作原理,就要从理解XMLHttpRequest这个对象开始。<br>下面给出将要用于该对象的很少的几个方法和属性：<br>open()：建立到服务器的新请求。<br>send()：向服务器发送请求。<br>abort()：退出当前请求。<br>readyState：提供当前HTML的就绪状态。<br>responseText：服务器返回的请求响应文本。<br>onreadystatechange:回调方法。<br>responseXML：服务器返回的请求响应XML形式组织的文本。</p>
+<blockquote>
+<blockquote>
+<p>附：XMLHttpRequest对象的使用</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>Ajax调用方式总结</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">   url: //必须，请求发送的地址。</div><div class="line">   type: //&apos;get&apos;或&apos;post&apos;; get()方法通过远程HTTP GET请求载入信息,post()方法通过远程HTTP Post请求载入信息  </div><div class="line">   datatype: //服务器响应的数据类型，默认将智能判断</div><div class="line">   data: //可选，发送到服务器的数据。注：打包java对象作为参数传递给controller;可事先定义一个json对象(将表单数据打包给它)   </div><div class="line">   async: //是否异步：默认为ture，可设置为false</div><div class="line">   success:function(data)&#123;...&#125;: //可选，请求成功时运行的函数</div><div class="line">   error:function(data)&#123;...&#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">&gt;&gt; 附：</div><div class="line">语法：$(selector).get(url,data,success(response,status,xhr),dataType)</div><div class="line">语法：$(selector).post(url,data,success(data,status,jqXHR),dataType)</div><div class="line">参数: (1).data：包含结果的数据(2).status:包含请求的状态(3).xhr/jqXHR:包含XmlHttpRequest对象</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<blockquote>
+<p>注：使用$.ajax实现获取后台数据，后台返回数据格式为text，json，xml三种类型。</p>
+</blockquote>
+</blockquote>
+<h3 id="附：高可用代码段-仅供参考"><a href="#附：高可用代码段-仅供参考" class="headerlink" title="附：高可用代码段(仅供参考)"></a>附：高可用代码段(仅供参考)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/***计算统计周期用（Java计算时间差（年月日））**/</span></div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getDateDiff</span><span class="params">(Date date1,Date date2)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> diffYear  = getDateDiff(date1,date2,Calendar.YEAR);</div><div class="line">       <span class="keyword">int</span> diffMonth = getDateDiff(date1,date2,Calendar.MONTH);</div><div class="line">       <span class="keyword">int</span> diffDay   = getDateDiff(date1,date2,Calendar.DAY_OF_MONTH);</div><div class="line">       </div><div class="line">       <span class="keyword">return</span> diffYear + <span class="string">"年"</span> + diffMonth + <span class="string">"月"</span> + diffDay + <span class="string">"天"</span>;</div><div class="line">&#125;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDateDiff</span><span class="params">(Date date1,Date date2,<span class="keyword">int</span> diffType)</span></span>&#123;</div><div class="line">       Calendar cdate1 = Calendar.getInstance();</div><div class="line">       cdate1.setTime(date1);</div><div class="line">       Calendar cdate2 = Calendar.getInstance();</div><div class="line">       cdate2.setTime(date2);</div><div class="line">       </div><div class="line">       <span class="keyword">if</span>(cdate1.getTime().getTime() - cdate2.getTime().getTime() &lt;=<span class="number">0</span> )&#123;</div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">int</span> year1  = cdate1.get(Calendar.YEAR);</div><div class="line">       <span class="keyword">int</span> month1 = cdate1.get(Calendar.MONTH);</div><div class="line">       <span class="keyword">int</span> day1   = cdate1.get(Calendar.DAY_OF_MONTH);</div><div class="line">       </div><div class="line">       <span class="keyword">int</span> year2  = cdate2.get(Calendar.YEAR);</div><div class="line">       <span class="keyword">int</span> month2 = cdate2.get(Calendar.MONTH);</div><div class="line">       <span class="keyword">int</span> day2   = cdate2.get(Calendar.DAY_OF_MONTH);</div><div class="line">       </div><div class="line">       <span class="keyword">if</span>(Calendar.YEAR == diffType)&#123;<span class="comment">//计算相差的年份数据</span></div><div class="line">           <span class="keyword">if</span>(year1 - year2 &gt;= <span class="number">1</span>)&#123;</div><div class="line">               <span class="keyword">return</span> getDiffYear(year1,year2,month1,month2,day1,day2);</div><div class="line">           &#125;<span class="keyword">else</span>&#123;</div><div class="line">               <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">           &#125;</div><div class="line">       &#125;<span class="keyword">else</span> <span class="keyword">if</span>(Calendar.MONTH == diffType)&#123;<span class="comment">//计算相差的月份数据,除去相差的年份数据</span></div><div class="line">           <span class="keyword">int</span> diffYear = getDateDiff(date1,date2,Calendar.YEAR);</div><div class="line">           <span class="keyword">if</span>(diffYear &gt; <span class="number">0</span>)&#123;</div><div class="line">               Calendar cdate3 = Calendar.getInstance();</div><div class="line">               cdate3.set(Calendar.YEAR, year1 + diffYear);</div><div class="line">               cdate3.set(Calendar.MONTH, month2);</div><div class="line">               cdate3.set(Calendar.DAY_OF_MONTH, day2);</div><div class="line">               </div><div class="line">               <span class="keyword">int</span> month3 = cdate3.get(Calendar.MONTH);</div><div class="line">               <span class="keyword">int</span> day3   = cdate3.get(Calendar.DAY_OF_MONTH);</div><div class="line">               </div><div class="line">               <span class="keyword">return</span> getDiffMonth(month1,month3,day1,day3);</div><div class="line">           &#125;<span class="keyword">else</span>&#123;</div><div class="line">               <span class="keyword">return</span> getDiffMonth(month1,month2,day1,day2);</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">       &#125;<span class="keyword">else</span> <span class="keyword">if</span>(Calendar.DAY_OF_MONTH == diffType)&#123;</div><div class="line">           <span class="keyword">int</span> diffYear  = getDateDiff(date1,date2,Calendar.YEAR);</div><div class="line">           <span class="keyword">int</span> diffMonth = getDateDiff(date1,date2,Calendar.MONTH);</div><div class="line">           Calendar cdate3 = Calendar.getInstance();</div><div class="line">           cdate3.set(Calendar.YEAR, year2 + diffYear);</div><div class="line">           cdate3.set(Calendar.MONTH, month2 + diffMonth);</div><div class="line">           cdate3.set(Calendar.DAY_OF_MONTH, day2);</div><div class="line">           </div><div class="line">           <span class="keyword">long</span> diffDay = <span class="number">0</span>;</div><div class="line">           <span class="keyword">if</span>((cdate1.getTime().getTime() - cdate3.getTime().getTime())%(<span class="number">24</span> * <span class="number">3600000</span>) == <span class="number">0</span>)&#123;</div><div class="line">               diffDay = (cdate1.getTime().getTime() - cdate3.getTime().getTime())/(<span class="number">24</span> * <span class="number">3600000</span>);</div><div class="line">           &#125;<span class="keyword">else</span>&#123;</div><div class="line">               diffDay = (cdate1.getTime().getTime() - cdate3.getTime().getTime())/(<span class="number">24</span> * <span class="number">3600000</span>) + <span class="number">1</span>;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">return</span> Long.valueOf(diffDay).intValue();</div><div class="line">       &#125;<span class="keyword">else</span>&#123;</div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//jsp页面---金额格式化（千分位显示）</div><div class="line">var formatMoney = function(amount)&#123;</div><div class="line">	var num = parseFloat(amount).toFixed(2);</div><div class="line">	num = num.toString().replace(/\$|\,/g,&apos;&apos;); </div><div class="line">	if(isNaN(num)) num = &quot;0&quot;;</div><div class="line">	var sign = (num == (num = Math.abs(num)));</div><div class="line">	num = Math.floor(num*100+0.50000000001);</div><div class="line">	var cents = num%100;</div><div class="line">	num = Math.floor(num/100).toString();</div><div class="line">	if(cents&lt;10) cents = &quot;0&quot; + cents;</div><div class="line">	for (var i = 0; i &lt; Math.floor((num.length-(1+i))/3); i++)&#123;</div><div class="line">		num = num.substring(0,num.length-(4*i+3))+&apos;,&apos;+num.substring(num.length-(4*i+3)); </div><div class="line">	&#125;</div><div class="line">	return (((sign)?&apos;&apos;:&apos;-&apos;) + num + &apos;.&apos; + cents);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 
           
         
@@ -2362,7 +2603,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2370,7 +2611,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2379,7 +2620,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
